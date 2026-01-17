@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="" />
+    <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +33,10 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -39,12 +47,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ListingServiceApplication.executor": "Run",
     "JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor": "Run",
     "JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.EventSphereApplication.executor": "Run",
     "Spring Boot.ListingServiceApplication.executor": "Run",
     "Spring Boot.UserServiceApplication.executor": "Run",
@@ -62,8 +72,25 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.eventsphere.listing_service.payload" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\J-SPRING BOOT PROJECT\Event-Sphere\Backend\listing-service\src\main\java\com\eventsphere\listing_service" />
+      <recent name="D:\J-SPRING BOOT PROJECT\Event-Sphere\Backend\listing-service\src\main\java\com\eventsphere" />
+    </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ListingServiceApplication">
+  <component name="RunManager" selected="Application.ListingServiceApplication">
+    <configuration name="ListingServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.eventsphere.listing_service.ListingServiceApplication" />
+      <module name="listing-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eventsphere.listing_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="user-service" />
       <extension name="coverage">
@@ -92,20 +119,6 @@
       <option name="MAIN_CLASS_NAME" value="com.eventsphere.user_service.service.UserServiceTest" />
       <option name="METHOD_NAME" value="createUser_shouldThrowException_whenUserAlreadyExists" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EventSphereApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="Event-Sphere" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eventsphere.Event.Sphere.EventSphereApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.eventsphere.Event.Sphere.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -140,19 +153,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.ListingServiceApplication" />
       <item itemvalue="JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists" />
       <item itemvalue="JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists" />
       <item itemvalue="Spring Boot.ListingServiceApplication" />
-      <item itemvalue="Spring Boot.EventSphereApplication" />
       <item itemvalue="Spring Boot.UserServiceApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ListingServiceApplication" />
         <item itemvalue="Spring Boot.ListingServiceApplication" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists" />
         <item itemvalue="Spring Boot.UserServiceApplication" />
-        <item itemvalue="Spring Boot.EventSphereApplication" />
       </list>
     </recent_temporary>
   </component>
