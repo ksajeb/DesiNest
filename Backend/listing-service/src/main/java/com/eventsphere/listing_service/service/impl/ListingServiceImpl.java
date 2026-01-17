@@ -1,8 +1,10 @@
 package com.eventsphere.listing_service.service.impl;
 
+import com.eventsphere.listing_service.Config.UserClients;
 import com.eventsphere.listing_service.dto.ListingDto;
 import com.eventsphere.listing_service.dto.ListingRequestDto;
 import com.eventsphere.listing_service.dto.ListingResponseDto;
+import com.eventsphere.listing_service.dto.UserDto;
 import com.eventsphere.listing_service.entity.Listing;
 import com.eventsphere.listing_service.entity.ListingImage;
 import com.eventsphere.listing_service.exception.ResourceNotFoundException;
@@ -33,14 +35,31 @@ public class ListingServiceImpl implements ListingService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserClients userClients;
+
     @Override
     public ListingResponseDto addListing(ListingRequestDto listingDto) throws IOException {
         log.info("Creating new listing for ownerUserId={}", listingDto.getOwnerUserId());
+
+        UserDto user;
+        try {
+            user = userClients.getUserById(listingDto.getOwnerUserId());
+        } catch (Exception ex) {
+            log.error("User not found with id={}", listingDto.getOwnerUserId());
+            throw new ResourceNotFoundException(
+                    "User not found with id: " + listingDto.getOwnerUserId()
+            );
+        }
+
+        // 🔹 If execution reaches here, user is VALID
+        log.info("Verified user from User Service: id={}, name={}", user.getId(), user.getName());
+
         Listing listing = new Listing();
         listing.setId(null);
         listing.setTitle(listingDto.getTitle());
         listing.setDescription(listingDto.getDescription());
-        listing.setOwnerUserId(listingDto.getOwnerUserId());
+        listing.setOwnerUserId(user.getId()); // make change here
         listing.setRent(listingDto.getRent());
         listing.setCity(listingDto.getCity());
         listing.setLandmark(listingDto.getLandmark());
@@ -68,6 +87,8 @@ public class ListingServiceImpl implements ListingService {
         ListingResponseDto response = modelMapper.map(saved, ListingResponseDto.class);
         response.setImages(imageUrls);
 
+        response.setOwnerUserId(user.getId());
+
         return response;
     }
 
@@ -92,7 +113,7 @@ public class ListingServiceImpl implements ListingService {
             // Map basic fields
             ListingResponseDto dto = modelMapper.map(listing, ListingResponseDto.class);
 
-            // Extract image URLs explicitly
+            // get the URLs of the image
             List<String> imageUrls = listing.getImages()
                     .stream()
                     .map(ListingImage::getImageUrl)

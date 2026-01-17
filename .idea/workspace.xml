@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,10 +162,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ListingServiceApplication" />
+        <item itemvalue="Spring Boot.UserServiceApplication" />
         <item itemvalue="Spring Boot.ListingServiceApplication" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists" />
-        <item itemvalue="Spring Boot.UserServiceApplication" />
       </list>
     </recent_temporary>
   </component>
