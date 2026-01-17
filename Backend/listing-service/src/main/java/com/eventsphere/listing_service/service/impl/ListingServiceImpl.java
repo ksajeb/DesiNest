@@ -143,4 +143,41 @@ public class ListingServiceImpl implements ListingService {
         log.debug("Listing found: id={}, title={}", listing.getId(), listing.getTitle());
         return modelMapper.map(listing,ListingResponseDto.class);
     }
+
+    @Override
+    public List<ListingResponseDto> getListingByUserId(Long id) {
+
+        log.info("Fetching listings for userId={}", id);
+
+        try {
+            userClients.getUserById(id);
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("User not found with id: " + id);
+        }
+
+        List<Listing> listings = listingRepository.findByOwnerUserId(id);
+
+        if (listings.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No listings found for user id: " + id
+            );
+        }
+
+        return listings.stream().map(listing -> {
+
+            ListingResponseDto dto =
+                    modelMapper.map(listing, ListingResponseDto.class);
+
+            List<String> imageUrls = listing.getImages()
+                    .stream()
+                    .map(ListingImage::getImageUrl)
+                    .toList();
+
+            dto.setImages(imageUrls);
+            dto.setOwnerUserId(id);
+
+            return dto;
+
+        }).toList();
+    }
 }

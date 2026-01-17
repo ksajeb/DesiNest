@@ -42,4 +42,10 @@ public class ListingController {
         ListingResponseDto listings=listingService.getListingById(id);
         return ResponseEntity.ok(listings);
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<ListingResponseDto>> getListingByUserId(@PathVariable Long id){
+        List<ListingResponseDto> list=listingService.getListingByUserId(id);
+        return ResponseEntity.ok(list);
+    }
 }

@@ -119,10 +119,10 @@ function Navbar() {
                   Logout
                 </li>
                 <li
-                  onClick={() => navigate("/listingpage1")}
+                  onClick={() => navigate("/mylisting")}
                   className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
                 >
-                  List your home
+                  My Listing
                 </li>
               </ul>
             </div>

@@ -15,4 +15,6 @@ public interface ListingService {
     List<ListingResponseDto> getAllListing();
 
     ListingResponseDto getListingById(Long id);
+
+    List<ListingResponseDto> getListingByUserId(Long id);
 }
