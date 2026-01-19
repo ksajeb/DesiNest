@@ -1,9 +1,7 @@
 package com.eventsphere.listing_service.controller;
 
-import com.eventsphere.listing_service.dto.ListingDto;
 import com.eventsphere.listing_service.dto.ListingRequestDto;
 import com.eventsphere.listing_service.dto.ListingResponseDto;
-import com.eventsphere.listing_service.repository.ListingRepository;
 import com.eventsphere.listing_service.service.ListingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,6 @@ public class ListingController {
 
     @Autowired
     private ListingService listingService;
-
-    @Autowired
-    private ListingRepository listingRepository;
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

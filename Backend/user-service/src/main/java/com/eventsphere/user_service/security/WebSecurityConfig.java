@@ -24,6 +24,7 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionConfig->
                         sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/users/curr/me").authenticated()
                         .requestMatchers("/auth/**","/users/**").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -3,6 +3,7 @@ package com.eventsphere.user_service.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -52,8 +53,11 @@ public class User implements UserDetails {
 //    @Column(nullable = false)
 //    private Role role = Role.USER;
 
-    private String bookingId;
-    private String listingId;
+//    private String bookingId;
+
+//    @Column(nullable = false)
+//    @NotNull
+//    private String listingId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -62,6 +66,6 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return this.email;
     }
 }

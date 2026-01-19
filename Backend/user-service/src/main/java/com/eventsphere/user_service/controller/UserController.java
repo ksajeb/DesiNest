@@ -6,6 +6,8 @@ import com.eventsphere.user_service.repository.UserRepository;
 import com.eventsphere.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +38,16 @@ public class UserController {
         UserDto user=userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
+
+    @GetMapping("/curr/me")
+    public ResponseEntity<UserDto> getCurrentUser(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        return ResponseEntity.ok(
+                userService.getUserByEmail(userDetails.getUsername())
+        );
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id){

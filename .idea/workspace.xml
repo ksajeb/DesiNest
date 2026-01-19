@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/repository/ListingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/repository/ListingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/ListingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/ListingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/JwtAuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/MyListing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/MyListing.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

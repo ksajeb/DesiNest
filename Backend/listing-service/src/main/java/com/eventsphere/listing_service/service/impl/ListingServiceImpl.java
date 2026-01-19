@@ -14,6 +14,7 @@ import com.eventsphere.listing_service.service.ListingService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -134,6 +135,7 @@ public class ListingServiceImpl implements ListingService {
 
 
     @Override
+    @Cacheable(value = "listings",key = "#id")
     public ListingResponseDto getListingById(Long id) {
         log.info("Fetching listing with id={}", id);
         Listing listing=listingRepository.findById(id).orElseThrow(()-> {
