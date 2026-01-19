@@ -1,78 +1,97 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthDataContext } from "./AuthContext";
-import { WiNightClear } from "react-icons/wi";
 import { useNavigate } from "react-router-dom";
+import { UserDataContext } from "./UserContext";
 
 export const ListingDataContext = createContext();
 
 function ListingContext({ children }) {
-  let { serverUrl2 } = useContext(AuthDataContext);
-  let navigate = useNavigate();
-  let [adding, setAdding] = useState(false);
-  let [listingData, setListingData] = useState([]);
-  let [allListingData, setAllListingData] = useState([]);
-  let [activeCategory, setActiveCategory] = useState("Trending");
+  const { serverUrl2 } = useContext(AuthDataContext);
+  const { userData } = useContext(UserDataContext);
 
-  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+
+  const [adding, setAdding] = useState(false);
+  const [listingData, setListingData] = useState([]);
+  const [allListingData, setAllListingData] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("Trending");
+
   const [title, setTitle] = useState("");
-  const [ownerUserId, setOwnerUserId] = useState("");
+  const [description, setDescription] = useState("");
   const [rent, setRent] = useState("");
   const [city, setCity] = useState("");
   const [landmark, setLandmark] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
 
+  // Add new listing
   const handleAddListing = async () => {
-    setAdding(true);
-    try {
-      const formData = new FormData();
+    if (!userData?.id) {
+      navigate("/login");
+      return;
+    }
 
+    setAdding(true);
+
+    try {
+      const formData = new FormData();~
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("ownerUserId", Number(ownerUserId));
+      formData.append("ownerUserId", userData.id);
       formData.append("rent", Number(rent));
       formData.append("city", city);
       formData.append("landmark", landmark);
       formData.append("category", category);
 
-      // Append multiple images
-      images.forEach((file) => {
-        formData.append("images", file);
+      images.forEach((file) => formData.append("images", file));
+
+      await axios.post(`${serverUrl2}/listing`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
 
-      let result = await axios.post(serverUrl2 + "/listing", formData, {
-        withCredentials: true,
-      });
-      setAdding(false);
-      console.log(result);
+      await getListing();
       navigate("/");
+
+      // reset
       setTitle("");
       setDescription("");
-      setOwnerUserId("");
       setRent("");
       setCity("");
       setLandmark("");
       setCategory("");
       setImages([]);
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
+    } finally {
       setAdding(false);
-      console.log(error);
     }
   };
 
+  // Fetch all listings
   const getListing = async () => {
     try {
-      const result = await axios.get(serverUrl2 + "/listing", {
-        withCredentials: true,
+      const result = await axios.get(`${serverUrl2}/listing`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
+
       setListingData(result.data);
       setAllListingData(result.data);
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 404) {
+        setListingData([]);
+        setAllListingData([]);
+      } else {
+        console.error("Error fetching listings:", error);
+      }
     }
   };
 
+  // Filter listings by category
   const filterByCategory = (category) => {
     setActiveCategory(category);
 
@@ -82,15 +101,15 @@ function ListingContext({ children }) {
     }
 
     const filtered = allListingData.filter(
-      (item) => item.category === category
+      (item) => item.category === category,
     );
-
     setListingData(filtered);
   };
 
+  // Fetch listings on mount
   useEffect(() => {
     getListing();
-  }, [adding]);
+  }, []);
 
   const value = {
     listingData,
@@ -98,14 +117,10 @@ function ListingContext({ children }) {
     allListingData,
     filterByCategory,
     activeCategory,
-
-    // existing fields
     title,
     setTitle,
     description,
     setDescription,
-    ownerUserId,
-    setOwnerUserId,
     rent,
     setRent,
     city,

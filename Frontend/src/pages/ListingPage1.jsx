@@ -1,30 +1,24 @@
 import { ListingDataContext } from "@/Context/ListingContext";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 function ListingPage1() {
   const navigate = useNavigate();
-  // const [images, setImages] = useState([]);
 
   let {
     title,
     setTitle,
     description,
     setDescription,
-    ownerUserId,
-    setOwnerUserId,
     rent,
     setRent,
     city,
     setCity,
     landmark,
     setLandmark,
-    category,
-    setCategory,
     images,
     setImages,
-    handleAddListing,
   } = useContext(ListingDataContext);
 
   // Handle multiple image upload

@@ -12,29 +12,37 @@ import { IoEye, IoEyeOff, IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthDataContext } from "../Context/AuthContext";
+import { UserDataContext } from "@/Context/UserContext";
 
 function Login() {
   let [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const { serverUrl, loading, setLoading } = useContext(AuthDataContext);
+  const { getCurrentUser } = useContext(UserDataContext);
+
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
+    e.preventDefault();
     setLoading(true);
+
     try {
-      e.preventDefault();
-      let result = await axios.post(
-        serverUrl + "/auth/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const result = await axios.post(serverUrl + "/auth/login", {
+        email,
+        password,
+      });
+
+      const { jwt } = result.data;
+      localStorage.setItem("token", jwt);
+
+      // fetch logged-in user & update context
+      await getCurrentUser();
+
       setLoading(false);
-      console.log(result);
+      navigate("/");
+      // window.location.reload();
     } catch (error) {
       setLoading(false);
       console.log(error);

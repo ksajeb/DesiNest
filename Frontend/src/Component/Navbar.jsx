@@ -8,28 +8,23 @@ import { SiHomeassistantcommunitystore } from "react-icons/si";
 import { FaTreeCity } from "react-icons/fa6";
 import { BiBuildingHouse } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { AuthDataContext } from "@/Context/AuthContext";
 import { ListingDataContext } from "@/Context/ListingContext";
+import { UserDataContext } from "@/Context/UserContext";
+
 import logo from "../assets/logo.png";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-
-  const { serverUrl } = useContext(AuthDataContext);
   const { filterByCategory, activeCategory } = useContext(ListingDataContext);
+  const { userData, setUserData } = useContext(UserDataContext);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        serverUrl + "/auth/login",
-        {},
-        { withCredentials: true }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUserData(null);
+    setShowPopup(false);
+    navigate("/");
   };
 
   const trendingItems = [
@@ -100,30 +95,45 @@ function Navbar() {
             className="flex items-center gap-2 border border-gray-600 rounded-full px-4 py-2 hover:bg-[#1D1F20]"
           >
             <RxHamburgerMenu className="text-white" />
-            <CgProfile className="text-white text-xl" />
+
+            {userData && userData.email ? (
+              <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">
+                {userData.email.charAt(0).toUpperCase()}
+              </div>
+            ) : (
+              <CgProfile className="text-white text-xl" />
+            )}
           </button>
 
           {showPopup && (
             <div className="absolute bg-white top-[110%] right-0 border rounded-lg w-56 z-10">
               <ul className="flex flex-col">
-                <li
-                  onClick={() => navigate("/login")}
-                  className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                >
-                  Login
-                </li>
-                <li
-                  onClick={handleLogout}
-                  className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                >
-                  Logout
-                </li>
-                <li
-                  onClick={() => navigate("/mylisting")}
-                  className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                >
-                  My Listing
-                </li>
+                {!userData?.id && (
+                  <li
+                    onClick={() => navigate("/login")}
+                    className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Login
+                  </li>
+                )}
+
+                {userData?.id && (
+                  <>
+                    <li
+                      onClick={handleLogout}
+                      className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Logout
+                    </li>
+
+                    <li
+                      onClick={() => navigate("/mylisting")}
+                      className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                    >
+                      My Listing
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           )}

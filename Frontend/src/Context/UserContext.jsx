@@ -19,7 +19,7 @@ function UserContext({ children }) {
 
       const result = await axios.get(`${serverUrl}/users/curr/me`, {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -35,7 +35,7 @@ function UserContext({ children }) {
   }, []);
 
   return (
-    <UserDataContext.Provider value={{ userData, setUserData }}>
+    <UserDataContext.Provider value={{ userData, setUserData, getCurrentUser }}>
       {children}
     </UserDataContext.Provider>
   );
