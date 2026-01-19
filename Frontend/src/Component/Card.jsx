@@ -1,3 +1,4 @@
+import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
 import { useContext, useState } from "react";
 import { FaHeart, FaStar } from "react-icons/fa";
@@ -7,9 +8,21 @@ function Card({ list }) {
   const navigate = useNavigate();
   const { userData } = useContext(UserDataContext);
   const [liked, setLiked] = useState(false);
+  const { getListingById } = useContext(ListingDataContext);
+
+  const handleClick = (id) => {
+    if (userData) {
+      getListingById(id);
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
-    <div className="w-[280px] cursor-pointer mx-9">
+    <div
+      className="w-[280px] cursor-pointer mx-9"
+      onClick={() => handleClick(list.id)}
+    >
       {/* Image */}
       <div className="relative w-full h-[260px] rounded-xl overflow-hidden">
         <img

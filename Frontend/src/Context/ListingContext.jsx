@@ -25,6 +25,7 @@ function ListingContext({ children }) {
   const [landmark, setLandmark] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [cardDetails, setCardDetails] = useState(null);
 
   // Add new listing
   const handleAddListing = async () => {
@@ -127,6 +128,23 @@ function ListingContext({ children }) {
     }
   };
 
+  const getListingById = async (id) => {
+    if (!id) return;
+
+    try {
+      const result = await axios.get(`${serverUrl2}/listing/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      setCardDetails(result.data);
+      navigate(`/viewcard/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Fetch listings on mount
   useEffect(() => {
     getListing();
@@ -156,6 +174,9 @@ function ListingContext({ children }) {
     adding,
     myListings,
     getUsersListings,
+    getListingById,
+    cardDetails,
+    setCardDetails,
   };
 
   return (

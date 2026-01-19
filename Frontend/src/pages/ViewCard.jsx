@@ -1,34 +1,47 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { IoArrowBackOutline, IoClose } from "react-icons/io5";
 import { ListingDataContext } from "@/Context/ListingContext";
-import { Landmark } from "lucide-react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function ListingPage3() {
+import { IoArrowBackOutline, IoClose } from "react-icons/io5";
+
+function ViewCard() {
   const navigate = useNavigate();
   const [showFullDesc, setShowFullDesc] = useState(false);
-
-  const {
-    title,
-    description,
-    rent,
-    city,
-    category,
-    images,
-    landmark,
-    handleAddListing,
-    adding,
-  } = useContext(ListingDataContext);
+  const { cardDetails, handleAddListing, adding, getListingById } =
+    useContext(ListingDataContext);
 
   const [showGallery, setShowGallery] = useState(false);
+  const { id } = useParams();
+  useEffect(() => {
+    if (id && !cardDetails) {
+      getListingById(id);
+    }
+  }, [id, cardDetails]);
 
+  // if (!cardDetails) {
+  //   return (
+  //     <div className="w-full min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white">
+  //       Loading listing...
+  //     </div>
+  //   );
+  // }
+  if (!cardDetails) {
+    return (
+      <div className="w-full min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white">
+        Loading listing...
+      </div>
+    );
+  }
+
+  const { title, description, rent, city, category, images, landmark } =
+    cardDetails;
   return (
     <div className="w-full min-h-screen bg-[#1a1a1a] relative">
       {/* BACK BUTTON */}
       <div
         className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
-        cursor-pointer rounded-2xl flex justify-center items-center text-white"
-        onClick={() => navigate("/listingpage2")}
+          cursor-pointer rounded-2xl flex justify-center items-center text-white"
+        onClick={() => navigate("/")}
       >
         <IoArrowBackOutline className="w-6 h-6" />
       </div>
@@ -45,21 +58,21 @@ function ListingPage3() {
         {images?.length > 0 && (
           <div
             className="
-              grid grid-cols-1
-              md:grid-cols-4
-              md:grid-rows-2
-              gap-3
-              rounded-2xl
-              overflow-hidden
-              h-[420px]
-              cursor-pointer
-            "
+                grid grid-cols-1
+                md:grid-cols-4
+                md:grid-rows-2
+                gap-3
+                rounded-2xl
+                overflow-hidden
+                h-[420px]
+                cursor-pointer
+              "
             onClick={() => setShowGallery(true)}
           >
             {/* BIG IMAGE */}
             <div className="md:col-span-2 md:row-span-2 overflow-hidden">
               <img
-                src={URL.createObjectURL(images[0])}
+                src={images[0]}
                 alt="main"
                 className="w-full h-full object-cover"
               />
@@ -69,12 +82,11 @@ function ListingPage3() {
             {images.slice(1, 5).map((image, index) => (
               <div key={index} className="relative overflow-hidden">
                 <img
-                  src={URL.createObjectURL(image)}
+                  src={image}
                   alt="preview"
                   className="w-full h-full object-cover"
                 />
 
-                {/* SHOW ALL PHOTOS BUTTON */}
                 {index === 3 && images.length > 5 && (
                   <div className="absolute inset-0 bg-black/40 flex items-end justify-end p-4">
                     <button
@@ -170,13 +182,13 @@ function ListingPage3() {
         <div className="mt-6 pb-10 flex items-center justify-center">
           <button
             className="group/btn relative block h-10 w-full rounded-md
-      bg-gradient-to-br from-black to-neutral-600
-      font-medium text-white
-      shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-      dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-      dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-      border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-      duration-200 delay-100"
+        bg-gradient-to-br from-black to-neutral-600
+        font-medium text-white
+        shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
+        dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
+        dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
+        border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
+        duration-200 delay-100"
             onClick={handleAddListing}
             disabled={adding}
           >
@@ -204,7 +216,7 @@ function ListingPage3() {
             {images.map((image, index) => (
               <img
                 key={index}
-                src={URL.createObjectURL(image)}
+                src={image} // ✅ DIRECT URL
                 alt="gallery"
                 className="w-full h-64 object-cover rounded-lg"
               />
@@ -216,4 +228,4 @@ function ListingPage3() {
   );
 }
 
-export default ListingPage3;
+export default ViewCard;

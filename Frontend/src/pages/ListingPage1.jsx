@@ -43,13 +43,6 @@ function ListingPage1() {
         <IoArrowBackOutline className="w-6 h-6" />
       </div>
 
-      {/* Right Button */}
-      <div className="fixed top-6 right-10 z-50">
-        <button className="px-8 py-2 rounded-full bg-[#FF4163] hover:bg-[#AA001F] text-lg text-white">
-          Setup your home
-        </button>
-      </div>
-
       {/* FORM */}
       <form
         className="w-[420px] flex flex-col gap-6 pt-32 pb-20"
@@ -124,6 +117,8 @@ function ListingPage1() {
           <label className="text-lg text-white">Rent</label>
           <input
             type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FF4163]"
             required
             value={rent}

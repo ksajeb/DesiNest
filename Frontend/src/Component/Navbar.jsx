@@ -42,7 +42,7 @@ function Navbar() {
   return (
     <div>
       {/* TOP NAVBAR */}
-      <div className="w-full px-[40px] py-4 flex items-center justify-between bg-[#0f0f0f] border-b border-red-500/50 md:px-10">
+      <div className="w-full px-[40px] py-4 flex items-center justify-between  border-b border-red-500/50 md:px-10">
         {/* LOGO */}
         <div className="w-14 h-14 rounded-full overflow-hidden">
           <img
@@ -55,27 +55,27 @@ function Navbar() {
 
         {/* SEARCH BAR (DESKTOP) */}
         <div className="w-[40%] hidden md:block">
-          <div className="flex items-center bg-[#232628] h-15 rounded-full shadow-md">
-            <div className="flex flex-col flex-1 px-6 border-r border-gray-600">
-              <span className="text-white text-xs font-semibold">Where</span>
+          <div className="flex items-center h-15 rounded-full shadow-lg">
+            <div className="flex flex-col flex-1 px-6 border-r border-gray-700">
+              <span className="text-black text-xs font-semibold">Where</span>
               <input
                 type="text"
                 placeholder="Search destinations"
-                className="bg-transparent text-gray-400 text-sm outline-none"
+                className="bg-transparent text-gray-700 text-sm outline-none"
               />
             </div>
 
-            <div className="flex flex-col flex-1 px-6 border-r border-gray-600">
-              <span className="text-white text-xs font-semibold">When</span>
-              <span className="text-gray-400 text-sm">Add dates</span>
+            <div className="flex flex-col flex-1 px-6 border-r border-gray-900">
+              <span className="text-black text-xs font-semibold">When</span>
+              <span className="text-gray-700 text-sm">Add dates</span>
             </div>
 
             <div className="flex flex-col flex-1 px-6">
-              <span className="text-white text-xs font-semibold">Who</span>
-              <span className="text-gray-400 text-sm">Add guests</span>
+              <span className="text-black text-xs font-semibold">Who</span>
+              <span className="text-gray-700 text-sm">Add guests</span>
             </div>
 
-            <button className="mr-2 bg-red-600 w-10 h-10 rounded-full flex items-center justify-center text-white">
+            <button className="mr-2 bg-red-600 w-10 h-10 rounded-full flex items-center justify-center text-white cursor-pointer">
               <IoSearchOutline size={18} />
             </button>
           </div>
@@ -84,7 +84,7 @@ function Navbar() {
         {/* RIGHT MENU */}
         <div className="flex items-center gap-3 relative">
           <span
-            className="hidden md:block text-white cursor-pointer rounded-full px-5 py-2 hover:bg-[#1D1F20]"
+            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 hover:bg-[#EA6E8F] text-black hover:text-white hover:duration-500"
             onClick={() => navigate("/listingpage1")}
           >
             Become a host
@@ -92,43 +92,60 @@ function Navbar() {
 
           <button
             onClick={() => setShowPopup(!showPopup)}
-            className="flex items-center gap-2 border border-gray-600 rounded-full px-4 py-2 hover:bg-[#1D1F20]"
+            className="flex items-center gap-2 border border-gray-600 rounded-full px-4 py-2 hover:bg-none cursor-pointer"
           >
-            <RxHamburgerMenu className="text-white" />
+            <RxHamburgerMenu className="text-black" />
 
             {userData && userData.email ? (
               <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">
                 {userData.email.charAt(0).toUpperCase()}
               </div>
             ) : (
-              <CgProfile className="text-white text-xl" />
+              <CgProfile className="text-black text-xl " />
             )}
           </button>
 
           {showPopup && (
-            <div className="absolute bg-white top-[110%] right-0 border rounded-lg w-56 z-10">
+            <div className="absolute top-[110%] right-0 z-10 w-56 overflow-hidden rounded-lg border bg-white shadow-lg">
               <ul className="flex flex-col">
+                <li
+                  onClick={() => navigate("/listingpage1")}
+                  className="px-4 py-3 cursor-pointer flex items-center gap-2 font-bold hover:bg-gray-400 hover:text-black duration-500"
+                >
+                  Become a host
+                </li>
+
+                <hr className="border-gray-200" />
+
                 {!userData?.id && (
-                  <li
-                    onClick={() => navigate("/login")}
-                    className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                  >
-                    Login
-                  </li>
+                  <>
+                    <li
+                      onClick={() => navigate("/login")}
+                      className="px-4 py-3 cursor-pointer font-bold hover:bg-gray-400 hover:text-black duration-500"
+                    >
+                      Login
+                    </li>
+                    <hr className=" border-gray-200" />
+                    <li
+                      onClick={() => navigate("/signup")}
+                      className="px-4 py-3 cursor-pointer font-bold hover:bg-gray-400 hover:text-black duration-500"
+                    >
+                      Signup
+                    </li>
+                  </>
                 )}
 
                 {userData?.id && (
                   <>
                     <li
                       onClick={handleLogout}
-                      className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
                     >
                       Logout
                     </li>
-
                     <li
                       onClick={() => navigate("/mylisting")}
-                      className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
                     >
                       My Listing
                     </li>
