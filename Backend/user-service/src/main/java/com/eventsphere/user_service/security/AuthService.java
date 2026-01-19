@@ -4,9 +4,11 @@ import com.eventsphere.user_service.dto.LoginRequestDto;
 import com.eventsphere.user_service.dto.LoginResponseDto;
 import com.eventsphere.user_service.dto.SignupRequestDto;
 import com.eventsphere.user_service.dto.SignupResponseDto;
+import com.eventsphere.user_service.entity.TokenBlacklist;
 import com.eventsphere.user_service.entity.User;
 import com.eventsphere.user_service.exception.UserAlreadyExistsException;
 import com.eventsphere.user_service.exception.UserNotFoundException;
+import com.eventsphere.user_service.repository.TokenBlacklistRepository;
 import com.eventsphere.user_service.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class AuthService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private TokenBlacklistRepository tokenBlacklistRepository;
+
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
 
         User user = userRepository.findByEmail(loginRequestDto.getEmail())
@@ -44,8 +49,6 @@ public class AuthService {
         Authentication authentication=authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(),loginRequestDto.getPassword())
         );
-
-//        User user= (User) authentication.getPrincipal();
 
         String token=authUtil.generateAccessToken(user);
 
@@ -65,5 +68,24 @@ public class AuthService {
         System.out.println("Saved user phone: " + savedUser.getPhoneNumber());
 
         return modelMapper.map(savedUser, SignupResponseDto.class);
+    }
+
+    public String logout(String token) {
+
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        if (tokenBlacklistRepository.findByToken(token).isPresent()) {
+            return "Already logged out";
+        }
+
+        TokenBlacklist blacklist = new TokenBlacklist();
+        blacklist.setToken(token);
+        blacklist.setExpiryTime(authUtil.extractExpiration(token).toInstant());
+
+        tokenBlacklistRepository.save(blacklist);
+
+        return "Logged out successfully";
     }
 }

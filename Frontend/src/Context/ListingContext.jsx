@@ -16,6 +16,7 @@ function ListingContext({ children }) {
   const [listingData, setListingData] = useState([]);
   const [allListingData, setAllListingData] = useState([]);
   const [activeCategory, setActiveCategory] = useState("Trending");
+  const [myListings, setMyListings] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -35,7 +36,7 @@ function ListingContext({ children }) {
     setAdding(true);
 
     try {
-      const formData = new FormData();~
+      const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
       formData.append("ownerUserId", userData.id);
@@ -106,6 +107,26 @@ function ListingContext({ children }) {
     setListingData(filtered);
   };
 
+  const getUsersListings = async () => {
+    if (!userData?.id) return;
+
+    try {
+      const result = await axios.get(
+        `${serverUrl2}/listing/user/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      setMyListings(result.data || []);
+    } catch (error) {
+      setMyListings([]);
+      console.error("Error fetching my listings:", error);
+    }
+  };
+
   // Fetch listings on mount
   useEffect(() => {
     getListing();
@@ -133,6 +154,8 @@ function ListingContext({ children }) {
     setImages,
     handleAddListing,
     adding,
+    myListings,
+    getUsersListings,
   };
 
   return (

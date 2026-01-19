@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/ListingServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/JwtAuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/pages/MyListing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/MyListing.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,9 +24,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="com.intellij.jpb.JpaRepository" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="com.intellij.jpb.JpaRepository" />
       </list>
     </option>
   </component>
@@ -49,33 +48,36 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="380TJ1AyVKGOqJKSMCLuEhfZQ1W" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ListingServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.EventSphereApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ListingServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.UserServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/J-SPRING BOOT PROJECT/Event-Sphere&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ListingServiceApplication.executor": "Run",
+    "JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor": "Run",
+    "JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.EventSphereApplication.executor": "Run",
+    "Spring Boot.ListingServiceApplication.executor": "Run",
+    "Spring Boot.UserServiceApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/J-SPRING BOOT PROJECT/DesiNest",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propCompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.eventsphere.listing_service.payload" />
@@ -85,7 +87,7 @@
       <recent name="D:\J-SPRING BOOT PROJECT\Event-Sphere\Backend\listing-service\src\main\java\com\eventsphere" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ListingServiceApplication">
+  <component name="RunManager" selected="Spring Boot.UserServiceApplication">
     <configuration name="ListingServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eventsphere.listing_service.ListingServiceApplication" />
       <module name="listing-service" />
@@ -169,8 +171,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ListingServiceApplication" />
         <item itemvalue="Spring Boot.UserServiceApplication" />
+        <item itemvalue="Application.ListingServiceApplication" />
         <item itemvalue="Spring Boot.ListingServiceApplication" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists" />
         <item itemvalue="JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists" />

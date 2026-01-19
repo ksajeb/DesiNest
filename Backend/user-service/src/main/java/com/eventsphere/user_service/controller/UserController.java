@@ -22,37 +22,37 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-        UserDto created=userService.createUser(userDto);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        UserDto created = userService.createUser(userDto);
         return ResponseEntity.ok(created);
     }
 
     @GetMapping
-    public ResponseEntity <List<UserDto>> getAllUser(){
-        List<UserDto> user=userService.getAllUser();
+    public ResponseEntity<List<UserDto>> getAllUser() {
+        List<UserDto> user = userService.getAllUser();
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
-        UserDto user=userService.getUserById(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/curr/me")
     public ResponseEntity<UserDto> getCurrentUser(
-            @AuthenticationPrincipal UserDetails userDetails
-    ) {
-        return ResponseEntity.ok(
-                userService.getUserByEmail(userDetails.getUsername())
-        );
+            @AuthenticationPrincipal Object principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body(null);
+        }
+        User user = (User) principal;
+        return ResponseEntity.ok(userService.getCurrentUser(user));
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
-        return ResponseEntity.ok("User deleted successfully with the id:"+id);
+        return ResponseEntity.ok("User deleted successfully with the id:" + id);
     }
 
 }

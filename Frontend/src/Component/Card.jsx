@@ -1,8 +1,13 @@
+import { UserDataContext } from "@/Context/UserContext";
+import { useContext, useState } from "react";
 import { FaHeart, FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Card({ list }) {
   const navigate = useNavigate();
+  const { userData } = useContext(UserDataContext);
+  const [liked, setLiked] = useState(false);
+
   return (
     <div className="w-[280px] cursor-pointer mx-9">
       {/* Image */}
@@ -20,8 +25,18 @@ function Card({ list }) {
 
         {/* Heart */}
         <FaHeart
-          className="absolute top-3 right-3 text-white text-xl drop-shadow-md hover:scale-110 transition"
-          onClick={() => navigate("/login")}
+          className={`absolute top-3 right-3 text-xl drop-shadow-md hover:scale-110 transition 
+    ${liked ? "text-red-500" : "text-white"}`}
+          onClick={(e) => {
+            e.stopPropagation();
+
+            if (!userData) {
+              navigate("/login");
+              return;
+            }
+
+            setLiked((prev) => !prev);
+          }}
         />
       </div>
 

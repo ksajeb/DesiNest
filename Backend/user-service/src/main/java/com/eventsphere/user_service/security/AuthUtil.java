@@ -39,4 +39,15 @@ public class AuthUtil {
                 .getPayload();
         return claims.getSubject();
     }
+
+    public Date extractExpiration(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.getExpiration();
+    }
+
 }

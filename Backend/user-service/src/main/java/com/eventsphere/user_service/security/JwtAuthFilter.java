@@ -2,6 +2,7 @@ package com.eventsphere.user_service.security;
 
 
 import com.eventsphere.user_service.entity.User;
+import com.eventsphere.user_service.repository.TokenBlacklistRepository;
 import com.eventsphere.user_service.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final HandlerExceptionResolver handlerExceptionResolver;
 
+    @Autowired
+    private TokenBlacklistRepository tokenBlacklistRepository;
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
@@ -40,6 +46,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
             String token = requestTokenHeader.split("Bearer ")[1];
+            if (tokenBlacklistRepository.findByToken(token).isPresent()) {
+                throw new RuntimeException("JWT token is invalid (logged out)");
+            }
             String username = authUtil.getEmailFromToken(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
