@@ -1,7 +1,6 @@
 package com.eventsphere.listing_service.service.impl;
 
 import com.eventsphere.listing_service.Config.UserClients;
-import com.eventsphere.listing_service.dto.ListingDto;
 import com.eventsphere.listing_service.dto.ListingRequestDto;
 import com.eventsphere.listing_service.dto.ListingResponseDto;
 import com.eventsphere.listing_service.dto.UserDto;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -59,7 +57,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setId(null);
         listing.setTitle(listingDto.getTitle());
         listing.setDescription(listingDto.getDescription());
-        listing.setOwnerUserId(user.getId()); // make change here
+        listing.setOwnerUserId(user.getId());
         listing.setRent(listingDto.getRent());
         listing.setCity(listingDto.getCity());
         listing.setLandmark(listingDto.getLandmark());
@@ -121,11 +119,7 @@ public class ListingServiceImpl implements ListingService {
 
             dto.setImages(imageUrls);
 
-            log.debug(
-                    "Listing id={} mapped with {} images",
-                    listing.getId(),
-                    imageUrls.size()
-            );
+            log.debug("Listing with the id={} mapped with {} images",listing.getId(),imageUrls.size());
 
             return dto;
 

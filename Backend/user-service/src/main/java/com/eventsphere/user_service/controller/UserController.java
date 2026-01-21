@@ -6,6 +6,7 @@ import com.eventsphere.user_service.repository.UserRepository;
 import com.eventsphere.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -41,12 +42,15 @@ public class UserController {
 
     @GetMapping("/curr/me")
     public ResponseEntity<UserDto> getCurrentUser(
-            @AuthenticationPrincipal Object principal) {
-        if (principal == null) {
+            Authentication authentication) {
+        if (authentication == null) {
             return ResponseEntity.status(401).body(null);
         }
-        User user = (User) principal;
-        return ResponseEntity.ok(userService.getCurrentUser(user));
+        String email = authentication.getName();
+
+        UserDto userDto = userService.getUserByEmail(email);
+
+        return ResponseEntity.ok(userDto);
     }
 
     @DeleteMapping("/{id}")
