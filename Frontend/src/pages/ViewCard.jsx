@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { IoArrowBackOutline, IoClose } from "react-icons/io5";
+import { UserDataContext } from "@/Context/UserContext";
 
 function ViewCard() {
   const navigate = useNavigate();
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const { cardDetails, handleAddListing, adding, getListingById } =
-    useContext(ListingDataContext);
+  const { cardDetails, getListingById } = useContext(ListingDataContext);
+  const { userData } = useContext(UserDataContext);
 
   const [showGallery, setShowGallery] = useState(false);
   const { id } = useParams();
@@ -27,6 +28,8 @@ function ViewCard() {
 
   const { title, description, rent, city, category, images, landmark } =
     cardDetails;
+
+
   return (
     <div className="w-full min-h-screen bg-[#1a1a1a] relative">
       {/* BACK BUTTON */}
@@ -86,7 +89,7 @@ function ViewCard() {
                         e.stopPropagation();
                         setShowGallery(true);
                       }}
-                      className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium"
+                      className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
                     >
                       Show all photos
                     </button>
@@ -100,7 +103,6 @@ function ViewCard() {
         {/* ================= LISTING DETAILS ================= */}
         <div className="mt-10 rounded-2xl bg-[#111] border border-white/10 p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* LEFT COLUMN: DESCRIPTION + LANDMARK */}
             {/* LEFT COLUMN: DESCRIPTION + LANDMARK */}
             <div className="space-y-6">
               {/* DESCRIPTION */}
@@ -169,21 +171,37 @@ function ViewCard() {
             </div>
           </div>
         </div>
+        {/* ================= ACTION BUTTONS ================= */}
+        <div className="mt-6 pb-10 flex items-center justify-center gap-6">
+          {cardDetails.ownerUserId == userData?.id && (
+            <button
+              className="group/btn relative block h-10 w-1/2 rounded-md
+    bg-gradient-to-br from-black to-neutral-600
+    font-medium text-white
+    shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
+    dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
+    dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
+    border-2 hover:cursor-pointer hover:text-black transition-colors duration-600 ease-in-out hover:bg-green-500
+"
+            >
+              Edit Listing
+            </button>
+          )}
 
-        {/* ================= ADD LISTING BUTTON (OUTSIDE) ================= */}
-        <div className="mt-6 pb-10 flex items-center justify-center">
-          <button
-            className="group/btn relative block h-10 w-1/2 rounded-md
-        bg-gradient-to-br from-black to-neutral-600
-        font-medium text-white
-        shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-        dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-        dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-        border-2 hover:cursor-pointer hover:text-black hover:bg-red-500
-        duration-200 delay-100"
-          >
-            Edit
-          </button>
+          {cardDetails.ownerUserId != userData?.id && (
+            <button
+              className="group/btn relative block h-10 w-1/2 rounded-md
+    bg-gradient-to-br from-black to-neutral-600
+    font-medium text-white
+    shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
+    dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
+    dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
+    border-2 hover:cursor-pointer hover:text-black transition-colors duration-700 ease-in-out hover:bg-green-500
+"
+            >
+              Reserve
+            </button>
+          )}
         </div>
       </div>
 
@@ -206,7 +224,7 @@ function ViewCard() {
             {images.map((image, index) => (
               <img
                 key={index}
-                src={image} // ✅ DIRECT URL
+                src={image}
                 alt="gallery"
                 className="w-full h-64 object-cover rounded-lg"
               />

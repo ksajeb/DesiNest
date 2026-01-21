@@ -13,6 +13,7 @@ import com.eventsphere.listing_service.service.ListingService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +39,7 @@ public class ListingServiceImpl implements ListingService {
     private UserClients userClients;
 
     @Override
+    @CacheEvict(value = {"allListings", "listingsByUser"}, allEntries = true)
     public ListingResponseDto addListing(ListingRequestDto listingDto) throws IOException {
         log.info("Creating new listing for ownerUserId={}", listingDto.getOwnerUserId());
 
@@ -91,6 +93,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
+    @Cacheable(value = "allListings")
     public List<ListingResponseDto> getAllListing() {
 
         log.info("Fetching all listings");
@@ -128,7 +131,7 @@ public class ListingServiceImpl implements ListingService {
 
 
     @Override
-    @Cacheable(value = "listings",key = "#id")
+    @Cacheable(value = "listingById", key = "#id")
     public ListingResponseDto getListingById(Long id) {
         log.info("Fetching listing with id={}", id);
         Listing listing=listingRepository.findById(id).orElseThrow(()-> {
@@ -156,6 +159,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
+    @Cacheable(value = "listingsByUser", key = "#id")
     public List<ListingResponseDto> getListingByUserId(Long id) {
 
         log.info("Fetching listings for userId={}", id);
@@ -190,5 +194,63 @@ public class ListingServiceImpl implements ListingService {
             return dto;
 
         }).toList();
+    }
+
+    @Override
+    @CacheEvict(value = {"allListings", "listingById", "listingsByUser"}, allEntries = true)
+    public ListingResponseDto updateListing(Long id, ListingRequestDto listingDto) throws IOException {
+        log.info("Updating listing with id={}", id);
+        Listing listing = listingRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("Listing not found with the id={}", id);
+                    return new ResourceNotFoundException("Listing not found with id: " + id);
+                });
+
+        UserDto user;
+        try {
+            user = userClients.getUserById(listing.getOwnerUserId());
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("Owner user not found");
+        }
+
+        listing.setTitle(listingDto.getTitle());
+        listing.setDescription(listingDto.getDescription());
+        listing.setRent(listingDto.getRent());
+        listing.setCity(listingDto.getCity());
+        listing.setLandmark(listingDto.getLandmark());
+        listing.setCategory(listingDto.getCategory());
+
+        if (listingDto.getImages() != null && !listingDto.getImages().isEmpty()) {
+
+            log.debug("Updating images for listing id={}", id);
+            listing.getImages().clear();
+
+            for (MultipartFile file : listingDto.getImages()) {
+                String url = fileService.uploadFile(file);
+
+                ListingImage image = new ListingImage();
+                image.setImageUrl(url);
+                image.setListing(listing);
+                listing.getImages().add(image);
+            }
+
+        }
+
+        Listing updatedListing = listingRepository.save(listing);
+
+        log.info("Listing updated successfully with the  id={}", updatedListing.getId());
+
+        ListingResponseDto response =
+                modelMapper.map(updatedListing, ListingResponseDto.class);
+
+        List<String> imageUrls = updatedListing.getImages()
+                .stream()
+                .map(ListingImage::getImageUrl)
+                .toList();
+
+        response.setImages(imageUrls);
+        response.setOwnerUserId(updatedListing.getOwnerUserId());
+
+        return response;
     }
 }

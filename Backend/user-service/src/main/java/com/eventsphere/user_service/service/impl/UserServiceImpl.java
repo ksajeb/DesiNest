@@ -9,6 +9,8 @@ import com.eventsphere.user_service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+    @CacheEvict(value = {"userById", "userByEmail", "allUsers"}, allEntries = true)
     public UserDto createUser(UserDto userDto) {
-        log.info("START :: createUser | email={}", userDto.getEmail());
+        log.info("Creating user with the email={}", userDto.getEmail());
         Optional<User> existingUser = userRepository.findByEmail(userDto.getEmail());
 
         if (existingUser.isPresent()) {
@@ -53,6 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "userById", key = "#id", unless = "#result == null")
     public UserDto getUserById(Long id) {
         log.info("START :: getUserById | userId={}", id);
 
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "allUsers", unless = "#result.isEmpty()")
     public List<UserDto> getAllUser() {
         log.info("Fetching all users");
         List<User> users = userRepository.findAll();
@@ -85,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = {"userById", "userByEmail", "allUsers"}, allEntries = true)
     public void deleteUserById(Long id) {
         log.info("Deleting user with the userId={}", id);
         User user = userRepository.findById(id)
@@ -105,6 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "userByEmail", key = "#email", unless = "#result == null")
     public UserDto getUserByEmail(String email) {
         log.info("Fetching user with the email={}", email);
         User user = userRepository.findByEmail(email)

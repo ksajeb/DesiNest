@@ -43,4 +43,13 @@ public class ListingController {
         List<ListingResponseDto> list=listingService.getListingByUserId(id);
         return ResponseEntity.ok(list);
     }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ListingResponseDto> updateListing(@PathVariable Long id,
+                                                            @Valid @ModelAttribute ListingRequestDto listingDto) throws IOException {
+
+        ListingResponseDto updatedListing = listingService.updateListing(id, listingDto);
+        return ResponseEntity.ok(updatedListing);
+    }
+
 }

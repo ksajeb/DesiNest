@@ -26,13 +26,13 @@ function UserContext({ children }) {
       setUserData(result.data);
     } catch (error) {
       setUserData(null);
-      console.error("Get current user failed:", error);
     }
   };
 
   useEffect(() => {
     getCurrentUser();
   }, []);
+
 
   return (
     <UserDataContext.Provider value={{ userData, setUserData, getCurrentUser }}>
