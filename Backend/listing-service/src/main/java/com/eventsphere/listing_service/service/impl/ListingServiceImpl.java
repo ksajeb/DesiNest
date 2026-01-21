@@ -53,7 +53,6 @@ public class ListingServiceImpl implements ListingService {
             );
         }
 
-        // 🔹 If execution reaches here, user is VALID
         log.info("Verified user from User Service: id={}, name={}", user.getId(), user.getName());
 
         Listing listing = new Listing();
@@ -143,7 +142,23 @@ public class ListingServiceImpl implements ListingService {
             return new ResourceNotFoundException("Listing not found with id: " + id);
         });
         log.debug("Listing found: id={}, title={}", listing.getId(), listing.getTitle());
-        return modelMapper.map(listing,ListingResponseDto.class);
+
+        ListingResponseDto dto = modelMapper.map(listing, ListingResponseDto.class);
+
+        List<String> imageUrls = listing.getImages()
+                .stream()
+                .map(ListingImage::getImageUrl)
+                .toList();
+
+        dto.setImages(imageUrls);
+
+        log.debug(
+                "Listing id={} mapped with {} images",
+                listing.getId(),
+                imageUrls.size()
+        );
+
+        return dto;
     }
 
     @Override

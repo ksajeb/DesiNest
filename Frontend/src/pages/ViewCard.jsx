@@ -17,14 +17,6 @@ function ViewCard() {
       getListingById(id);
     }
   }, [id, cardDetails]);
-
-  // if (!cardDetails) {
-  //   return (
-  //     <div className="w-full min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white">
-  //       Loading listing...
-  //     </div>
-  //   );
-  // }
   if (!cardDetails) {
     return (
       <div className="w-full min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white">
@@ -181,18 +173,16 @@ function ViewCard() {
         {/* ================= ADD LISTING BUTTON (OUTSIDE) ================= */}
         <div className="mt-6 pb-10 flex items-center justify-center">
           <button
-            className="group/btn relative block h-10 w-full rounded-md
+            className="group/btn relative block h-10 w-1/2 rounded-md
         bg-gradient-to-br from-black to-neutral-600
         font-medium text-white
         shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
         dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
         dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-        border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
+        border-2 hover:cursor-pointer hover:text-black hover:bg-red-500
         duration-200 delay-100"
-            onClick={handleAddListing}
-            disabled={adding}
           >
-            {adding ? "Adding...." : "Add Listing"}
+            Edit
           </button>
         </div>
       </div>
