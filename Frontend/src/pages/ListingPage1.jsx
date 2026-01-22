@@ -83,9 +83,9 @@ function ListingPage1() {
             multiple
             accept="image/*"
             onChange={handleImageUpload}
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-white cursor-pointer
-                       file:bg-[#FF4163] file:border-none file:text-white file:px-4 file:py-2
-                       file:rounded-lg file:cursor-pointer"
+            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 text-white cursor-pointer
+    file:bg-[#FF4163] file:border-none file:text-white file:px-4 file:h-12
+    file:rounded-lg file:cursor-pointer file:font-medium"
           />
 
           {/* Image Preview */}
@@ -155,7 +155,7 @@ function ListingPage1() {
              dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
              dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
              border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-             duration-200 delay-100"
+             transition-colors duration-700 ease-in-out"
             type="submit"
             onClick={() => navigate("/listingpage2")}
           >

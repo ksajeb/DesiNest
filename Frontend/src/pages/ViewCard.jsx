@@ -1,23 +1,29 @@
 import { ListingDataContext } from "@/Context/ListingContext";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { IoArrowBackOutline, IoClose } from "react-icons/io5";
 import { UserDataContext } from "@/Context/UserContext";
+import UpdateListing from "@/Component/UpdateListing";
 
 function ViewCard() {
   const navigate = useNavigate();
   const [showFullDesc, setShowFullDesc] = useState(false);
   const { cardDetails, getListingById } = useContext(ListingDataContext);
   const { userData } = useContext(UserDataContext);
+  const [updatePopUp, setUpdatePopUp] = useState(false);
 
   const [showGallery, setShowGallery] = useState(false);
   const { id } = useParams();
+
+  let { setTitle, setDescription, setRent, setCity, setLandmark, setImages } =
+    useContext(ListingDataContext);
+
   useEffect(() => {
-    if (id && !cardDetails) {
+    if (id) {
       getListingById(id);
     }
-  }, [id, cardDetails]);
+  }, [id]);
+
   if (!cardDetails) {
     return (
       <div className="w-full min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white">
@@ -28,7 +34,6 @@ function ViewCard() {
 
   const { title, description, rent, city, category, images, landmark } =
     cardDetails;
-
 
   return (
     <div className="w-full min-h-screen bg-[#1a1a1a] relative">
@@ -181,8 +186,18 @@ function ViewCard() {
     shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
     dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
     dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-    border-2 hover:cursor-pointer hover:text-black transition-colors duration-600 ease-in-out hover:bg-green-500
+    border-2 hover:cursor-pointer hover:text-black transition-colors duration-700 ease-in-out hover:bg-green-500
 "
+              // onClick={() => setUpdatePopUp((prev) => !prev)}
+              onClick={() => {
+                setTitle(cardDetails.title);
+                setDescription(cardDetails.description);
+                setRent(cardDetails.rent);
+                setCity(cardDetails.city);
+                setLandmark(cardDetails.landmark);
+                setImages(cardDetails.images);
+                setUpdatePopUp(true);
+              }}
             >
               Edit Listing
             </button>
@@ -231,6 +246,14 @@ function ViewCard() {
             ))}
           </div>
         </div>
+      )}
+
+      {/* update listing page */}
+      {updatePopUp && (
+        <UpdateListing
+          listingId={cardDetails.id}
+          onClose={() => setUpdatePopUp(false)}
+        />
       )}
     </div>
   );

@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { CgProfile } from "react-icons/cg";
 import { MdWhatshot, MdOutlinePool, MdBedroomParent } from "react-icons/md";
 import { GiFamilyHouse, GiWoodCabin } from "react-icons/gi";
 import { SiHomeassistantcommunitystore } from "react-icons/si";
 import { IoBedOutline } from "react-icons/io5";
 import { FaTreeCity } from "react-icons/fa6";
-import { BiBuildingHouse } from "react-icons/bi";
 import ListingContext, { ListingDataContext } from "@/Context/ListingContext";
 
 function ListingPage2() {
@@ -18,10 +15,13 @@ function ListingPage2() {
     { icon: FaTreeCity, title: "Farm Stay", value: "FARM_STAY" },
     { icon: MdOutlinePool, title: "Resort", value: "RESORT" },
     { icon: MdBedroomParent, title: "Apartment", value: "APARTMENT" },
-    { icon: BiBuildingHouse, title: "Apartment", value: "APARTMENT" },
     { icon: IoBedOutline, title: "PG", value: "HOSTEL" },
     { icon: GiWoodCabin, title: "Cottage", value: "COTTAGE" },
-    { icon: SiHomeassistantcommunitystore, title: "Boutique", value: "BOUTIQUE" },
+    {
+      icon: SiHomeassistantcommunitystore,
+      title: "Boutique",
+      value: "BOUTIQUE",
+    },
     { icon: FaTreeCity, title: "Tree House", value: "TREE_HOUSE" },
   ];
 
@@ -36,12 +36,6 @@ function ListingPage2() {
         onClick={() => navigate("/listingpage1")}
       >
         <IoArrowBackOutline className="w-6 h-6" />
-      </div>
-      {/* Right Button */}
-      <div className="fixed top-6 right-10 z-50">
-        <button className="px-8 py-2 rounded-full bg-[#FF4163] hover:bg-[#AA001F] text-lg text-white cursor-pointer">
-          Setup Your Category
-        </button>
       </div>
 
       <div className="w-full max-w-[420px] px-4 sm:px-0 flex flex-col gap-6 pt-16 sm:pt-32 pb-20">
@@ -88,7 +82,7 @@ function ListingPage2() {
              dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
              dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
              border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-             duration-200 delay-100"
+             transition-colors duration-700 ease-in-out"
           type="submit"
           onClick={() => navigate("/listingpage3")}
           disabled={!category}

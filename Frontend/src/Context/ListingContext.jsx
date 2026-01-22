@@ -145,6 +145,45 @@ function ListingContext({ children }) {
     }
   };
 
+  const updateListing = async (listingId) => {
+    if (!userData?.id) {
+      navigate("/login");
+      return;
+    }
+
+    setAdding(true);
+
+    try {
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("rent", Number(rent));
+      formData.append("city", city);
+      formData.append("landmark", landmark);
+      formData.append("category", category);
+
+      images.forEach((img) => {
+        if (img instanceof File) {
+          formData.append("images", img);
+        }
+      });
+
+      await axios.put(`${serverUrl2}/listing/${listingId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      await getListing();
+      navigate(`/viewcard/${listingId}`);
+    } catch (error) {
+      console.error("Update failed", error);
+    } finally {
+      setAdding(false);
+    }
+  };
+
   // Fetch listings on mount
   useEffect(() => {
     getListing();
@@ -177,6 +216,7 @@ function ListingContext({ children }) {
     getListingById,
     cardDetails,
     setCardDetails,
+    updateListing,
   };
 
   return (

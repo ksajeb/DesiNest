@@ -10,6 +10,7 @@ import com.eventsphere.listing_service.exception.ResourceNotFoundException;
 import com.eventsphere.listing_service.repository.ListingRepository;
 import com.eventsphere.listing_service.service.FileService;
 import com.eventsphere.listing_service.service.ListingService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,6 +199,7 @@ public class ListingServiceImpl implements ListingService {
 
     @Override
     @CacheEvict(value = {"allListings", "listingById", "listingsByUser"}, allEntries = true)
+    @Transactional
     public ListingResponseDto updateListing(Long id, ListingRequestDto listingDto) throws IOException {
         log.info("Updating listing with id={}", id);
         Listing listing = listingRepository.findById(id)
