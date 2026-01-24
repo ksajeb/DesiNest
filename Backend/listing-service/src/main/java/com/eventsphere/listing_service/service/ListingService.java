@@ -17,4 +17,6 @@ public interface ListingService {
     List<ListingResponseDto> getListingByUserId(Long id);
 
     ListingResponseDto updateListing(Long id,ListingRequestDto listingDto) throws IOException;
+
+    void deleteListing(Long id);
 }

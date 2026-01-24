@@ -26,6 +26,7 @@ function ListingContext({ children }) {
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const [cardDetails, setCardDetails] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   // Add new listing
   const handleAddListing = async () => {
@@ -145,7 +146,7 @@ function ListingContext({ children }) {
     }
   };
 
-  const updateListing = async (listingId) => {
+  const updateListing = async (listingId, onSuccess) => {
     if (!userData?.id) {
       navigate("/login");
       return;
@@ -177,6 +178,7 @@ function ListingContext({ children }) {
 
       await getListing();
       navigate(`/viewcard/${listingId}`);
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error("Update failed", error);
     } finally {
@@ -184,10 +186,40 @@ function ListingContext({ children }) {
     }
   };
 
+  //delete listing
+  const deleteListing = async () => {
+    // if (!userData?.id) {
+    //   navigate("/login");
+    //   return;
+    // }
+    setDeleting(true);
+    try {
+      await axios.delete(
+        `${serverUrl2}/listing/${cardDetails.id}`,
+        { withCredentials: true },
+        // headers: {
+        //   Authorization: `Bearer ${localStorage.getItem("token")}`,
+        // },
+      );
+      setDeleting(false);
+
+      // refresh listings
+      await getListing();
+
+      // clear selected card
+      // setCardDetails(null);
+
+      // navigate to home
+      navigate("/");
+    } catch (error) {
+      console.error("Delete failed", error);
+    }
+  };
+
   // Fetch listings on mount
   useEffect(() => {
     getListing();
-  }, []);
+  }, [deleting]);
 
   const value = {
     listingData,
@@ -217,6 +249,9 @@ function ListingContext({ children }) {
     cardDetails,
     setCardDetails,
     updateListing,
+    deleteListing,
+    deleting,
+    setDeleting,
   };
 
   return (

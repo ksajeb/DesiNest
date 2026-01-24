@@ -19,7 +19,10 @@ function MyListing() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#1a1a1a] flex justify-center text-white">
+    <div
+      className="w-full min-h-screen bg-[#1a1a1a] flex justify-center text-white cursor-pointer"
+      onClick={() => navigate("/viewcard/:id")}
+    >
       {/* Back Button */}
       <button
         onClick={() => navigate("/")}

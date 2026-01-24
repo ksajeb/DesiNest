@@ -8,7 +8,8 @@ import UpdateListing from "@/Component/UpdateListing";
 function ViewCard() {
   const navigate = useNavigate();
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const { cardDetails, getListingById } = useContext(ListingDataContext);
+  const { cardDetails, getListingById, deleteListing } =
+    useContext(ListingDataContext);
   const { userData } = useContext(UserDataContext);
   const [updatePopUp, setUpdatePopUp] = useState(false);
 
@@ -17,6 +18,7 @@ function ViewCard() {
 
   let { setTitle, setDescription, setRent, setCity, setLandmark, setImages } =
     useContext(ListingDataContext);
+  let { deleting, setDeleting } = useContext(ListingDataContext);
 
   useEffect(() => {
     if (id) {
@@ -177,10 +179,11 @@ function ViewCard() {
           </div>
         </div>
         {/* ================= ACTION BUTTONS ================= */}
-        <div className="mt-6 pb-10 flex items-center justify-center gap-6">
-          {cardDetails.ownerUserId == userData?.id && (
-            <button
-              className="group/btn relative block h-10 w-1/2 rounded-md
+        <div className="mt-6 pb-10 w-full">
+          {cardDetails.ownerUserId === userData?.id && (
+            <div className="flex gap-4">
+              <button
+                className="group/btn relative block h-10 w-1/2 rounded-md
     bg-gradient-to-br from-black to-neutral-600
     font-medium text-white
     shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
@@ -188,34 +191,47 @@ function ViewCard() {
     dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
     border-2 hover:cursor-pointer hover:text-black transition-colors duration-700 ease-in-out hover:bg-green-500
 "
-              // onClick={() => setUpdatePopUp((prev) => !prev)}
-              onClick={() => {
-                setTitle(cardDetails.title);
-                setDescription(cardDetails.description);
-                setRent(cardDetails.rent);
-                setCity(cardDetails.city);
-                setLandmark(cardDetails.landmark);
-                setImages(cardDetails.images);
-                setUpdatePopUp(true);
-              }}
-            >
-              Edit Listing
-            </button>
+                onClick={() => {
+                  setTitle(cardDetails.title);
+                  setDescription(cardDetails.description);
+                  setRent(cardDetails.rent);
+                  setCity(cardDetails.city);
+                  setLandmark(cardDetails.landmark);
+                  setImages(cardDetails.images);
+                  setUpdatePopUp(true);
+                }}
+              >
+                Edit Listing
+              </button>
+              <button
+                className="group/btn relative block h-10 w-1/2 rounded-md
+    bg-gradient-to-br from-black to-neutral-600
+    font-medium text-white
+    shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
+    dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
+    dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
+    border-2 hover:cursor-pointer hover:text-black transition-colors duration-700 ease-in-out hover:bg-red-500"
+                onClick={deleteListing}
+                disabled={deleting}
+              >
+                {deleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
           )}
 
           {cardDetails.ownerUserId != userData?.id && (
-            <button
-              className="group/btn relative block h-10 w-1/2 rounded-md
-    bg-gradient-to-br from-black to-neutral-600
-    font-medium text-white
-    shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-    dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-    dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-    border-2 hover:cursor-pointer hover:text-black transition-colors duration-700 ease-in-out hover:bg-green-500
-"
-            >
-              Reserve
-            </button>
+            <div className="flex justify-center">
+              <button
+                className="group/btn relative block h-10 w-1/2 rounded-md
+        bg-gradient-to-br from-black to-neutral-600
+        font-medium text-white
+        shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
+        border-2 hover:cursor-pointer hover:text-black
+        transition-colors duration-700 ease-in-out hover:bg-green-500"
+              >
+                Reserve
+              </button>
+            </div>
           )}
         </div>
       </div>

@@ -19,37 +19,43 @@ public class ListingController {
     @Autowired
     private ListingService listingService;
 
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ListingResponseDto> addListing(@Valid @ModelAttribute ListingRequestDto listingDto) throws IOException {
-        ListingResponseDto add=listingService.addListing(listingDto);
-        return  ResponseEntity.ok(add);
+    public ResponseEntity<ListingResponseDto> addListing(@Valid @ModelAttribute ListingRequestDto listingDto)
+            throws IOException {
+        ListingResponseDto add = listingService.addListing(listingDto);
+        return ResponseEntity.ok(add);
     }
 
     @GetMapping
-    public ResponseEntity<List<ListingResponseDto>> getAllListing(){
-        List<ListingResponseDto> listings=listingService.getAllListing();
+    public ResponseEntity<List<ListingResponseDto>> getAllListing() {
+        List<ListingResponseDto> listings = listingService.getAllListing();
         return ResponseEntity.ok(listings);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ListingResponseDto> getListingById(@PathVariable Long id){
-        ListingResponseDto listings=listingService.getListingById(id);
+    public ResponseEntity<ListingResponseDto> getListingById(@PathVariable Long id) {
+        ListingResponseDto listings = listingService.getListingById(id);
         return ResponseEntity.ok(listings);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<ListingResponseDto>> getListingByUserId(@PathVariable Long id){
-        List<ListingResponseDto> list=listingService.getListingByUserId(id);
+    public ResponseEntity<List<ListingResponseDto>> getListingByUserId(@PathVariable Long id) {
+        List<ListingResponseDto> list = listingService.getListingByUserId(id);
         return ResponseEntity.ok(list);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ListingResponseDto> updateListing(@PathVariable Long id,
-                                                            @Valid @ModelAttribute ListingRequestDto listingDto) throws IOException {
+            @Valid @ModelAttribute ListingRequestDto listingDto) throws IOException {
 
         ListingResponseDto updatedListing = listingService.updateListing(id, listingDto);
         return ResponseEntity.ok(updatedListing);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteListing(@PathVariable Long id) {
+        listingService.deleteListing(id);
+        return ResponseEntity.ok("Listing deleted successfully with the id:" + id);
     }
 
 }

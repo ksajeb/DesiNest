@@ -162,10 +162,10 @@ function UpdateListing({ listingId, onClose }) {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-black"
+              className="h-12 rounded-lg bg-black border border-gray-500 px-4 text-white"
               required
             >
-              <option value="" className="text-lg">
+              <option value="" className="text-lg bg-none">
                 Select category
               </option>
 
@@ -185,7 +185,7 @@ function UpdateListing({ listingId, onClose }) {
           <button
             type="button"
             disabled={adding}
-            onClick={() => updateListing(listingId, onClose())}
+            onClick={() => updateListing(listingId, onClose)}
             className="group/btn relative block h-10 w-full rounded-md
     bg-gradient-to-br from-black to-neutral-600
     font-medium text-white

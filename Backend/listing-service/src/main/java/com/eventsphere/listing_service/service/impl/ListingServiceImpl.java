@@ -225,7 +225,6 @@ public class ListingServiceImpl implements ListingService {
         if (listingDto.getImages() != null && !listingDto.getImages().isEmpty()) {
 
             log.debug("Updating images for listing id={}", id);
-            listing.getImages().clear();
 
             for (MultipartFile file : listingDto.getImages()) {
                 String url = fileService.uploadFile(file);
@@ -255,4 +254,22 @@ public class ListingServiceImpl implements ListingService {
 
         return response;
     }
+
+    @Override
+    @CacheEvict(value = {"allListings", "listingById", "listingsByUser"}, allEntries = true)
+    @Transactional
+    public void deleteListing(Long id) {
+        log.info("Deleting listing with id={}", id);
+
+        Listing listing = listingRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("Listing not found with id={}", id);
+                    return new ResourceNotFoundException("Listing not found with id: " + id);
+                });
+        listingRepository.delete(listing);
+        log.info("Listing deleted successfully with id={}", id);
+
+    }
+
+
 }
