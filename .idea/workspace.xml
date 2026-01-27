@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/controller/ListingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/ListingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/ListingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/service/impl/ListingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/UpdateListing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/UpdateListing.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Home.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
