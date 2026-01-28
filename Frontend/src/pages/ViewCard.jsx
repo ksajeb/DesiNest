@@ -18,7 +18,7 @@ function ViewCard() {
 
   let { setTitle, setDescription, setRent, setCity, setLandmark, setImages } =
     useContext(ListingDataContext);
-  let { deleting, setDeleting } = useContext(ListingDataContext);
+  let { deleting } = useContext(ListingDataContext);
 
   useEffect(() => {
     if (id) {
@@ -228,7 +228,7 @@ function ViewCard() {
         shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
         border-2 hover:cursor-pointer hover:text-black
         transition-colors duration-700 ease-in-out hover:bg-green-500"
-              >
+              onClick={()=>navigate("/booking")}>
                 Reserve
               </button>
             </div>
@@ -238,8 +238,8 @@ function ViewCard() {
 
       {/* ================= FULLSCREEN GALLERY ================= */}
       {showGallery && (
-        <div className="fixed inset-0 bg-black/90 z-[999] overflow-y-auto">
-          <div className="flex justify-between items-center p-6">
+        <div className="fixed inset-0 bg-black/90 z-999 ">
+          <div className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-black/80 backdrop-blur-md z-[1000] border-b border-white/10">
             <h2 className="text-white text-xl font-semibold">
               All Photos ({images.length})
             </h2>
@@ -251,15 +251,17 @@ function ViewCard() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6">
-            {images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt="gallery"
-                className="w-full h-64 object-cover rounded-lg"
-              />
-            ))}
+          <div className="overflow-y-auto h-full pt-24 px-6 pb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt="gallery"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}

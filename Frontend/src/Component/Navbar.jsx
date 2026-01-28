@@ -13,6 +13,13 @@ import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
 
 import logo from "../assets/logo.png";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
@@ -39,6 +46,29 @@ function Navbar() {
     { icon: SiHomeassistantcommunitystore, title: "Shops", value: "SHOP" },
   ];
 
+  const [date, setDate] = useState();
+  const [guests, setGuests] = useState({
+    adults: 0,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
+  const updateGuests = (type, value) => {
+    setGuests((prev) => ({
+      ...prev,
+      [type]: Math.max(0, prev[type] + value),
+    }));
+  };
+
+  const totalGuests = guests.adults + guests.children;
+
+  const guestText =
+    totalGuests > 0
+      ? `${totalGuests} guest${totalGuests > 1 ? "s" : ""}${
+          guests.infants > 0 ? ` · ${guests.infants} infant` : ""
+        }`
+      : "Add guests";
+
   return (
     <div>
       {/* TOP NAVBAR */}
@@ -55,8 +85,8 @@ function Navbar() {
 
         {/* SEARCH BAR (DESKTOP) */}
         <div className="w-[40%] hidden md:block">
-          <div className="flex items-center h-15 rounded-full shadow-lg">
-            <div className="flex flex-col flex-1 px-6 border-r border-gray-700">
+          <div className="flex items-center h-15 rounded-full shadow-lg border border-gray-300 overflow-hidden bg-white">
+            <div className="flex flex-col flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200">
               <span className="text-black text-xs font-semibold">Where</span>
               <input
                 type="text"
@@ -64,20 +94,96 @@ function Navbar() {
                 className="bg-transparent text-gray-700 text-sm outline-none"
               />
             </div>
+            <div className="h-8 w-px bg-gray-300"></div>
 
-            <div className="flex flex-col flex-1 px-6 border-r border-gray-900">
-              <span className="text-black text-xs font-semibold">When</span>
-              <span className="text-gray-700 text-sm">Add dates</span>
-            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <div className="flex flex-col flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200 cursor-pointer">
+                  <span className="text-black text-xs font-semibold">When</span>
+                  <span className="text-gray-700 text-sm">
+                    {date?.from ? (
+                      date.to ? (
+                        <>
+                          {format(date.from, "dd MMM")} -{" "}
+                          {format(date.to, "dd MMM")}
+                        </>
+                      ) : (
+                        format(date.from, "dd MMM")
+                      )
+                    ) : (
+                      "Add dates"
+                    )}
+                  </span>
+                </div>
+              </PopoverTrigger>
 
-            <div className="flex flex-col flex-1 px-6">
-              <span className="text-black text-xs font-semibold">Who</span>
-              <span className="text-gray-700 text-sm">Add guests</span>
-            </div>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="range"
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+            <div className="h-8 w-px bg-gray-300"></div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <div className="flex items-center justify-between flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200 cursor-pointer">
+                  <div className="flex flex-col">
+                    <span className="text-black text-xs font-semibold">
+                      Who
+                    </span>
+                    <span className="text-gray-700 text-sm">{guestText}</span>
+                  </div>
 
-            <button className="mr-2 bg-red-600 w-10 h-10 rounded-full flex items-center justify-center text-white cursor-pointer">
-              <IoSearchOutline size={18} />
-            </button>
+                  <button
+                    onClick={(e) => e.stopPropagation()}
+                    className="ml-4 bg-red-600 hover:bg-red-700 w-10 h-10 rounded-full flex items-center justify-center text-white transition cursor-pointer"
+                  >
+                    <IoSearchOutline size={18} />
+                  </button>
+                </div>
+              </PopoverTrigger>
+
+              <PopoverContent
+                className="w-[320px] p-5 rounded-2xl shadow-xl"
+                align="end"
+              >
+                <GuestRow
+                  title="Adults"
+                  subtitle="Ages 13 or above"
+                  count={guests.adults}
+                  onAdd={() => updateGuests("adults", 1)}
+                  onRemove={() => updateGuests("adults", -1)}
+                />
+
+                <GuestRow
+                  title="Children"
+                  subtitle="Ages 2–12"
+                  count={guests.children}
+                  onAdd={() => updateGuests("children", 1)}
+                  onRemove={() => updateGuests("children", -1)}
+                />
+
+                <GuestRow
+                  title="Infants"
+                  subtitle="Under 2"
+                  count={guests.infants}
+                  onAdd={() => updateGuests("infants", 1)}
+                  onRemove={() => updateGuests("infants", -1)}
+                />
+
+                <GuestRow
+                  title="Pets"
+                  subtitle="Bringing a service animal?"
+                  count={guests.pets}
+                  onAdd={() => updateGuests("pets", 1)}
+                  onRemove={() => updateGuests("pets", -1)}
+                  isLast
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
@@ -174,6 +280,40 @@ function Navbar() {
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+function GuestRow({ title, subtitle, count, onAdd, onRemove, isLast }) {
+  return (
+    <div
+      className={`flex items-center justify-between py-4 ${
+        !isLast && "border-b border-gray-200"
+      }`}
+    >
+      <div>
+        <p className="font-semibold text-sm">{title}</p>
+        <p className="text-gray-500 text-xs">{subtitle}</p>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onRemove}
+          disabled={count === 0}
+          className="w-8 h-8 rounded-full border flex items-center justify-center text-xl leading-none disabled:opacity-30 cursor-pointer"
+        >
+          −
+        </button>
+
+        <span className="w-5 text-center">{count}</span>
+
+        <button
+          onClick={onAdd}
+          className="w-8 h-8 rounded-full border flex items-center justify-center text-xl leading-none cursor-pointer"
+        >
+          +
+        </button>
       </div>
     </div>
   );
