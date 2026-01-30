@@ -10,7 +10,7 @@ function PaymentMethod() {
 
       <p className="text-gray-600 mb-4">
         Available payment methods for INR.{" "}
-        <span className="underline cursor-pointer">Switch currency</span>
+        <span className="underline cursor-pointer hover:text-black">Switch currency</span>
       </p>
 
       <div className="space-y-4">

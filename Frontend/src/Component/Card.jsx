@@ -65,7 +65,7 @@ function Card({ list }) {
       {/* Content */}
       <div className="mt-1 ">
         <div className="flex justify-between items-start">
-          <h3 className="text-white text-sm truncate mix-blend-difference">
+          <h3 className="text-white text-sm truncate mix-blend-difference font-semibold">
             Room in {list.landmark}
           </h3>
         </div>

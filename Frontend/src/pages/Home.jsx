@@ -23,7 +23,7 @@ function Home() {
     <div>
       <Navbar />
 
-      <h2 className="text-2xl text- px-24 mb-4 font-[20px]">
+      <h2 className="px-24 mb-4 text-[20px] font-semibold">
         Stay near {place}
       </h2>
       <div
