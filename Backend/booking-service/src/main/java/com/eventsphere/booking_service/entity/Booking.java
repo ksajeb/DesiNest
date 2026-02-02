@@ -42,7 +42,8 @@ public class Booking {
     @Column(nullable = false)
     private BookingStatus status;
 
-//    private String paymentId;
+    @Column
+    private String paymentId;
 
     @Min(1)
     @Max(5)

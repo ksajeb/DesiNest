@@ -14,20 +14,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookingResponseDto {
     private Long id;
-
     private Long listingId;
     private Long userId;
-
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-
     private Double totalAmount;
-
     private String status;
-
-//    private String paymentId;
-
+    private String paymentId;
+    private String razorpayOrderId;
     private Integer listingRating;
-
     private LocalDateTime createdAt;
 }

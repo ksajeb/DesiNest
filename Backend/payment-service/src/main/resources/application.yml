@@ -1,9 +1,7 @@
-#spring.application.name=booking-service
-
 
 spring:
   application:
-    name: booking-service
+    name: payment-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/event-sphere
@@ -17,7 +15,7 @@ spring:
     show-sql: true
 
 server:
-  port: 8098
+  port: 8099
 
 
 cors:
@@ -25,3 +23,12 @@ cors:
   allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
   allowed-headers: "*"
   allow-credentials: true
+
+logging:
+  level:
+    root: INFO
+    com.eventsphere.user_service: DEBUG
+
+razorpay:
+  key: rzp_test_SBB1ElloLuHfk8
+  secret: z4XUX2gZKS8ABUEOwg6J0Y2Z

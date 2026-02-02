@@ -1,7 +1,11 @@
 package com.eventsphere.booking_service.service.impl;
 
+
+import com.eventsphere.booking_service.config.PaymentClients;
 import com.eventsphere.booking_service.dto.BookingRequestDto;
 import com.eventsphere.booking_service.dto.BookingResponseDto;
+import com.eventsphere.booking_service.dto.PaymentRequestDto;
+import com.eventsphere.booking_service.dto.PaymentResponseDto;
 import com.eventsphere.booking_service.entity.Booking;
 import com.eventsphere.booking_service.entity.BookingStatus;
 import com.eventsphere.booking_service.exception.ValidationException;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
@@ -24,6 +29,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PaymentClients paymentClients;
+
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
@@ -80,9 +89,61 @@ public class BookingServiceImpl implements BookingService {
         Booking savedBooking = bookingRepository.save(booking);
         log.info("Booking saved successfully with ID: {}", savedBooking.getId());
 
-        BookingResponseDto response = modelMapper.map(savedBooking, BookingResponseDto.class);
-        log.debug("Mapped Response DTO: {}", response);
+        PaymentResponseDto payment = null;
 
+        try {
+            log.info("Calling Payment Service for bookingId: {}", savedBooking.getId());
+
+            PaymentRequestDto paymentRequest = new PaymentRequestDto();
+            paymentRequest.setBookingId(savedBooking.getId());
+            paymentRequest.setAmount(savedBooking.getTotalAmount());
+            paymentRequest.setCurrency("INR");
+
+            payment = paymentClients.createPayment(paymentRequest);
+
+            log.info("Payment success. RazorpayPaymentId: {}", payment.getRazorpayPaymentId());
+
+            savedBooking.setPaymentId(payment.getRazorpayPaymentId());
+            savedBooking.setStatus(BookingStatus.CONFIRMED);
+
+            bookingRepository.save(savedBooking);
+
+        } catch (Exception ex) {
+            log.error("Payment failed for bookingId: {}", savedBooking.getId(), ex);
+
+            savedBooking.setStatus(BookingStatus.FAILED);
+            bookingRepository.save(savedBooking);
+
+            throw new RuntimeException("Payment failed. Booking marked as FAILED.");
+        }
+        BookingResponseDto response = modelMapper.map(savedBooking, BookingResponseDto.class);
+        response.setPaymentId(payment.getRazorpayPaymentId());
+
+        if (payment != null) {
+            response.setPaymentId(payment.getRazorpayPaymentId());
+            response.setRazorpayOrderId(payment.getRazorpayOrderId());
+        }
+
+        log.debug("Mapped Response DTO: {}", response);
         return response;
+    }
+
+    @Override
+    public List<BookingResponseDto> getAllBooking() {
+        log.info("Fetching all bookings from the database");
+
+        List<Booking> bookings = bookingRepository.findAll();
+        log.debug("Fetched {} bookings: {}", bookings.size(), bookings);
+
+        List<BookingResponseDto> responseList = bookings.stream()
+                .map(booking -> {
+                    BookingResponseDto dto = modelMapper.map(booking, BookingResponseDto.class);
+                    log.trace("Mapped Booking to DTO: {}", dto);
+                    return dto;
+                })
+                .toList();
+
+        log.info("Returning {} BookingResponseDto objects", responseList.size());
+        return responseList;
     }
 }
