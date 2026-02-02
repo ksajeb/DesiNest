@@ -1,0 +1,26 @@
+server:
+  port: 8099
+
+spring:
+  datasource:
+    url: jdbc:postgresql://<DB_HOST>:<DB_PORT>/<DB_NAME>
+    username: <DB_USERNAME>
+    password: <DB_PASSWORD>
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+razorpay:
+  key-id: <RAZORPAY_KEY_ID>
+  key-secret: <RAZORPAY_KEY_SECRET>
+
+cors:
+  allowed-origins: <FRONTEND_URL>
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: *
+
+logging:
+  level:
+    root: INFO
+    com.eventsphere: DEBUG
