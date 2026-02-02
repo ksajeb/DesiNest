@@ -1,8 +1,8 @@
 import { ListingDataContext } from "@/Context/ListingContext";
-import { useContext } from "react";
+import { bookingDataContext } from "@/Context/BookingContext";
+import { useContext, useState } from "react";
 import { PiMedalMilitary } from "react-icons/pi";
 
-import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -13,18 +13,20 @@ import { format, differenceInCalendarDays, subDays } from "date-fns";
 
 function BookingSummary() {
   const { cardDetails } = useContext(ListingDataContext);
+  const {
+    checkIn,
+    checkOut,
+    nights,
+    totalAmount,
+    calculateBooking,
+    setListingId,
+  } = useContext(bookingDataContext);
+
   const [date, setDate] = useState();
 
-  //temporary night
-  const nights =
-    date?.from && date?.to
-      ? Math.max(1, differenceInCalendarDays(date.to, date.from))
-      : 0;
-
   const pricePerNight = cardDetails?.rent || 0;
-  const subtotal = nights * pricePerNight;
-  const taxes = subtotal * 0.05;
-  const total = subtotal + taxes;
+  const taxes = totalAmount * 0.05;
+  const total = totalAmount + taxes;
 
   const [guests, setGuests] = useState({
     adults: 1,
@@ -74,7 +76,7 @@ function BookingSummary() {
           <p className="text-sm mt-1 flex items-center gap-2 whitespace-nowrap">
             <span>⭐ 4.78 (32)</span>
             <span className="flex items-center gap-1">
-              <PiMedalMilitary className="text-black" />
+              <PiMedalMilitary />
               Superhost
             </span>
           </p>
@@ -125,7 +127,13 @@ function BookingSummary() {
             <Calendar
               mode="range"
               selected={date}
-              onSelect={setDate}
+              onSelect={(range) => {
+                setDate(range);
+                if (range?.from && range?.to) {
+                  calculateBooking(cardDetails?.rent, range.from, range.to);
+                  setListingId(cardDetails?.id);
+                }
+              }}
               numberOfMonths={2}
               disabled={{ before: new Date() }}
             />
@@ -203,19 +211,12 @@ function BookingSummary() {
               : "Select dates to see price"}
           </span>
 
-          <span>₹{subtotal.toFixed(1)}</span>
+          <span>₹{totalAmount.toFixed(1)}</span>
         </div>
         <div className="flex justify-between">
           <span>Taxes</span>
           <span>₹{taxes.toFixed(1)}</span>
         </div>
-      </div>
-
-      <hr className="my-6" />
-
-      <div className="flex justify-between font-semibold text-base mt-2">
-        <span>Total INR</span>
-        <span>₹{total.toFixed(1)}</span>
       </div>
 
       <hr className="my-6" />

@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import UpiIcon from "../assets/upi-ar21.svg";
 import CreditCard from "../assets/credit-card-svgrepo-com.svg";
 import Bank from "../assets/bank.svg";
+import { bookingDataContext } from "@/Context/BookingContext";
 
 function PaymentMethod() {
+  const { totalAmount, createBooking, bookingLoading } =
+    useContext(bookingDataContext);
+  const handlePay = async () => {
+    try {
+      await createBooking();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="border border-gray-200 rounded-xl p-8 bg-white">
       <h2 className="text-xl font-semibold mb-4">1. Add a payment method</h2>
 
       <p className="text-gray-600 mb-4">
         Available payment methods for INR.{" "}
-        <span className="underline cursor-pointer hover:text-black">Switch currency</span>
+        <span className="underline cursor-pointer hover:text-black">
+          Switch currency
+        </span>
       </p>
 
       <div className="space-y-4">
@@ -21,10 +34,16 @@ function PaymentMethod() {
       </div>
 
       <button
-        className="mt-8 ml-auto block bg-neutral-900 text-white px-8 py-3 rounded-lg font-semibold
-  hover:bg-black transition-colors duration-500 ease-in-out cursor-pointer"
+        onClick={handlePay}
+        disabled={!totalAmount || totalAmount <= 0 || bookingLoading}
+        className={`mt-8 ml-auto block px-8 py-3 rounded-lg font-semibold
+          ${
+            !totalAmount || totalAmount <= 0 || bookingLoading
+              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+              : "bg-neutral-900 text-white hover:bg-black cursor-pointer"
+          }`}
       >
-        Next
+        {bookingLoading ? "Processing..." : `Pay ₹${totalAmount}`}
       </button>
     </div>
   );

@@ -8,6 +8,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 
 function Booking() {
   const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-white px-12 py-16">
       <div className="max-w-6xl mx-auto px-6">
