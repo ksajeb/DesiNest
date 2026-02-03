@@ -7,6 +7,7 @@ import AuthContext from "./Context/AuthContext.jsx";
 import ListingContext from "./Context/ListingContext";
 import UserContext from "./Context/UserContext";
 import BookingContext from "./Context/BookingContext";
+import PaymentContext from "./Context/PaymentContext";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
       <UserContext>
         <ListingContext>
           <BookingContext>
-            <App />
+            <PaymentContext>
+              <App />
+            </PaymentContext>
           </BookingContext>
         </ListingContext>
       </UserContext>

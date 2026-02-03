@@ -146,4 +146,27 @@ public class BookingServiceImpl implements BookingService {
         log.info("Returning {} BookingResponseDto objects", responseList.size());
         return responseList;
     }
+
+    @Override
+    public BookingResponseDto getBookingById(Long id) {
+        log.info("Fetching booking with ID: {}", id);
+
+        if (id == null) {
+            log.warn("Booking ID is null");
+            throw new ValidationException("Booking ID is required");
+        }
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Booking not found with ID: {}", id);
+                    return new ValidationException("Booking not found with ID: " + id);
+                });
+
+        log.debug("Booking entity fetched from DB: {}", booking);
+        BookingResponseDto response = modelMapper.map(booking, BookingResponseDto.class);
+
+        log.debug("Mapped BookingResponseDto: {}", response);
+
+        log.info("Returning booking details for ID: {}", id);
+        return response;
+    }
 }

@@ -3,13 +3,15 @@ import UpiIcon from "../assets/upi-ar21.svg";
 import CreditCard from "../assets/credit-card-svgrepo-com.svg";
 import Bank from "../assets/bank.svg";
 import { bookingDataContext } from "@/Context/BookingContext";
+import { paymentDataContext } from "@/Context/PaymentContext";
 
 function PaymentMethod() {
-  const { totalAmount, createBooking, bookingLoading } =
-    useContext(bookingDataContext);
+  const { totalAmount } = useContext(bookingDataContext);
+  const { startPayment, paymentLoading } = useContext(paymentDataContext);
+
   const handlePay = async () => {
     try {
-      await createBooking();
+      await startPayment();
     } catch (err) {
       console.error(err);
     }
@@ -35,15 +37,15 @@ function PaymentMethod() {
 
       <button
         onClick={handlePay}
-        disabled={!totalAmount || totalAmount <= 0 || bookingLoading}
+        disabled={!totalAmount || totalAmount <= 0 || paymentLoading}
         className={`mt-8 ml-auto block px-8 py-3 rounded-lg font-semibold
           ${
-            !totalAmount || totalAmount <= 0 || bookingLoading
+            !totalAmount || totalAmount <= 0 || paymentLoading
               ? "bg-gray-400 text-gray-700 cursor-not-allowed"
               : "bg-neutral-900 text-white hover:bg-black cursor-pointer"
           }`}
       >
-        {bookingLoading ? "Processing..." : `Pay ₹${totalAmount}`}
+        {paymentLoading ? "Processing..." : `Pay ₹${totalAmount}`}
       </button>
     </div>
   );

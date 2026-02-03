@@ -1,7 +1,8 @@
 package com.eventsphere.booking_service.controller;
 
-import booking_service.dto.BookingRequestDto;
-import booking_service.dto.BookingResponseDto;
+
+import com.eventsphere.booking_service.dto.BookingRequestDto;
+import com.eventsphere.booking_service.dto.BookingResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,12 @@ public class BookingController {
     @GetMapping
     public ResponseEntity<List<BookingResponseDto>> getAllBooking(){
         List<BookingResponseDto> responseDto=bookingService.getAllBooking();
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id) {
+        BookingResponseDto responseDto = bookingService.getBookingById(id);
         return ResponseEntity.ok(responseDto);
     }
 }

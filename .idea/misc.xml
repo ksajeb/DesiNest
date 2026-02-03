@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/listing-service/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/listing-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/payment-service/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/booking-service/pom.xml" />
       </list>
     </option>

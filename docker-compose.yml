@@ -1,0 +1,96 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: event-sphere
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - desinest-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build: ./Backend/user-service
+    container_name: user-service
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8096:8096"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8096
+    networks:
+      - desinest-network
+
+  listing-service:
+    build: ./Backend/listing-service
+    container_name: listing-service
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8097:8097"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8097
+    networks:
+      - desinest-network
+
+  booking-service:
+    build: ./Backend/booking-service
+    container_name: booking-service
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8098:8098"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8098
+    networks:
+      - desinest-network
+
+  payment-service:
+    build: ./Backend/payment-service
+    container_name: payment-service
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8099:8099"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8099
+    networks:
+      - desinest-network
+
+networks:
+  desinest-network:
+
+volumes:
+  postgres_data:
