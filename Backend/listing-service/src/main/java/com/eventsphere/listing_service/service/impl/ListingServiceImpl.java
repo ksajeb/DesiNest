@@ -271,5 +271,12 @@ public class ListingServiceImpl implements ListingService {
 
     }
 
-
+    @Override
+    @Cacheable(value = "listingExists", key = "#id")
+    public boolean existsById(Long id) {
+        log.info("Checking listing exists with id={}", id);
+        boolean exists = listingRepository.existsById(id);
+        log.debug("Listing exists with id={}, exists={}", id, exists);
+        return exists;
+    }
 }

@@ -124,4 +124,16 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
 
     }
+
+    @Override
+    @Cacheable(value = "userExists", key = "#id")
+    public boolean existsById(Long id) {
+        log.info("Checking if user exists with userId={}", id);
+
+        boolean exists = userRepository.existsById(id);
+
+        log.debug("User existence with userId={}, exists={}", id, exists);
+
+        return exists;
+    }
 }

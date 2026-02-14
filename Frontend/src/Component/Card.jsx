@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Card({ list }) {
   const navigate = useNavigate();
   const { userData } = useContext(UserDataContext);
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
   const { getListingById } = useContext(ListingDataContext);
 
   const handleClick = (id) => {
@@ -41,12 +41,12 @@ function Card({ list }) {
         />
 
         {/* Badge */}
-        <span className="absolute top-3 left-3 bg-white text-black text-xs font-medium px-3 py-1 rounded-full shadow">
+        {/* <span className="absolute top-3 left-3 bg-white text-black text-xs font-medium px-3 py-1 rounded-full shadow">
           Guest favourite
-        </span>
+        </span> */}
 
         {/* Heart */}
-        <FaHeart
+        {/* <FaHeart
           className={`absolute top-3 right-3 text-xl drop-shadow-md hover:scale-110 transition
     ${liked ? "text-red-500" : "text-white"}`}
           onClick={(e) => {
@@ -59,7 +59,7 @@ function Card({ list }) {
 
             setLiked((prev) => !prev);
           }}
-        />
+        /> */}
       </div>
 
       {/* Content */}

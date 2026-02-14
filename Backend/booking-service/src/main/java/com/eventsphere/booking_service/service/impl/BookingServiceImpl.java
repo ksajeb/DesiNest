@@ -1,7 +1,9 @@
 package com.eventsphere.booking_service.service.impl;
 
 
+import com.eventsphere.booking_service.config.ListingClients;
 import com.eventsphere.booking_service.config.PaymentClients;
+import com.eventsphere.booking_service.config.UserClients;
 import com.eventsphere.booking_service.dto.BookingRequestDto;
 import com.eventsphere.booking_service.dto.BookingResponseDto;
 import com.eventsphere.booking_service.dto.PaymentRequestDto;
@@ -33,16 +35,24 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private PaymentClients paymentClients;
 
+    @Autowired
+    private ListingClients listingClients;
+
+    @Autowired
+    private UserClients userClients;
+
+
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
-//        if (!listingRepository.existsById(request.getListingId())) {
-//            throw new ValidationException("Listing does not exist");
-//        }
+        if (!listingClients.existsById(request.getListingId())) {
+            throw new ValidationException("Listing does not exist");
+        }
 
-//        if (!userRepository.existsById(request.getUserId())) {
-//            throw new ValidationException("User does not exist");
-//        }
+        if (!userClients.existsById(request.getUserId())) {
+            throw new ValidationException("User does not exist");
+        }
+
 
         if (request.getListingId() == null) {
             throw new ValidationException("Listing ID is required");
@@ -126,6 +136,7 @@ public class BookingServiceImpl implements BookingService {
 
         log.debug("Mapped Response DTO: {}", response);
         return response;
+
     }
 
     @Override

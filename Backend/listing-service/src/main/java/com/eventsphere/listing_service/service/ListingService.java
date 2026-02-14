@@ -19,4 +19,6 @@ public interface ListingService {
     ListingResponseDto updateListing(Long id,ListingRequestDto listingDto) throws IOException;
 
     void deleteListing(Long id);
+
+    boolean existsById(Long id);
 }

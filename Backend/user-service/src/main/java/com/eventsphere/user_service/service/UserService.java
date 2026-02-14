@@ -18,4 +18,6 @@ public interface UserService {
     UserDto getCurrentUser(User user);
 
     UserDto getUserByEmail(String username);
+
+    boolean existsById(Long id);
 }

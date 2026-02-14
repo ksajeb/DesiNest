@@ -50,6 +50,12 @@ public class UserController {
 
         return ResponseEntity.ok(userDto);
     }
+    @GetMapping("/{id}/exists")
+    public ResponseEntity<Boolean> existsById(@PathVariable Long id) {
+        boolean exists = userService.existsById(id);
+        return ResponseEntity.ok(exists);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
