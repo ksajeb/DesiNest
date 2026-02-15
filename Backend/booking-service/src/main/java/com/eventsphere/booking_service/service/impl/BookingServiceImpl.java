@@ -6,11 +6,10 @@ import com.eventsphere.booking_service.config.PaymentClients;
 import com.eventsphere.booking_service.config.UserClients;
 import com.eventsphere.booking_service.dto.BookingRequestDto;
 import com.eventsphere.booking_service.dto.BookingResponseDto;
-import com.eventsphere.booking_service.dto.PaymentRequestDto;
-import com.eventsphere.booking_service.dto.PaymentResponseDto;
 import com.eventsphere.booking_service.entity.Booking;
 import com.eventsphere.booking_service.entity.BookingStatus;
 import com.eventsphere.booking_service.exception.ValidationException;
+import com.eventsphere.booking_service.kafka.BookingProducer;
 import com.eventsphere.booking_service.repository.BookingRepository;
 import com.eventsphere.booking_service.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,17 +40,17 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserClients userClients;
 
+//    @Autowired
+//    private BookingCreateEvent bookingCreateEvent;
+
+    @Autowired
+    private BookingProducer bookingProducer;
+
 
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
-        if (!listingClients.existsById(request.getListingId())) {
-            throw new ValidationException("Listing does not exist");
-        }
 
-        if (!userClients.existsById(request.getUserId())) {
-            throw new ValidationException("User does not exist");
-        }
 
 
         if (request.getListingId() == null) {
@@ -60,6 +59,13 @@ public class BookingServiceImpl implements BookingService {
 
         if (request.getUserId() == null) {
             throw new ValidationException("User ID is required");
+        }
+        if (!listingClients.existsById(request.getListingId())) {
+            throw new ValidationException("Listing does not exist");
+        }
+
+        if (!userClients.existsById(request.getUserId())) {
+            throw new ValidationException("User does not exist");
         }
 
         if (request.getCheckInDate() == null) {
@@ -99,40 +105,52 @@ public class BookingServiceImpl implements BookingService {
         Booking savedBooking = bookingRepository.save(booking);
         log.info("Booking saved successfully with ID: {}", savedBooking.getId());
 
-        PaymentResponseDto payment = null;
 
         try {
-            log.info("Calling Payment Service for bookingId: {}", savedBooking.getId());
-
-            PaymentRequestDto paymentRequest = new PaymentRequestDto();
-            paymentRequest.setBookingId(savedBooking.getId());
-            paymentRequest.setAmount(savedBooking.getTotalAmount());
-            paymentRequest.setCurrency("INR");
-
-            payment = paymentClients.createPayment(paymentRequest);
-
-            log.info("Payment success. RazorpayPaymentId: {}", payment.getRazorpayPaymentId());
-
-            savedBooking.setPaymentId(payment.getRazorpayPaymentId());
-            savedBooking.setStatus(BookingStatus.CONFIRMED);
-
-            bookingRepository.save(savedBooking);
-
-        } catch (Exception ex) {
-            log.error("Payment failed for bookingId: {}", savedBooking.getId(), ex);
-
-            savedBooking.setStatus(BookingStatus.FAILED);
-            bookingRepository.save(savedBooking);
-
-            throw new RuntimeException("Payment failed. Booking marked as FAILED.");
+            bookingProducer.sendBookingCreatedEvent(
+                    savedBooking.getId(),
+                    savedBooking.getTotalAmount()
+            );
+        } catch (Exception e) {
+            log.error("Failed to send Kafka event", e);
         }
+
+
+
+//        PaymentResponseDto payment = null;
+
+//        try {
+//            log.info("Calling Payment Service for bookingId: {}", savedBooking.getId());
+//
+//            PaymentRequestDto paymentRequest = new PaymentRequestDto();
+//            paymentRequest.setBookingId(savedBooking.getId());
+//            paymentRequest.setAmount(savedBooking.getTotalAmount());
+//            paymentRequest.setCurrency("INR");
+//
+//            payment = paymentClients.createPayment(paymentRequest);
+//
+//            log.info("Payment success. RazorpayPaymentId: {}", payment.getRazorpayPaymentId());
+//
+//            savedBooking.setPaymentId(payment.getRazorpayPaymentId());
+//            savedBooking.setStatus(BookingStatus.CONFIRMED);
+//
+//            bookingRepository.save(savedBooking);
+//
+//        } catch (Exception ex) {
+//            log.error("Payment failed for bookingId: {}", savedBooking.getId(), ex);
+//
+//            savedBooking.setStatus(BookingStatus.FAILED);
+//            bookingRepository.save(savedBooking);
+//
+//            throw new RuntimeException("Payment failed. Booking marked as FAILED.");
+//        }
         BookingResponseDto response = modelMapper.map(savedBooking, BookingResponseDto.class);
-        response.setPaymentId(payment.getRazorpayPaymentId());
+//        response.setPaymentId(payment.getRazorpayPaymentId());
 
-        if (payment != null) {
-            response.setPaymentId(payment.getRazorpayPaymentId());
-            response.setRazorpayOrderId(payment.getRazorpayOrderId());
-        }
+//        if (payment != null) {
+//            response.setPaymentId(payment.getRazorpayPaymentId());
+//            response.setRazorpayOrderId(payment.getRazorpayOrderId());
+//        }
 
         log.debug("Mapped Response DTO: {}", response);
         return response;

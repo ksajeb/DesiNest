@@ -1,0 +1,2 @@
+com\eventsphere\booking_service\event\BookingCreateEvent.class
+com\eventsphere\booking_service\event\PaymentSuccessEvent.class
