@@ -65,4 +65,18 @@ public class ListingController {
         return ResponseEntity.ok("Listing deleted successfully with the id:" + id);
     }
 
+    @GetMapping("/between-dates")
+    public ResponseEntity<List<ListingResponseDto>> getListingsBetweenDates(
+            @RequestParam String startDate, @RequestParam String endDate) {
+        List<ListingResponseDto> listings = listingService.getListingsBetweenDates(startDate, endDate);
+        return ResponseEntity.ok(listings);
+    }
+
+    @GetMapping("/by-date")
+    public ResponseEntity<List<ListingResponseDto>> getListingsByDate(@RequestParam String date) {
+        List<ListingResponseDto> listings = listingService.getListingsByDate(date);
+        return ResponseEntity.ok(listings);
+    }
+
+
 }

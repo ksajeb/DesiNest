@@ -21,4 +21,8 @@ public interface ListingService {
     void deleteListing(Long id);
 
     boolean existsById(Long id);
+
+    List<ListingResponseDto> getListingsBetweenDates(String startDate, String endDate);
+
+    List<ListingResponseDto> getListingsByDate(String date);
 }

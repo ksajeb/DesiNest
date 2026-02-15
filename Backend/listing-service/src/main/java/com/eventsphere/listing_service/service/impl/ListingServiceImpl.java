@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -279,4 +281,83 @@ public class ListingServiceImpl implements ListingService {
         log.debug("Listing exists with id={}, exists={}", id, exists);
         return exists;
     }
+
+    @Override
+    @Cacheable(value = "listingsBetweenDates", key = "#startDate + '-' + #endDate")
+    public List<ListingResponseDto> getListingsBetweenDates(String startDate, String endDate) {
+        log.info("Fetching listings between startDate={} and endDate={}", startDate, endDate);
+
+        LocalDateTime start = LocalDate.parse(startDate).atStartOfDay();
+        LocalDateTime end = LocalDate.parse(endDate).atTime(23, 59, 59);
+
+        List<Listing> listings = listingRepository.findByCreatedAtBetween(start, end);
+
+        if (listings.isEmpty()) {
+            log.warn("No listings found between {} and {}", startDate, endDate);
+            throw new ResourceNotFoundException("No listings found between given dates");
+        }
+
+        log.debug("Found {} listings between given dates", listings.size());
+
+        return listings.stream().map(listing -> {
+
+            log.debug("Mapping listing id={}", listing.getId());
+
+            ListingResponseDto dto =
+                    modelMapper.map(listing, ListingResponseDto.class);
+
+            List<String> imageUrls = listing.getImages()
+                    .stream()
+                    .map(ListingImage::getImageUrl)
+                    .toList();
+
+            dto.setImages(imageUrls);
+
+            log.debug("Listing id={} mapped with {} images",
+                    listing.getId(),
+                    imageUrls.size());
+
+            return dto;
+
+        }).toList();
+    }
+
+    @Override
+    @Cacheable(value = "listingsByDate", key = "#date")
+    public List<ListingResponseDto> getListingsByDate(String date) {
+
+        log.info("Fetching listings for date={}", date);
+
+        LocalDateTime start = LocalDate.parse(date).atStartOfDay();
+        LocalDateTime end = LocalDate.parse(date).atTime(23, 59, 59);
+
+        List<Listing> listings = listingRepository.findByCreatedAtBetween(start, end);
+
+        if (listings.isEmpty()) {
+            log.warn("No listings found for date={}", date);
+            throw new ResourceNotFoundException("No listings found for given date");
+        }
+
+        log.debug("Found {} listings for date={}", listings.size(), date);
+
+        return listings.stream().map(listing -> {
+
+            log.debug("Mapping listing id={}", listing.getId());
+
+            ListingResponseDto dto = modelMapper.map(listing, ListingResponseDto.class);
+
+            List<String> imageUrls = listing.getImages()
+                    .stream()
+                    .map(ListingImage::getImageUrl)
+                    .toList();
+
+            dto.setImages(imageUrls);
+
+            log.debug("Listing id={} mapped with {} images", listing.getId(), imageUrls.size());
+
+            return dto;
+
+        }).toList();
+    }
+
 }
