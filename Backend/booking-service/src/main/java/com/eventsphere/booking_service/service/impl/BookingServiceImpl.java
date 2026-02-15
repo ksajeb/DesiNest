@@ -40,8 +40,6 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserClients userClients;
 
-//    @Autowired
-//    private BookingCreateEvent bookingCreateEvent;
 
     @Autowired
     private BookingProducer bookingProducer;
