@@ -13,13 +13,6 @@ import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
 
 import logo from "../assets/logo.png";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
@@ -34,40 +27,7 @@ function Navbar() {
     navigate("/");
   };
 
-  const trendingItems = [
-    { icon: MdWhatshot, title: "Trending", value: "Trending" },
-    { icon: GiFamilyHouse, title: "Villa", value: "VILLA" },
-    { icon: FaTreeCity, title: "Farm House", value: "FARM_HOUSE" },
-    { icon: MdOutlinePool, title: "Pool House", value: "POOL_HOUSE" },
-    { icon: MdBedroomParent, title: "Rooms", value: "ROOM" },
-    { icon: BiBuildingHouse, title: "Flat", value: "FLAT" },
-    { icon: IoBedOutline, title: "PG", value: "PG" },
-    { icon: GiWoodCabin, title: "Cabins", value: "CABIN" },
-    { icon: SiHomeassistantcommunitystore, title: "Shops", value: "SHOP" },
-  ];
-
-  const [date, setDate] = useState();
-  const [guests, setGuests] = useState({
-    adults: 0,
-    children: 0,
-    infants: 0,
-    pets: 0,
-  });
-  const updateGuests = (type, value) => {
-    setGuests((prev) => ({
-      ...prev,
-      [type]: Math.max(0, prev[type] + value),
-    }));
-  };
-
-  const totalGuests = guests.adults + guests.children;
-
-  const guestText =
-    totalGuests > 0
-      ? `${totalGuests} guest${totalGuests > 1 ? "s" : ""}${
-          guests.infants > 0 ? ` · ${guests.infants} infant` : ""
-        }`
-      : "Add guests";
+  const navItems = ["Home", "Hotel", "About", "Contact"];
 
   return (
     <div>
@@ -82,119 +42,42 @@ function Navbar() {
             onClick={() => navigate("/")}
           />
         </div>
-
-        {/* SEARCH BAR (DESKTOP) */}
-        <div className="w-[40%] hidden md:block">
-          <div className="flex items-center h-15 rounded-full shadow-lg border border-gray-300 overflow-hidden bg-white">
-            <div className="flex flex-col flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200">
-              <span className="text-black text-xs font-semibold">Where</span>
-              <input
-                type="text"
-                placeholder="Search destinations"
-                className="bg-transparent text-gray-700 text-sm outline-none"
-              />
-            </div>
-            <div className="h-8 w-px bg-gray-300"></div>
-
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="flex flex-col flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200 cursor-pointer">
-                  <span className="text-black text-xs font-semibold">When</span>
-                  <span className="text-gray-700 text-sm">
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {format(date.from, "dd MMM")} -{" "}
-                          {format(date.to, "dd MMM")}
-                        </>
-                      ) : (
-                        format(date.from, "dd MMM")
-                      )
-                    ) : (
-                      "Add dates"
-                    )}
-                  </span>
-                </div>
-              </PopoverTrigger>
-
-              <PopoverContent className="w-auto p-0" align="center">
-                <Calendar
-                  mode="range"
-                  selected={date}
-                  onSelect={setDate}
-                  numberOfMonths={2}
-                  disabled={{ before: new Date() }}
-                />
-              </PopoverContent>
-            </Popover>
-            <div className="h-8 w-px bg-gray-300"></div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="flex items-center justify-between flex-1 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-200 cursor-pointer">
-                  <div className="flex flex-col">
-                    <span className="text-black text-xs font-semibold">
-                      Who
-                    </span>
-                    <span className="text-gray-700 text-sm">{guestText}</span>
-                  </div>
-
-                  <button
-                    onClick={(e) => e.stopPropagation()}
-                    className="ml-4 bg-red-600 hover:bg-red-700 w-10 h-10 rounded-full flex items-center justify-center text-white transition cursor-pointer"
-                  >
-                    <IoSearchOutline size={18} />
-                  </button>
-                </div>
-              </PopoverTrigger>
-
-              <PopoverContent
-                className="w-[320px] p-5 rounded-2xl shadow-xl"
-                align="end"
+        {/* navItems */}
+        <div className="flex items-center justify-center gap-4">
+          <ul className="flex items-center justify-center gap-10 list-none font-semibold">
+            {navItems.map((item, index) => (
+              <li
+                key={index}
+                className="relative cursor-pointer text-black hover:text-[#FA6432]
+        after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
+        after:w-0 after:h-[2px] after:bg-[#FA6432]
+        after:transition-all after:duration-300 hover:after:w-full"
               >
-                <GuestRow
-                  title="Adults"
-                  subtitle="Ages 13 or above"
-                  count={guests.adults}
-                  onAdd={() => updateGuests("adults", 1)}
-                  onRemove={() => updateGuests("adults", -1)}
-                />
-
-                <GuestRow
-                  title="Children"
-                  subtitle="Ages 2–12"
-                  count={guests.children}
-                  onAdd={() => updateGuests("children", 1)}
-                  onRemove={() => updateGuests("children", -1)}
-                />
-
-                <GuestRow
-                  title="Infants"
-                  subtitle="Under 2"
-                  count={guests.infants}
-                  onAdd={() => updateGuests("infants", 1)}
-                  onRemove={() => updateGuests("infants", -1)}
-                />
-
-                <GuestRow
-                  title="Pets"
-                  subtitle="Bringing a service animal?"
-                  count={guests.pets}
-                  onAdd={() => updateGuests("pets", 1)}
-                  onRemove={() => updateGuests("pets", -1)}
-                  isLast
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* RIGHT MENU */}
         <div className="flex items-center gap-3 relative">
           <span
-            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 hover:bg-[#EA6E8F] text-black hover:text-white hover:duration-500"
+            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432]  hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
             onClick={() => navigate("/listingpage1")}
           >
             Become a host
+          </span>
+          <span
+            className="hidden md:block  cursor-pointer rounded-full px-7 py-2 hover:bg-[#1A213F] text-black hover:text-white hover:duration-500 border-2 font-semibold"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </span>
+          <span
+            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 bg-[#FA6432] hover:bg-[#FA6436] text-white hover:duration-500 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
+            onClick={() => navigate("/signup")}
+          >
+            SignUp
           </span>
 
           <button
@@ -262,59 +145,6 @@ function Navbar() {
             </div>
           )}
         </div>
-      </div>
-
-      {/* CATEGORY BAR */}
-      <div className="w-screen bg-white flex gap-10 overflow-x-auto md:justify-center px-4 py-3">
-        {trendingItems.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={index}
-              onClick={() => filterByCategory(item.value)}
-              className={`flex flex-col items-center cursor-pointer text-sm ${
-                activeCategory === item.value ? "border-b-2 border-red-500" : ""
-              }`}
-            >
-              <Icon className="text-black w-7 h-7" />
-              <span className="mt-1">{item.title}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function GuestRow({ title, subtitle, count, onAdd, onRemove, isLast }) {
-  return (
-    <div
-      className={`flex items-center justify-between py-4 ${
-        !isLast && "border-b border-gray-200"
-      }`}
-    >
-      <div>
-        <p className="font-semibold text-sm">{title}</p>
-        <p className="text-gray-500 text-xs">{subtitle}</p>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onRemove}
-          disabled={count === 0}
-          className="w-8 h-8 rounded-full border flex items-center justify-center text-xl leading-none disabled:opacity-30 cursor-pointer"
-        >
-          −
-        </button>
-
-        <span className="w-5 text-center">{count}</span>
-
-        <button
-          onClick={onAdd}
-          className="w-8 h-8 rounded-full border flex items-center justify-center text-xl leading-none cursor-pointer"
-        >
-          +
-        </button>
       </div>
     </div>
   );
