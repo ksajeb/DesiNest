@@ -188,38 +188,41 @@ function ListingContext({ children }) {
 
   //delete listing
   const deleteListing = async () => {
-    // if (!userData?.id) {
-    //   navigate("/login");
-    //   return;
-    // }
     setDeleting(true);
     try {
       await axios.delete(
         `${serverUrl2}/listing/${cardDetails.id}`,
         { withCredentials: true },
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-        // },
       );
       setDeleting(false);
-
-      // refresh listings
       await getListing();
-
-      // clear selected card
-      // setCardDetails(null);
-
-      // navigate to home
       navigate("/");
     } catch (error) {
       console.error("Delete failed", error);
     }
   };
 
-  // Fetch listings on mount
   useEffect(() => {
     getListing();
   }, [deleting]);
+
+  const searchListingsByDates = async (startDate, endDate) => {
+  try {
+    const result = await axios.get(
+      `${serverUrl2}/listing/between?startDate=${startDate}&endDate=${endDate}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    setListingData(result.data);
+  } catch (error) {
+    console.error("Date search failed", error);
+    setListingData([]);
+  }
+};
 
   const value = {
     listingData,
@@ -252,6 +255,7 @@ function ListingContext({ children }) {
     deleteListing,
     deleting,
     setDeleting,
+    searchListingsByDates
   };
 
   return (

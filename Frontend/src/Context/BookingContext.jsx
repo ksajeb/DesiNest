@@ -1,20 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 import { AuthDataContext } from "./AuthContext";
 import { UserDataContext } from "./UserContext";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export const bookingDataContext = createContext();
 
 function BookingContext({ children }) {
   const { serverUrl3 } = useContext(AuthDataContext);
   const { userData } = useContext(UserDataContext);
-  const navigate = useNavigate();
 
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const [nights, setNights] = useState(0);
   const [listingId, setListingId] = useState(null);
+  const [bookingId, setBookingId] = useState(null);
 
   const [bookingLoading, setBookingLoading] = useState(false);
 
@@ -43,6 +42,13 @@ function BookingContext({ children }) {
 
   const createBooking = async () => {
     if (!userData?.id || !listingId || totalAmount <= 0) return;
+    console.log("BOOKING DATA SENDING:", {
+      listingId,
+      userId: userData?.id,
+      checkIn,
+      checkOut,
+      totalAmount,
+    });
 
     setBookingLoading(true);
 
@@ -63,15 +69,34 @@ function BookingContext({ children }) {
         },
       );
 
-      resetBooking();
-      navigate("/");
-
+      setBookingId(res.data.id);
       return res.data;
     } catch (error) {
       console.error("Booking failed", error);
+      alert(error.response?.data?.message || "Booking failed");
       throw error;
     } finally {
       setBookingLoading(false);
+    }
+  };
+
+  const getUserBookings = async () => {
+    if (!userData?.id) return;
+
+    try {
+      const res = await axios.get(
+        `${serverUrl3}/bookings/user/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      return res.data;
+    } catch (error) {
+      console.error("Failed to fetch bookings", error);
+      return [];
     }
   };
 
@@ -88,6 +113,9 @@ function BookingContext({ children }) {
     resetBooking,
     createBooking,
     bookingLoading,
+    getUserBookings,
+    bookingId,
+    setBookingId,
   };
 
   return (

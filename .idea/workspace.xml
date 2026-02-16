@@ -5,16 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/dto/BookingDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/PaymentMethod.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/PaymentMethod.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/PaymentContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/PaymentContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/ListingPage2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/ListingPage2.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,36 +56,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ListingServiceApplication.executor": "Run",
-    "Application.PaymentServiceApplication.executor": "Run",
-    "JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor": "Run",
-    "JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.BookingServiceApplication (1).executor": "Run",
-    "Spring Boot.BookingServiceApplication.executor": "Run",
-    "Spring Boot.EventSphereApplication.executor": "Run",
-    "Spring Boot.ListingServiceApplication.executor": "Run",
-    "Spring Boot.PaymentServiceApplication (1).executor": "Run",
-    "Spring Boot.PaymentServiceApplication.executor": "Run",
-    "Spring Boot.UserServiceApplication.executor": "Run",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/J-SPRING BOOT PROJECT/DesiNest/Backend/event-common/src/main/java/com/eventsphere/common/event",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propCompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ListingServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BookingServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.BookingServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EventSphereApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ListingServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UserServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/J-SPRING BOOT PROJECT/DesiNest/Backend/event-common/src/main/java/com/eventsphere/common/event&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.eventsphere.listing_service.payload" />
@@ -107,7 +107,7 @@
       <recent name="booking_service.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.PaymentServiceApplication (1)">
+  <component name="RunManager" selected="Application.ListingServiceApplication">
     <configuration name="ListingServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.eventsphere.listing_service.ListingServiceApplication" />
       <module name="listing-service" />
@@ -186,9 +186,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.PaymentServiceApplication (1)" />
-        <item itemvalue="Spring Boot.BookingServiceApplication (1)" />
         <item itemvalue="Application.ListingServiceApplication" />
+        <item itemvalue="Spring Boot.BookingServiceApplication (1)" />
+        <item itemvalue="Spring Boot.PaymentServiceApplication (1)" />
         <item itemvalue="Spring Boot.UserServiceApplication" />
         <item itemvalue="Spring Boot.PaymentServiceApplication" />
       </list>

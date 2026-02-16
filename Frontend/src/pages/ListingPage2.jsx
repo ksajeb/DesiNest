@@ -12,7 +12,7 @@ function ListingPage2() {
   const trendingItems = [
     { icon: MdWhatshot, title: "Hotel", value: "HOTEL" },
     { icon: GiFamilyHouse, title: "Villa", value: "VILLA" },
-    { icon: FaTreeCity, title: "Farm Stay", value: "FARM_STAY" },
+    { icon: FaTreeCity, title: "Farm Stay", value: "FARM STAY" },
     { icon: MdOutlinePool, title: "Resort", value: "RESORT" },
     { icon: MdBedroomParent, title: "Apartment", value: "APARTMENT" },
     { icon: IoBedOutline, title: "PG", value: "HOSTEL" },

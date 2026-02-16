@@ -6,12 +6,15 @@ import { bookingDataContext } from "@/Context/BookingContext";
 import { paymentDataContext } from "@/Context/PaymentContext";
 
 function PaymentMethod() {
-  const { totalAmount } = useContext(bookingDataContext);
+  const { totalAmount, createBooking } = useContext(bookingDataContext);
   const { startPayment, paymentLoading } = useContext(paymentDataContext);
 
   const handlePay = async () => {
     try {
-      await startPayment();
+      const booking = await createBooking();
+      if (booking?.id) {
+        await startPayment(booking.id);
+      }
     } catch (err) {
       console.error(err);
     }

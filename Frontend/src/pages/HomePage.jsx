@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -6,9 +6,12 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { ListingDataContext } from "@/Context/ListingContext";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const [date, setDate] = useState();
+  const navigate=useNavigate();
   const [guests, setGuests] = useState({
     adults: 0,
     children: 0,
@@ -29,6 +32,15 @@ function HomePage() {
           guests.infants > 0 ? ` · ${guests.infants} infant` : ""
         }`
       : "Add guests";
+  const { searchListingsByDates } = useContext(ListingDataContext);
+  const handleSearch = () => {
+    if (!date?.from || !date?.to) return;
+
+    const start = format(date.from, "yyyy-MM-dd");
+    const end = format(date.to, "yyyy-MM-dd");
+
+    searchListingsByDates(start, end);
+  };
 
   return (
     <div className="bg-[#161D3A] w-full py-16">
@@ -65,7 +77,7 @@ function HomePage() {
                 <span className="text-[#73809B] text-[15px] font-semibold">
                   Check-In
                 </span>
-                <span className="text-gray-700 text-sm">
+                <span className="bg-transparent text-gray-700 text-sm">
                   {date?.from ? (
                     date.to ? (
                       <>
@@ -76,7 +88,7 @@ function HomePage() {
                       format(date.from, "dd MMM")
                     )
                   ) : (
-                    "Add dates"
+                    "When you are planning?"
                   )}
                 </span>
               </div>
@@ -104,7 +116,11 @@ function HomePage() {
                 </div>
 
                 <button
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSearch();
+                    navigate("/mylisting")
+                  }}
                   className="ml-4 bg-[#FA6432] hover:bg-[#FA6436] w-28 h-12 rounded flex items-center justify-center text-white font-semibold transition-all duration-300 cursor-pointer 
   hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]"
                 >

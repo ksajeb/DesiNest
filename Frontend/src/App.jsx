@@ -9,6 +9,7 @@ import ListingPage3 from "./pages/ListingPage3";
 import MyListing from "./pages/MyListing";
 import ViewCard from "./pages/ViewCard";
 import Booking from "./pages/Booking";
+import MyBooking from "./pages/MyBooking";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/mylisting" element={<MyListing />}></Route>
         <Route path="/viewcard/:id" element={<ViewCard />}></Route>
         <Route path="/booking" element={<Booking />} />
+        <Route path="/my-bookings" element={<MyBooking />} />
       </Routes>
     </>
   );

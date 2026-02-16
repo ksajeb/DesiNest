@@ -128,16 +128,32 @@ function Navbar() {
                 {userData?.id && (
                   <>
                     <li
+                      onClick={() => {
+                        navigate("/my-bookings");
+                        setShowPopup(false);
+                      }}
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
+                    >
+                      My Bookings
+                    </li>
+
+                    <li
+                      onClick={() => {
+                        navigate("/mylisting");
+                        setShowPopup(false);
+                      }}
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
+                    >
+                      My Listing
+                    </li>
+
+                    <hr className="border-gray-200" />
+
+                    <li
                       onClick={handleLogout}
                       className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
                     >
                       Logout
-                    </li>
-                    <li
-                      onClick={() => navigate("/mylisting")}
-                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
-                    >
-                      My Listing
                     </li>
                   </>
                 )}

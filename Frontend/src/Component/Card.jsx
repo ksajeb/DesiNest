@@ -1,7 +1,7 @@
 import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
 import { useContext } from "react";
-import { FaStar, FaMapMarkerAlt } from "react-icons/fa"; // ⭐ CHANGE: added icons
+import { FaStar, FaMapMarkerAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Card({ list }) {

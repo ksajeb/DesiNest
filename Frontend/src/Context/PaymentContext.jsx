@@ -9,7 +9,7 @@ function PaymentContext({ children }) {
   const navigate = useNavigate();
   const PAYMENT_SERVICE_URL = "http://localhost:8099";
 
-  const { totalAmount, bookingId } = useContext(bookingDataContext);
+  const { totalAmount, resetBooking } = useContext(bookingDataContext);
 
   const [paymentLoading, setPaymentLoading] = useState(false);
   const loadRazorpayScript = () => {
@@ -22,7 +22,12 @@ function PaymentContext({ children }) {
     });
   };
 
-  const startPayment = async () => {
+  const startPayment = async (bookingId) => {
+    if (!bookingId) {
+      alert("Booking not created properly");
+      return;
+    }
+
     setPaymentLoading(true);
 
     const scriptLoaded = await loadRazorpayScript();
@@ -42,7 +47,7 @@ function PaymentContext({ children }) {
     const { razorpayOrderId } = orderResponse.data;
     const options = {
       key: "rzp_test_SBB1ElloLuHfk8",
-      amount: totalAmount * 100,
+      amount: totalAmount,
       currency: "INR",
       order_id: razorpayOrderId,
       name: "EventSphere",
@@ -71,7 +76,8 @@ function PaymentContext({ children }) {
         razorpaySignature: response.razorpay_signature,
       });
 
-      navigate("/");
+      resetBooking();
+      navigate("/my-bookings");
     } catch (error) {
       console.error("Payment verification failed", error);
       alert("Payment verification failed. Contact support.");
