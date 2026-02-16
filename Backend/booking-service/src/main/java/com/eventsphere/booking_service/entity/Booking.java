@@ -45,10 +45,8 @@ public class Booking {
     @Column
     private String paymentId;
 
-    @Min(1)
-    @Max(5)
     @Column
-    private Integer listingRating;
+    private String razorpayOrderId;
 
     @CreationTimestamp
     @Column(updatable = false)

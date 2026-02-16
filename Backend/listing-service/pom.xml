@@ -87,6 +87,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.eventsphere</groupId>
+			<artifactId>event-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<!-- Spring Cloud BOM -->

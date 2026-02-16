@@ -15,11 +15,20 @@ public class PaymentListener {
 
     @KafkaListener(topics = "payment-success", groupId = "booking-group")
     public void listen(PaymentSuccessEvent event) {
+        System.out.println("Payment event received: " + event);
         Booking booking = bookingRepository.findById(event.getBookingId())
-                        .orElseThrow();
+                        .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // Prevent duplicate updates
+        if (booking.getStatus() == BookingStatus.CONFIRMED) {
+            System.out.println("Booking already confirmed");
+            return;
+        }
         booking.setPaymentId(event.getPaymentId());
+        booking.setRazorpayOrderId(event.getRazorpayOrderId());
         booking.setStatus(BookingStatus.CONFIRMED);
+
         bookingRepository.save(booking);
-        System.out.println("Booking confirmed: " + event.getBookingId());
+        System.out.println("Booking confirmed: " + booking.getId());
     }
 }

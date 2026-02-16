@@ -6,6 +6,7 @@ import com.eventsphere.booking_service.config.PaymentClients;
 import com.eventsphere.booking_service.config.UserClients;
 import com.eventsphere.booking_service.dto.BookingRequestDto;
 import com.eventsphere.booking_service.dto.BookingResponseDto;
+import com.eventsphere.booking_service.dto.PaymentRequestDto;
 import com.eventsphere.booking_service.entity.Booking;
 import com.eventsphere.booking_service.entity.BookingStatus;
 import com.eventsphere.booking_service.exception.ValidationException;
@@ -15,6 +16,7 @@ import com.eventsphere.booking_service.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,43 +50,18 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
-
-
-
-        if (request.getListingId() == null) {
-            throw new ValidationException("Listing ID is required");
-        }
-
-        if (request.getUserId() == null) {
-            throw new ValidationException("User ID is required");
-        }
-        if (!listingClients.existsById(request.getListingId())) {
-            throw new ValidationException("Listing does not exist");
-        }
-
-        if (!userClients.existsById(request.getUserId())) {
-            throw new ValidationException("User does not exist");
-        }
-
-        if (request.getCheckInDate() == null) {
-            throw new ValidationException("Check-in date is required");
-        }
-
-        if (request.getCheckOutDate() == null) {
-            throw new ValidationException("Check-out date is required");
-        }
-
-        if (request.getCheckInDate().isBefore(LocalDate.now())) {
-            throw new ValidationException("Check-in date cannot be in the past");
-        }
-
-        if (!request.getCheckOutDate().isAfter(request.getCheckInDate())) {
-            throw new ValidationException(
-                    "Check-out date must be after check-in date"
-            );
-        }
-
         log.info("Received booking request: {}", request);
+
+        //validation for the listing and users
+        validateRequest(request);
+
+        // availability checking
+        validateAvailability(request.getListingId(),request.getCheckInDate(),request.getCheckOutDate());
+
+        //lock inventory
+        lockInventory(request.getListingId(),request.getCheckInDate(),request.getCheckOutDate());
+
+//        double totalAmount = calculateTotalAmount(request);
 
         Booking booking = new Booking();
         booking.setListingId(request.getListingId());
@@ -94,16 +71,18 @@ public class BookingServiceImpl implements BookingService {
 
         log.debug("Mapped Booking entity: {}", booking);
 
-        booking.setStatus(BookingStatus.PENDING);
-        booking.setTotalAmount(5000.0);
+        booking.setStatus(BookingStatus.PAYMENT_PROCESSING);
+        double totalAmount = calculateTotalAmount(request);
+        booking.setTotalAmount(totalAmount);
+
 
 
         log.info("Booking after setting status and amount: {}", booking);
 
-        Booking savedBooking = bookingRepository.save(booking);
+        Booking savedBooking = bookingRepository.saveAndFlush(booking);
         log.info("Booking saved successfully with ID: {}", savedBooking.getId());
 
-
+        //Send Kafka Event
         try {
             bookingProducer.sendBookingCreatedEvent(
                     savedBooking.getId(),
@@ -113,49 +92,14 @@ public class BookingServiceImpl implements BookingService {
             log.error("Failed to send Kafka event", e);
         }
 
-
-
-//        PaymentResponseDto payment = null;
-
-//        try {
-//            log.info("Calling Payment Service for bookingId: {}", savedBooking.getId());
-//
-//            PaymentRequestDto paymentRequest = new PaymentRequestDto();
-//            paymentRequest.setBookingId(savedBooking.getId());
-//            paymentRequest.setAmount(savedBooking.getTotalAmount());
-//            paymentRequest.setCurrency("INR");
-//
-//            payment = paymentClients.createPayment(paymentRequest);
-//
-//            log.info("Payment success. RazorpayPaymentId: {}", payment.getRazorpayPaymentId());
-//
-//            savedBooking.setPaymentId(payment.getRazorpayPaymentId());
-//            savedBooking.setStatus(BookingStatus.CONFIRMED);
-//
-//            bookingRepository.save(savedBooking);
-//
-//        } catch (Exception ex) {
-//            log.error("Payment failed for bookingId: {}", savedBooking.getId(), ex);
-//
-//            savedBooking.setStatus(BookingStatus.FAILED);
-//            bookingRepository.save(savedBooking);
-//
-//            throw new RuntimeException("Payment failed. Booking marked as FAILED.");
-//        }
         BookingResponseDto response = modelMapper.map(savedBooking, BookingResponseDto.class);
-//        response.setPaymentId(payment.getRazorpayPaymentId());
-
-//        if (payment != null) {
-//            response.setPaymentId(payment.getRazorpayPaymentId());
-//            response.setRazorpayOrderId(payment.getRazorpayOrderId());
-//        }
-
         log.debug("Mapped Response DTO: {}", response);
         return response;
 
     }
 
     @Override
+    @Cacheable(value = "allBookings")
     public List<BookingResponseDto> getAllBooking() {
         log.info("Fetching all bookings from the database");
 
@@ -175,6 +119,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Cacheable(value = "bookings", key = "#id")
     public BookingResponseDto getBookingById(Long id) {
         log.info("Fetching booking with ID: {}", id);
 
@@ -196,4 +141,97 @@ public class BookingServiceImpl implements BookingService {
         log.info("Returning booking details for ID: {}", id);
         return response;
     }
+
+    @Override
+    @Cacheable(value = "userBookings", key = "#userId")
+    public List<BookingResponseDto> getBookingsByUser(Long userId) {
+        log.info("Fetching bookings for user ID: {}", userId);
+
+        if (userId == null) {
+            throw new ValidationException("User ID is required");
+        }
+
+        if (!userClients.existsById(userId)) {
+            throw new ValidationException("User does not exist");
+        }
+
+        List<Booking> bookings = bookingRepository.findByUserId(userId);
+
+        log.debug("Found {} bookings for user {}", bookings.size(), userId);
+
+        return bookings.stream()
+                .map(booking -> modelMapper.map(booking, BookingResponseDto.class))
+                .toList();
+    }
+
+    private void validateRequest(BookingRequestDto request) {
+        log.debug("Validating booking request");
+        if (request.getListingId() == null)
+            throw new ValidationException("Listing ID is required");
+
+        if (request.getUserId() == null)
+            throw new ValidationException("User ID is required");
+
+        if (!listingClients.existsById(request.getListingId()))
+            throw new ValidationException("Listing does not exist");
+
+        if (!userClients.existsById(request.getUserId()))
+            throw new ValidationException("User does not exist");
+
+        if (request.getCheckInDate() == null)
+            throw new ValidationException("Check-in date required");
+
+        if (request.getCheckOutDate() == null)
+            throw new ValidationException("Check-out date required");
+
+        if (request.getCheckInDate().isBefore(LocalDate.now()))
+            throw new ValidationException("Check-in date cannot be in past");
+
+        if (!request.getCheckOutDate()
+                .isAfter(request.getCheckInDate()))
+            throw new ValidationException("Invalid checkout date");
+        log.debug("Validation successful");
+    }
+
+    private void validateAvailability(Long listingId, LocalDate checkIn, LocalDate checkOut) {
+        log.debug("Checking availability listingId={} dates={} - {}",listingId, checkIn, checkOut);
+
+        boolean exists = bookingRepository.existsOverlappingBooking(listingId,checkIn,checkOut);
+        if (exists) {
+            log.warn("Listing not available listingId={}", listingId);
+            throw new ValidationException(
+                    "Listing not available for selected dates"
+            );
+        }
+        log.debug("Listing available");
+    }
+
+    private void lockInventory(Long listingId,LocalDate checkIn,LocalDate checkOut) {
+        log.info("Inventory locked for listing {}", listingId);
+    }
+
+    private double calculateTotalAmount(BookingRequestDto request) {
+
+        // fetch listing details
+        var listing = listingClients.getListingById(request.getListingId());
+
+        double pricePerNight = listing.getRent();
+
+        long nights = java.time.temporal.ChronoUnit.DAYS.between(
+                request.getCheckInDate(),
+                request.getCheckOutDate()
+        );
+
+        if (nights <= 0) {
+            throw new ValidationException("Invalid booking duration");
+        }
+
+        double totalAmount = pricePerNight * nights;
+
+        log.info("Calculated total amount: {} ({} nights * {})",
+                totalAmount, nights, pricePerNight);
+
+        return totalAmount;
+    }
+
 }

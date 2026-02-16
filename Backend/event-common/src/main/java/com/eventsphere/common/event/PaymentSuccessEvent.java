@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class PaymentSuccessEvent {
     private Long bookingId;
     private String paymentId;
+    private String razorpayOrderId;
 }

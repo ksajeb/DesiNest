@@ -15,8 +15,9 @@ public class PaymentProducer {
 
     public void sendPaymentSuccess(Long bookingId, String paymentId) {
 
-        PaymentSuccessEvent event =
-                new PaymentSuccessEvent(bookingId, paymentId);
+        PaymentSuccessEvent event = new PaymentSuccessEvent(bookingId,
+                paymentId,
+                "RAZORPAY_ORDER_" + System.currentTimeMillis());
 
         kafkaTemplate.send(TOPIC, event);
 

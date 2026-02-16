@@ -10,4 +10,6 @@ public interface BookingService {
     List<BookingResponseDto> getAllBooking();
 
     BookingResponseDto getBookingById(Long id);
+
+    List<BookingResponseDto> getBookingsByUser(Long userId);
 }

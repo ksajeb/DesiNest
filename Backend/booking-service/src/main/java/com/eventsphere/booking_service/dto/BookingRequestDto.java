@@ -26,4 +26,8 @@ public class BookingRequestDto {
     @NotNull(message = "Check-out date is required")
     @Future(message = "Check-out must be a future date")
     private LocalDate checkOutDate;
+
+    @NotNull(message = "Price is required")
+    private Double pricePerNight;
+
 }

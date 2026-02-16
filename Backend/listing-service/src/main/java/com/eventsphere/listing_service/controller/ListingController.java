@@ -52,7 +52,7 @@ public class ListingController {
         return ResponseEntity.ok(updatedListing);
     }
 
-    @GetMapping("/{id}/exists")
+    @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> existsById(@PathVariable Long id) {
         boolean exists = listingService.existsById(id);
         return ResponseEntity.ok(exists);
