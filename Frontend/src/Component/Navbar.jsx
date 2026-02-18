@@ -61,30 +61,61 @@ function Navbar() {
 
         {/* RIGHT MENU */}
         <div className="flex items-center gap-3 relative">
-          <span
-            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432]  hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
-            onClick={() => navigate("/listingpage1")}
-          >
-            Become a host
-          </span>
-          <span
-            className="hidden md:block  cursor-pointer rounded-full px-7 py-2 hover:bg-[#1A213F] text-black hover:text-white hover:duration-500 border-2 font-semibold"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </span>
-          <span
-            className="hidden md:block  cursor-pointer rounded-full px-5 py-2 bg-[#FA6432] hover:bg-[#FA6436] text-white hover:duration-500 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
-            onClick={() => navigate("/signup")}
-          >
-            SignUp
-          </span>
+          {!userData?.id && (
+            <>
+              <span
+                className="hidden md:block cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432] hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
+                onClick={() => navigate("/listingpage1")}
+              >
+                Become a host
+              </span>
+
+              <span
+                className="hidden md:block cursor-pointer rounded-full px-7 py-2 hover:bg-[#1A213F] text-black hover:text-white hover:duration-500 border-2 font-semibold"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </span>
+
+              <span
+                className="hidden md:block cursor-pointer rounded-full px-5 py-2 bg-[#FA6432] hover:bg-[#FA6436] text-white hover:duration-500 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
+                onClick={() => navigate("/signup")}
+              >
+                SignUp
+              </span>
+            </>
+          )}
+          {userData?.id && (
+            <>
+              <span
+                className="hidden md:block cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432] hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
+                onClick={() => navigate("/listingpage1")}
+              >
+                Become a host
+              </span>
+
+              <span
+                className="hidden md:block cursor-pointer rounded-full px-5 py-2 
+  border-2 border-[#1A213F] 
+  text-[#1A213F] 
+  hover:bg-[#1A213F] 
+  hover:text-white 
+  hover:shadow-[0_8px_25px_rgba(26,33,63,0.6)] 
+  transition-all duration-500 
+  font-semibold 
+  hover:-translate-y-1"
+                onClick={() => navigate("/my-bookings")}
+              >
+                My Bookings
+              </span>
+            </>
+          )}
 
           <button
             onClick={() => setShowPopup(!showPopup)}
-            className="flex items-center gap-2 border border-gray-600 rounded-full px-4 py-2 hover:bg-none cursor-pointer"
+            className="flex items-center gap-2 border border-gray-600 rounded-full px-2 py-2 hover:bg-none cursor-pointer"
           >
-            <RxHamburgerMenu className="text-black" />
+            {/* <RxHamburgerMenu className="text-black" /> */}
 
             {userData && userData.email ? (
               <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">
@@ -96,7 +127,7 @@ function Navbar() {
           </button>
 
           {showPopup && (
-            <div className="absolute top-[110%] right-0 z-10 w-56 overflow-hidden rounded-lg border bg-white shadow-lg">
+            <div className="absolute top-[140%] -right-7.5 z-10 w-56 overflow-hidden rounded-lg border bg-white shadow-lg">
               <ul className="flex flex-col">
                 <li
                   onClick={() => navigate("/listingpage1")}
@@ -129,22 +160,12 @@ function Navbar() {
                   <>
                     <li
                       onClick={() => {
-                        navigate("/my-bookings");
-                        setShowPopup(false);
-                      }}
-                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
-                    >
-                      My Bookings
-                    </li>
-
-                    <li
-                      onClick={() => {
                         navigate("/mylisting");
                         setShowPopup(false);
                       }}
                       className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
                     >
-                      My Listing
+                      My Listings
                     </li>
 
                     <hr className="border-gray-200" />

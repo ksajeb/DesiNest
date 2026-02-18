@@ -21,7 +21,6 @@ function MyListing() {
   return (
     <div
       className="w-full min-h-screen bg-[#1a1a1a] flex justify-center text-white cursor-pointer"
-      onClick={() => navigate("/viewcard/:id")}
     >
       {/* Back Button */}
       <button
@@ -56,7 +55,8 @@ function MyListing() {
             myListings.map((item) => (
               <div
                 key={item.id}
-                className="bg-[#242424] rounded-xl p-5 shadow-md"
+                className="bg-[#242424] rounded-xl p-5 shadow-md cursor-pointer"
+                onClick={() => navigate(`/viewcard/${item.id}`)}
               >
                 <img
                   src={item.images?.[0]}

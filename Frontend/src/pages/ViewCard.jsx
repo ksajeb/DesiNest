@@ -43,7 +43,7 @@ function ViewCard() {
       <div
         className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
           cursor-pointer rounded-2xl flex justify-center items-center text-white"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/mylisting")}
       >
         <IoArrowBackOutline className="w-6 h-6" />
       </div>
