@@ -40,4 +40,15 @@ public class BookingController {
         return bookingService.getBookingsByUser(userId);
     }
 
+    @PutMapping("/confirm/{bookingId}")
+    public ResponseEntity<String> confirmBooking(@PathVariable Long bookingId) {
+        bookingService.confirmBooking(bookingId);
+        return ResponseEntity.ok("Booking Confirmed");
+    }
+
+    @PutMapping("/cancel/{bookingId}")
+    public ResponseEntity<String> cancelBooking(@PathVariable Long bookingId) {
+        bookingService.cancelBooking(bookingId);
+        return ResponseEntity.ok("Booking Confirmed");
+    }
 }

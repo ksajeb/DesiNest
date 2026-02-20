@@ -2,11 +2,9 @@ package com.eventsphere.booking_service.service.impl;
 
 
 import com.eventsphere.booking_service.config.ListingClients;
-import com.eventsphere.booking_service.config.PaymentClients;
 import com.eventsphere.booking_service.config.UserClients;
 import com.eventsphere.booking_service.dto.BookingRequestDto;
 import com.eventsphere.booking_service.dto.BookingResponseDto;
-import com.eventsphere.booking_service.dto.PaymentRequestDto;
 import com.eventsphere.booking_service.entity.Booking;
 import com.eventsphere.booking_service.entity.BookingStatus;
 import com.eventsphere.booking_service.exception.ValidationException;
@@ -34,19 +32,13 @@ public class BookingServiceImpl implements BookingService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private PaymentClients paymentClients;
-
-    @Autowired
     private ListingClients listingClients;
 
     @Autowired
     private UserClients userClients;
 
-
     @Autowired
     private BookingProducer bookingProducer;
-
-
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
@@ -61,8 +53,6 @@ public class BookingServiceImpl implements BookingService {
         //lock inventory
         lockInventory(request.getListingId(),request.getCheckInDate(),request.getCheckOutDate());
 
-//        double totalAmount = calculateTotalAmount(request);
-
         Booking booking = new Booking();
         booking.setListingId(request.getListingId());
         booking.setUserId(request.getUserId());
@@ -71,11 +61,9 @@ public class BookingServiceImpl implements BookingService {
 
         log.debug("Mapped Booking entity: {}", booking);
 
-        booking.setStatus(BookingStatus.PAYMENT_PROCESSING);
+        booking.setStatus(BookingStatus.PAYMENT_PENDING);
         double totalAmount = calculateTotalAmount(request);
         booking.setTotalAmount(totalAmount);
-
-
 
         log.info("Booking after setting status and amount: {}", booking);
 
@@ -162,6 +150,24 @@ public class BookingServiceImpl implements BookingService {
         return bookings.stream()
                 .map(booking -> modelMapper.map(booking, BookingResponseDto.class))
                 .toList();
+    }
+
+    @Override
+    public void confirmBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        booking.setStatus(BookingStatus.CONFIRMED);
+        bookingRepository.save(booking);
+    }
+
+    @Override
+    public void cancelBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
     }
 
     private void validateRequest(BookingRequestDto request) {

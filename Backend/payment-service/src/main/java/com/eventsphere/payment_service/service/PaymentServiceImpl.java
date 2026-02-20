@@ -4,6 +4,7 @@ import com.eventsphere.payment_service.dto.PaymentRequestDto;
 import com.eventsphere.payment_service.dto.PaymentResponseDto;
 import com.eventsphere.payment_service.dto.PaymentVerifyRequestDto;
 import com.eventsphere.payment_service.entity.Payment;
+import com.eventsphere.payment_service.kafka.PaymentProducer;
 import com.eventsphere.payment_service.repository.PaymentRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
@@ -28,6 +29,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Value("${razorpay.secret}")
     private String secret;
+
+    @Autowired
+    private PaymentProducer paymentProducer;
+
 
     @Override
     public PaymentResponseDto createOrder(PaymentRequestDto request) throws Exception {
@@ -59,6 +64,14 @@ public class PaymentServiceImpl implements PaymentService {
                 .findByRazorpayOrderId(dto.getRazorpayOrderId())
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
 
+        if (dto.getRazorpayPaymentId() == null ||
+                dto.getRazorpaySignature() == null) {
+
+            payment.setStatus("FAILED");
+            paymentRepository.save(payment);
+            throw new RuntimeException("Payment was cancelled");
+        }
+
         JSONObject attributes = new JSONObject();
         attributes.put("razorpay_order_id", dto.getRazorpayOrderId());
         attributes.put("razorpay_payment_id", dto.getRazorpayPaymentId());
@@ -70,6 +83,12 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setRazorpayPaymentId(dto.getRazorpayPaymentId());
             payment.setStatus("SUCCESS");
             paymentRepository.save(payment);
+
+            paymentProducer.sendPaymentSuccess(
+                    payment.getBookingId(),
+                    dto.getRazorpayPaymentId(),
+                    payment.getRazorpayOrderId()
+            );
             return "Payment Successful";
         } else {
             payment.setStatus("FAILED");
