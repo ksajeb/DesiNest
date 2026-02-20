@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/listing")
+@RequestMapping("/listings")
 public class ListingController {
 
     @Autowired
