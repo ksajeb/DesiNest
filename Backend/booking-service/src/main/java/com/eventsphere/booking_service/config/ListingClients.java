@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "listing-service", url = "http://localhost:8097")
 public interface ListingClients {
 
-    @GetMapping("/listing/{id}")
+    @GetMapping("/listings/{id}")
     ListingResponseDto getListingById(@PathVariable Long id);
 
-    @GetMapping("/listing/exists/{id}")
+    @GetMapping("/listings/exists/{id}")
     Boolean existsById(@PathVariable Long id);
 }

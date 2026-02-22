@@ -229,7 +229,7 @@ function ViewCard() {
         border-2 hover:cursor-pointer hover:text-black
         transition-colors duration-700 ease-in-out hover:bg-green-500"
               onClick={()=>navigate("/booking")}>
-                Reserve
+                Book Now
               </button>
             </div>
           )}

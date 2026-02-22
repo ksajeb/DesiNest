@@ -49,7 +49,7 @@ function ListingContext({ children }) {
 
       images.forEach((file) => formData.append("images", file));
 
-      await axios.post(`${serverUrl2}/listing`, formData, {
+      await axios.post(`${serverUrl2}/listings`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -76,7 +76,7 @@ function ListingContext({ children }) {
   // Fetch all listings
   const getListing = async () => {
     try {
-      const result = await axios.get(`${serverUrl2}/listing`, {
+      const result = await axios.get(`${serverUrl2}/listings`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -114,7 +114,7 @@ function ListingContext({ children }) {
 
     try {
       const result = await axios.get(
-        `${serverUrl2}/listing/user/${userData.id}`,
+        `${serverUrl2}/listings/user/${userData.id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -133,7 +133,7 @@ function ListingContext({ children }) {
     if (!id) return;
 
     try {
-      const result = await axios.get(`${serverUrl2}/listing/${id}`, {
+      const result = await axios.get(`${serverUrl2}/listings/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -170,7 +170,7 @@ function ListingContext({ children }) {
         }
       });
 
-      await axios.put(`${serverUrl2}/listing/${listingId}`, formData, {
+      await axios.put(`${serverUrl2}/listings/${listingId}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -191,7 +191,7 @@ function ListingContext({ children }) {
     setDeleting(true);
     try {
       await axios.delete(
-        `${serverUrl2}/listing/${cardDetails.id}`,
+        `${serverUrl2}/listings/${cardDetails.id}`,
         { withCredentials: true },
       );
       setDeleting(false);
