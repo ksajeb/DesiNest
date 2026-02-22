@@ -100,6 +100,28 @@ function BookingContext({ children }) {
     }
   };
 
+  const cancelBooking = async (bookingId) => {
+    if (!bookingId) return;
+
+    try {
+      await axios.put(
+        `${serverUrl3}/bookings/cancel/${bookingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      return true;
+    } catch (error) {
+      console.error("Cancel booking failed", error);
+      alert(error.response?.data?.message || "Cancel failed");
+      return false;
+    }
+  };
+
   let value = {
     checkIn,
     setCheckIn,
@@ -116,6 +138,7 @@ function BookingContext({ children }) {
     getUserBookings,
     bookingId,
     setBookingId,
+    cancelBooking,
   };
 
   return (

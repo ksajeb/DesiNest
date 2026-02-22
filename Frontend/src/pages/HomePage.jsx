@@ -119,7 +119,7 @@ function HomePage() {
                   onClick={(e) => {
                     e.stopPropagation();
                     handleSearch();
-                    navigate("/mylisting")
+                    navigate("/hotels")
                   }}
                   className="ml-4 bg-[#FA6432] hover:bg-[#FA6436] w-28 h-12 rounded flex items-center justify-center text-white font-semibold transition-all duration-300 cursor-pointer 
   hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]"

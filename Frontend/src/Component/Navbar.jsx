@@ -48,10 +48,16 @@ function Navbar() {
             {navItems.map((item, index) => (
               <li
                 key={index}
+                onClick={() => {
+                  if (item === "Home") navigate("/");
+                  if (item === "Hotel") navigate("/hotels");
+                  if (item === "About") navigate("/about");
+                  if (item === "Contact") navigate("/contact");
+                }}
                 className="relative cursor-pointer text-black hover:text-[#FA6432]
-        after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-        after:w-0 after:h-[2px] after:bg-[#FA6432]
-        after:transition-all after:duration-300 hover:after:w-full"
+    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
+    after:w-0 after:h-[2px] after:bg-[#FA6432]
+    after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item}
               </li>

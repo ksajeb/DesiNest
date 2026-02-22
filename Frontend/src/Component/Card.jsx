@@ -10,12 +10,9 @@ function Card({ list }) {
   const { getListingById } = useContext(ListingDataContext);
 
   const handleClick = (id) => {
-    if (userData) {
-      getListingById(id);
-    } else {
-      navigate("/login");
-    }
-  };
+  getListingById(id);
+  navigate(`/listing/${id}`);
+};
 
   return (
     <div

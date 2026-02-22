@@ -255,7 +255,8 @@ function ListingContext({ children }) {
     deleteListing,
     deleting,
     setDeleting,
-    searchListingsByDates
+    searchListingsByDates,
+    getListing
   };
 
   return (

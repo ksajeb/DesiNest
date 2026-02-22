@@ -3,7 +3,7 @@ import { UserDataContext } from "@/Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 
 const MyBooking = () => {
-  const { getUserBookings } = useContext(bookingDataContext);
+  const { getUserBookings, cancelBooking } = useContext(bookingDataContext);
   const { userData } = useContext(UserDataContext);
   const [bookings, setBookings] = useState([]);
 
@@ -11,9 +11,25 @@ const MyBooking = () => {
     const data = await getUserBookings();
     setBookings(data || []);
   };
+
+  const handleCancel = async (bookingId) => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this booking?",
+    );
+    if (!confirmCancel) return;
+
+    const success = await cancelBooking(bookingId);
+    if (success) {
+      fetchBookings();
+    }
+  };
+
   useEffect(() => {
-    fetchBookings();
+    if (userData?.id) {
+      fetchBookings();
+    }
   }, [userData]);
+
   return (
     <div className="p-10">
       <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
@@ -38,6 +54,22 @@ const MyBooking = () => {
             <p>
               <b>Check Out:</b> {booking.checkOutDate}
             </p>
+
+            {/* Booking cancel button */}
+            {booking.status !== "CANCELLED" && (
+              <button
+                onClick={() => handleCancel(booking.id)}
+                className="mt-3 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer"
+              >
+                Cancel Booking
+              </button>
+            )}
+
+            {booking.status === "CANCELLED" && (
+              <p className="text-red-500 mt-2 font-semibold">
+                This booking is cancelled
+              </p>
+            )}
           </div>
         ))
       )}

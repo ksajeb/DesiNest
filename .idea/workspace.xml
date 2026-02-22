@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/config/ListingClients.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/config/ListingClients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/repository/TokenBlacklistRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/repository/TokenBlacklistRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/MyBooking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/MyBooking.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

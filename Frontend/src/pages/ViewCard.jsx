@@ -37,13 +37,22 @@ function ViewCard() {
   const { title, description, rent, city, category, images, landmark } =
     cardDetails;
 
+  const handleBooking = () => {
+    if (!userData) {
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/booking`);
+  };
+
   return (
     <div className="w-full min-h-screen bg-[#1a1a1a] relative">
       {/* BACK BUTTON */}
       <div
         className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
           cursor-pointer rounded-2xl flex justify-center items-center text-white"
-        onClick={() => navigate("/mylisting")}
+        onClick={() => navigate("/")}
       >
         <IoArrowBackOutline className="w-6 h-6" />
       </div>
@@ -228,7 +237,8 @@ function ViewCard() {
         shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
         border-2 hover:cursor-pointer hover:text-black
         transition-colors duration-700 ease-in-out hover:bg-green-500"
-              onClick={()=>navigate("/booking")}>
+                onClick={handleBooking}
+              >
                 Book Now
               </button>
             </div>

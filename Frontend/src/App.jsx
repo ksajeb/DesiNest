@@ -10,6 +10,7 @@ import MyListing from "./pages/MyListing";
 import ViewCard from "./pages/ViewCard";
 import Booking from "./pages/Booking";
 import MyBooking from "./pages/MyBooking";
+import AllListings from "./pages/AllListings";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/viewcard/:id" element={<ViewCard />}></Route>
         <Route path="/booking" element={<Booking />} />
         <Route path="/my-bookings" element={<MyBooking />} />
+        <Route path="/hotels" element={<AllListings />} />
       </Routes>
     </>
   );
