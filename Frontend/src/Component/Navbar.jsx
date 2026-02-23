@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { AuthDataContext } from "@/Context/AuthContext";
 import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
+import { AiOutlineLogout } from "react-icons/ai";
 
 import logo from "../assets/logo.png";
+import { toast } from "react-toastify";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
@@ -24,9 +26,18 @@ function Navbar() {
     localStorage.removeItem("token");
     setUserData(null);
     setShowPopup(false);
+    toast.success("Logged out successfully 👋");
     navigate("/");
   };
+  const handleBecomeHost = () => {
+    if (!userData?.id) {
+      toast.error("Please login first to become a host");
+      navigate("/login");
+      return;
+    }
 
+    navigate("/listingpage1");
+  };
   const navItems = ["Home", "Hotel", "About", "Contact"];
 
   return (
@@ -71,7 +82,7 @@ function Navbar() {
             <>
               <span
                 className="hidden md:block cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432] hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
-                onClick={() => navigate("/listingpage1")}
+                onClick={handleBecomeHost}
               >
                 Become a host
               </span>
@@ -95,7 +106,7 @@ function Navbar() {
             <>
               <span
                 className="hidden md:block cursor-pointer rounded-full px-5 py-2 hover:bg-[#FA6432] text-[#FA6432] hover:text-white hover:duration-700 border-2 border-[#FA6432] hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
-                onClick={() => navigate("/listingpage1")}
+                onClick={handleBecomeHost}
               >
                 Become a host
               </span>
@@ -136,7 +147,7 @@ function Navbar() {
             <div className="absolute top-[140%] -right-7.5 z-10 w-56 overflow-hidden rounded-lg border bg-white shadow-lg">
               <ul className="flex flex-col">
                 <li
-                  onClick={() => navigate("/listingpage1")}
+                  onClick={handleBecomeHost}
                   className="px-4 py-3 cursor-pointer flex items-center gap-2 font-bold hover:bg-gray-400 hover:text-black duration-500"
                 >
                   Become a host
@@ -178,9 +189,9 @@ function Navbar() {
 
                     <li
                       onClick={handleLogout}
-                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200 flex items-center gap-1 font-bold "
                     >
-                      Logout
+                      <AiOutlineLogout />Logout
                     </li>
                   </>
                 )}

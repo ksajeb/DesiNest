@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { bookingDataContext } from "./BookingContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const paymentDataContext = createContext(null);
 
@@ -24,48 +25,58 @@ function PaymentContext({ children }) {
 
   const startPayment = async (bookingId) => {
     if (!bookingId) {
-      alert("Booking not created properly");
+      toast.error("Booking not created properly ❌");
       return;
     }
 
     setPaymentLoading(true);
 
     const scriptLoaded = await loadRazorpayScript();
+
     if (!scriptLoaded) {
-      alert("Razorpay SDK failed to load");
+      toast.error("Razorpay SDK failed to load ❌");
       setPaymentLoading(false);
       return;
     }
-    const orderResponse = await axios.post(
-      `${PAYMENT_SERVICE_URL}/payments/create-order`,
-      {
-        bookingId: bookingId,
+
+    try {
+      const orderResponse = await axios.post(
+        `${PAYMENT_SERVICE_URL}/payments/create-order`,
+        {
+          bookingId: bookingId,
+          amount: totalAmount,
+        },
+      );
+
+      const { razorpayOrderId } = orderResponse.data;
+
+      const options = {
+        key: "rzp_test_SBB1ElloLuHfk8",
         amount: totalAmount,
-      },
-    );
+        currency: "INR",
+        order_id: razorpayOrderId,
+        name: "EventSphere",
+        description: "Hotel Booking Payment",
 
-    const { razorpayOrderId } = orderResponse.data;
-    const options = {
-      key: "rzp_test_SBB1ElloLuHfk8",
-      amount: totalAmount,
-      currency: "INR",
-      order_id: razorpayOrderId,
-      name: "EventSphere",
-      description: "Hotel Booking Payment",
+        handler: async function (response) {
+          await verifyPayment(response);
+        },
 
-      handler: async function (response) {
-        await verifyPayment(response);
-      },
+        theme: {
+          color: "#000000",
+        },
+      };
 
-      theme: {
-        color: "#000000",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-
-    setPaymentLoading(false);
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Order creation failed", error);
+      toast.error(
+        error.response?.data?.message || "Failed to initiate payment ❌",
+      );
+    } finally {
+      setPaymentLoading(false);
+    }
   };
 
   const verifyPayment = async (response) => {
@@ -75,12 +86,16 @@ function PaymentContext({ children }) {
         razorpayPaymentId: response.razorpay_payment_id,
         razorpaySignature: response.razorpay_signature,
       });
+      toast.success("Payment successful 🎉 Booking confirmed!");
 
       resetBooking();
       navigate("/my-bookings");
     } catch (error) {
       console.error("Payment verification failed", error);
-      alert("Payment verification failed. Contact support.");
+      toast.error(
+        error.response?.data?.message ||
+          "Payment verification failed. Contact support ❌",
+      );
     }
   };
 

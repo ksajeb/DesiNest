@@ -19,6 +19,8 @@ function ListingPage1() {
     setLandmark,
     images,
     setImages,
+    maxGuests,
+    setMaxGuests,
   } = useContext(ListingDataContext);
 
   // Handle multiple image upload
@@ -33,19 +35,22 @@ function ListingPage1() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#1a1a1a] relative flex justify-center overflow-y-auto">
-      {/* Back Button */}
-      <div
-        className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
-             cursor-pointer rounded-2xl flex justify-center items-center text-white"
-        onClick={() => navigate("/")}
-      >
-        <IoArrowBackOutline className="w-6 h-6" />
+    // <div className="w-full min-h-screen bg-[#1a1a1a] relative flex flex-col items-center overflow-y-auto">
+    <div className="w-full min-h-screen bg-[#1a1a1a] relative flex flex-col items-center overflow-y-auto">
+      {/* HEADER */}
+      <div className="w-full text-center pt-20 px-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-white">
+          Create Your Listing
+        </h1>
+
+        <p className="text-gray-400 mt-3 max-w-xl mx-auto">
+          Share details about your place — add photos, description, and pricing
+          so guests can discover your property easily.
+        </p>
       </div>
 
-      {/* FORM */}
       <form
-        className="w-[420px] flex flex-col gap-6 pt-32 pb-20"
+        className="w-[700px] max-w-full flex flex-col gap-6 pt-4 pb-20 px-4"
         onSubmit={(e) => {
           e.preventDefault();
           navigate("/listingpage2");
@@ -56,7 +61,7 @@ function ListingPage1() {
           <label className="text-lg text-white">Title</label>
           <input
             type="text"
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FF4163]"
+            className="input"
             required
             onChange={(e) => setTitle(e.target.value)}
             value={title}
@@ -67,42 +72,48 @@ function ListingPage1() {
         <div className="flex flex-col gap-2">
           <label className="text-lg text-white">Description</label>
           <textarea
-            className="w-full h-40 rounded-lg bg-transparent border border-gray-500 px-4 py-3 text-lg text-white resize-none focus:outline-none focus:border-[#FF4163]"
+            className="textarea"
             required
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
         </div>
 
-        {/* IMAGE UPLOAD */}
+        {/* IMAGE */}
         <div className="flex flex-col gap-3">
           <label className="text-lg text-white">Upload Images</label>
-
           <input
             type="file"
             multiple
             accept="image/*"
             onChange={handleImageUpload}
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 text-white cursor-pointer
-    file:bg-[#FF4163] file:border-none file:text-white file:px-4 file:h-12
-    file:rounded-lg file:cursor-pointer file:font-medium"
+            className="w-full h-12 rounded-lg bg-transparent border border-gray-600 text-white cursor-pointer
+    file:bg-gradient-to-r file:from-[#FA6436] file:to-[#FF4163]
+    file:border-none file:text-white file:px-4 file:h-12
+    file:rounded-lg file:cursor-pointer file:font-medium
+    hover:border-[#FA6436] transition"
           />
-
-          {/* Image Preview */}
+          {/* IMAGE PREVIEW */}
           {images.length > 0 && (
-            <div className="grid grid-cols-3 gap-3 mt-2 cursor-pointer">
-              {images.map((image, index) => (
-                <div key={index} className="relative">
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4">
+              {images.map((file, index) => (
+                <div
+                  key={index}
+                  className="relative group rounded-lg overflow-hidden border border-gray-600"
+                >
                   <img
-                    src={URL.createObjectURL(image)}
+                    src={URL.createObjectURL(file)}
                     alt="preview"
-                    onLoad={(e) => URL.revokeObjectURL(e.target.src)}
-                    className="w-full h-24 object-cover rounded-lg border border-gray-500"
+                    className="w-full h-32 object-cover"
                   />
+
+                  {/* Remove Button */}
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-1 right-1 bg-black/70 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm cursor-pointer"
+                    className="absolute top-2 right-2 bg-black/70 text-white
+                     w-7 h-7 rounded-full flex items-center justify-center
+                     opacity-100 transition cursor-pointer"
                   >
                     ✕
                   </button>
@@ -112,69 +123,87 @@ function ListingPage1() {
           )}
         </div>
 
-        {/* EXTRA TITLE */}
-        <div className="flex flex-col gap-2">
-          <label className="text-lg text-white">Rent</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FF4163]"
-            required
-            value={rent}
-            onChange={(e) => setRent(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-lg text-white">City</label>
-          <input
-            type="text"
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FF4163]"
-            required
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-lg text-white">Landmark</label>
-          <input
-            type="text"
-            className="w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FF4163]"
-            required
-            value={landmark}
-            onChange={(e) => setLandmark(e.target.value)}
-          />
+        {/* GRID ROW */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-2">
+            <label className="text-white">Rent</label>
+            <input
+              type="text"
+              className="input"
+              required
+              value={rent}
+              onChange={(e) => setRent(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-white">City</label>
+            <input
+              type="text"
+              className="input"
+              required
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-white">Max Guests</label>
+            <input
+              type="number"
+              className="input"
+              required
+              value={maxGuests}
+              onChange={(e) => setMaxGuests(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-white">Landmark</label>
+            <input
+              type="text"
+              className="input"
+              required
+              value={landmark}
+              onChange={(e) => setLandmark(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div>
+        {/* BUTTON */}
+        {/* BUTTONS */}
+        <div className="flex gap-4 mt-4">
+          {/* Back Button */}
           <button
-            className="group/btn relative block h-10 w-full rounded-md
-             bg-gradient-to-br from-black to-neutral-600
-             font-medium text-white
-             shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-             dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-             dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-             border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-             transition-colors duration-700 ease-in-out"
-            type="submit"
-            onClick={() => navigate("/listingpage2")}
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex-1 h-12
+      cursor-pointer rounded-xl flex justify-center items-center text-white
+      bg-[#FA6436]
+      hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+      hover:-translate-y-1
+      transition duration-700"
           >
-            Next &rarr;
-            <BottomGradient />
+            <IoArrowBackOutline className="w-6 h-6 mr-2" />
+            Back
+          </button>
+
+          {/* Next Button */}
+          <button
+            type="submit"
+            className="flex-1 h-12
+      cursor-pointer rounded-xl flex justify-center items-center text-white
+      bg-[#FA6436]
+      hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+      hover:-translate-y-1
+      transition duration-700"
+          >
+            Next →
           </button>
         </div>
       </form>
     </div>
   );
 }
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-      <span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-    </>
-  );
-};
 
 export default ListingPage1;

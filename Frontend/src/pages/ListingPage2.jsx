@@ -30,13 +30,13 @@ function ListingPage2() {
   let { category, setCategory } = useContext(ListingDataContext);
   return (
     <div className="w-full min-h-screen bg-[#1a1a1a] relative flex justify-center overflow-y-auto">
-      <div
-        className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
-                   cursor-pointer rounded-2xl flex justify-center items-center text-white"
+      {/* <div
+        className="fixed top-6 left-10 z-50 w-[100px] h-[40px]
+                   cursor-pointer rounded-2xl flex justify-center items-center text-white hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] hover:-translate-y-1 hover:duration-700 bg-[#FA6436] "
         onClick={() => navigate("/listingpage1")}
       >
         <IoArrowBackOutline className="w-6 h-6" />
-      </div>
+      </div> */}
 
       <div className="w-full max-w-[420px] px-4 sm:px-0 flex flex-col gap-6 pt-16 sm:pt-32 pb-20">
         {/* HEADER */}
@@ -74,22 +74,38 @@ function ListingPage2() {
             );
           })}
         </div>
-        <button
-          className="group/btn relative block h-10 w-full rounded-md
-             bg-gradient-to-br from-black to-neutral-600
-             font-medium text-white
-             shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-             dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-             dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-             border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-             transition-colors duration-700 ease-in-out"
-          type="submit"
-          onClick={() => navigate("/listingpage3")}
-          disabled={!category}
-        >
-          Next &rarr;
-          <BottomGradient />
-        </button>
+        <div className="flex gap-4 mt-6">
+          {/* Back Button */}
+          <button
+            type="button"
+            onClick={() => navigate("/listingpage1")}
+            className="flex-1 h-12
+      cursor-pointer rounded-xl flex justify-center items-center text-white
+      bg-[#FA6436]
+      hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+      hover:-translate-y-1
+      transition duration-700"
+          >
+            <IoArrowBackOutline className="w-6 h-6 mr-2" />
+            Back
+          </button>
+
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={() => navigate("/listingpage3")}
+            disabled={!category}
+            className={`flex-1 h-12
+      cursor-pointer rounded-xl flex justify-center items-center text-white
+      bg-[#FA6436]
+      hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+      hover:-translate-y-1
+      transition duration-700
+      ${!category ? "opacity-50 cursor-not-allowed hover:shadow-none hover:-translate-y-0" : ""}`}
+          >
+            Next →
+          </button>
+        </div>
       </div>
     </div>
   );

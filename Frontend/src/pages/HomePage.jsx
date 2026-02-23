@@ -8,16 +8,19 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { ListingDataContext } from "@/Context/ListingContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function HomePage() {
   const [date, setDate] = useState();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [guests, setGuests] = useState({
     adults: 0,
     children: 0,
     infants: 0,
     pets: 0,
   });
+  const [location, setLocation] = useState("");
+  const { searchListings } = useContext(ListingDataContext);
   const updateGuests = (type, value) => {
     setGuests((prev) => ({
       ...prev,
@@ -32,14 +35,30 @@ function HomePage() {
           guests.infants > 0 ? ` · ${guests.infants} infant` : ""
         }`
       : "Add guests";
-  const { searchListingsByDates } = useContext(ListingDataContext);
-  const handleSearch = () => {
-    if (!date?.from || !date?.to) return;
+  const handleSearch = async () => {
+    let start = null;
+    let end = null;
 
-    const start = format(date.from, "yyyy-MM-dd");
-    const end = format(date.to, "yyyy-MM-dd");
+    if (date?.from) {
+      start = format(date.from, "yyyy-MM-dd");
+    }
 
-    searchListingsByDates(start, end);
+    if (date?.to) {
+      end = format(date.to, "yyyy-MM-dd");
+    }
+    if (!location && !date?.from && !date?.to && totalGuests === 0) {
+      toast.info("Please enter at least one search filter");
+      return;
+    }
+
+    await searchListings({
+      city: location,
+      startDate: start,
+      endDate: end,
+      guests: totalGuests,
+    });
+
+    navigate("/hotels");
   };
 
   return (
@@ -66,6 +85,8 @@ function HomePage() {
             <input
               type="text"
               placeholder="Where are you going?"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
               className="bg-transparent text-gray-700 text-sm outline-none"
             />
           </div>
@@ -119,7 +140,6 @@ function HomePage() {
                   onClick={(e) => {
                     e.stopPropagation();
                     handleSearch();
-                    navigate("/hotels")
                   }}
                   className="ml-4 bg-[#FA6432] hover:bg-[#FA6436] w-28 h-12 rounded flex items-center justify-center text-white font-semibold transition-all duration-300 cursor-pointer 
   hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]"

@@ -121,3 +121,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.input {
+  @apply w-full h-12 rounded-lg bg-transparent border border-gray-500 px-4 text-lg text-white focus:outline-none focus:border-[#FA6436];
+}
+
+.textarea {
+  @apply w-full h-32 rounded-lg bg-transparent border border-gray-500 px-4 py-3 text-lg text-white resize-none focus:outline-none focus:border-[#FA6436];
+}
+
+.fileInput {
+  @apply w-full h-12 rounded-lg bg-transparent border border-gray-500 text-white cursor-pointer
+  file:bg-[#FA6436] file:border-none file:text-white file:px-4 file:h-12
+  file:rounded-lg file:cursor-pointer file:font-medium;
+}

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { AuthDataContext } from "./AuthContext";
 import { UserDataContext } from "./UserContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 export const bookingDataContext = createContext();
 
 function BookingContext({ children }) {
@@ -42,14 +43,10 @@ function BookingContext({ children }) {
 
   const createBooking = async () => {
     if (!userData?.id || !listingId || totalAmount <= 0) return;
-    console.log("BOOKING DATA SENDING:", {
-      listingId,
-      userId: userData?.id,
-      checkIn,
-      checkOut,
-      totalAmount,
-    });
-
+    if (!userData?.id) {
+      toast.error("Please login to continue 🔐");
+      return;
+    }
     setBookingLoading(true);
 
     try {
@@ -70,10 +67,11 @@ function BookingContext({ children }) {
       );
 
       setBookingId(res.data.id);
+      toast.success("Booking created successfully 🎉");
       return res.data;
     } catch (error) {
       console.error("Booking failed", error);
-      alert(error.response?.data?.message || "Booking failed");
+      toast.error(error.response?.data?.message || "Booking failed ❌");
       throw error;
     } finally {
       setBookingLoading(false);
@@ -113,11 +111,11 @@ function BookingContext({ children }) {
           },
         },
       );
-
+      toast.success("Booking cancelled successfully ❌");
       return true;
     } catch (error) {
       console.error("Cancel booking failed", error);
-      alert(error.response?.data?.message || "Cancel failed");
+      toast.error(error.response?.data?.message || "Cancel failed ❌");
       return false;
     }
   };

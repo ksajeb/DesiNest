@@ -54,7 +54,7 @@ function SignUp() {
   return (
     <div className="relative min-h-screen">
       <div
-        className="absolute top-14 left-[100px] w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F] duration-200 cursor-pointer border-2 text-lg rounded-2xl flex justify-center items-center text-white"
+        className="absolute top-14 left-[100px] w-[100px] h-[40px] bg-[#FA6436]  duration-200 cursor-pointer border-2 text-lg rounded-2xl flex justify-center items-center text-white hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] hover:-translate-y-1 hover:duration-700"
         onClick={() => navigate("/")}
       >
         <IoArrowBackOutline className="w-[25px] h-[25px] text-white" />
@@ -135,12 +135,21 @@ function SignUp() {
           </LabelInputContainer>
 
           <button
-            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset] border-2 hover:cursor-pointer hover:text-black hover:bg-green-400 duration-200 delay-100"
+            className="
+    h-11 w-full rounded-lg 
+    bg-gradient-to-r from-[#FA6436] via-[#ff7a50] to-[#FF4163]
+    text-white font-semibold tracking-wide
+    shadow-lg shadow-[#FA6436]/25
+    hover:shadow-[0_12px_35px_rgba(250,100,50,0.6)]
+    hover:-translate-y-1 hover:scale-[1.03]
+    active:scale-95
+    transition duration-500 ease-out
+    cursor-pointer
+  "
             type="submit"
             disabled={loading}
           >
-            {loading ? "Loading" : "Signup  →"}
-            <BottomGradient />
+            {loading ? "Loading..." : "Signup →"}
           </button>
           <p className="mt-5">
             Create an account

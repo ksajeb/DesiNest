@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthDataContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { UserDataContext } from "./UserContext";
+import { toast } from "react-toastify";
 
 export const ListingDataContext = createContext();
 
@@ -27,6 +28,7 @@ function ListingContext({ children }) {
   const [images, setImages] = useState([]);
   const [cardDetails, setCardDetails] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [maxGuests, setMaxGuests] = useState("");
 
   // Add new listing
   const handleAddListing = async () => {
@@ -46,6 +48,7 @@ function ListingContext({ children }) {
       formData.append("city", city);
       formData.append("landmark", landmark);
       formData.append("category", category);
+      formData.append("maxGuests", Number(maxGuests));
 
       images.forEach((file) => formData.append("images", file));
 
@@ -54,7 +57,7 @@ function ListingContext({ children }) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
+      toast.success("Listing added successfully 🎉");
       await getListing();
       navigate("/");
 
@@ -66,8 +69,10 @@ function ListingContext({ children }) {
       setLandmark("");
       setCategory("");
       setImages([]);
+      setMaxGuests("");
     } catch (err) {
-      console.error(err);
+      console.log(err);
+      toast.error(err?.response?.data?.message || "Failed to add listing ❌");
     } finally {
       setAdding(false);
     }
@@ -163,6 +168,7 @@ function ListingContext({ children }) {
       formData.append("city", city);
       formData.append("landmark", landmark);
       formData.append("category", category);
+      formData.append("maxGuests", Number(maxGuests));
 
       images.forEach((img) => {
         if (img instanceof File) {
@@ -175,12 +181,15 @@ function ListingContext({ children }) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
+      toast.success("Listing updated successfully 🎉");
       await getListing();
       navigate(`/viewcard/${listingId}`);
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error("Update failed", error);
+      toast.error(
+        error?.response?.data?.message || "Failed to update listing ❌",
+      );
     } finally {
       setAdding(false);
     }
@@ -190,15 +199,19 @@ function ListingContext({ children }) {
   const deleteListing = async () => {
     setDeleting(true);
     try {
-      await axios.delete(
-        `${serverUrl2}/listings/${cardDetails.id}`,
-        { withCredentials: true },
-      );
+      await axios.delete(`${serverUrl2}/listings/${cardDetails.id}`, {
+        withCredentials: true,
+      });
+      toast.success("Listing deleted successfully 🗑️");
       setDeleting(false);
       await getListing();
       navigate("/");
     } catch (error) {
       console.error("Delete failed", error);
+      toast.error(
+        error?.response?.data?.message || "Failed to delete listing ❌",
+      );
+      setDeleting(false);
     }
   };
 
@@ -207,22 +220,43 @@ function ListingContext({ children }) {
   }, [deleting]);
 
   const searchListingsByDates = async (startDate, endDate) => {
-  try {
-    const result = await axios.get(
-      `${serverUrl2}/listing/between?startDate=${startDate}&endDate=${endDate}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+    try {
+      const result = await axios.get(
+        `${serverUrl2}/listings/between-dates?startDate=${startDate}&endDate=${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         },
-      }
-    );
+      );
 
-    setListingData(result.data);
-  } catch (error) {
-    console.error("Date search failed", error);
-    setListingData([]);
-  }
-};
+      setListingData(result.data);
+    } catch (error) {
+      console.error("Date search failed", error);
+      toast.error("No listings found for selected dates ❌");
+      setListingData([]);
+    }
+  };
+
+  const searchListings = async ({ city, startDate, endDate, guests }) => {
+    try {
+      const params = new URLSearchParams();
+
+      if (city) params.append("city", city);
+      if (startDate) params.append("startDate", startDate);
+      if (endDate) params.append("endDate", endDate);
+      if (guests) params.append("guests", guests);
+
+      const result = await axios.get(
+        `${serverUrl2}/listings/search?${params.toString()}`,
+      );
+
+      setListingData(result.data);
+    } catch (error) {
+      console.error("Search failed", error);
+      setListingData([]);
+    }
+  };
 
   const value = {
     listingData,
@@ -256,7 +290,10 @@ function ListingContext({ children }) {
     deleting,
     setDeleting,
     searchListingsByDates,
-    getListing
+    searchListings,
+    getListing,
+    maxGuests,
+    setMaxGuests,
   };
 
   return (

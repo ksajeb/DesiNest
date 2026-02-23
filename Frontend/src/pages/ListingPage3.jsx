@@ -1,12 +1,24 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoArrowBackOutline, IoClose } from "react-icons/io5";
+import {
+  IoArrowBackOutline,
+  IoClose,
+  IoHomeOutline,
+  IoLocationOutline,
+  IoPeopleOutline,
+  IoPricetagOutline,
+  IoBusinessOutline,
+  IoDocumentTextOutline,
+} from "react-icons/io5";
+
 import { ListingDataContext } from "@/Context/ListingContext";
-import { Landmark } from "lucide-react";
 
 function ListingPage3() {
   const navigate = useNavigate();
-  const [showFullDesc, setShowFullDesc] = useState(false);
+  const [showGallery, setShowGallery] = useState(false);
+  const openGallery = () => {
+    setShowGallery(true);
+  };
 
   const {
     title,
@@ -16,188 +28,178 @@ function ListingPage3() {
     category,
     images,
     landmark,
+    maxGuests,
     handleAddListing,
     adding,
   } = useContext(ListingDataContext);
 
-  const [showGallery, setShowGallery] = useState(false);
-
   return (
-    <div className="w-full min-h-screen bg-[#1a1a1a] relative">
-      {/* BACK BUTTON */}
-      <div
-        className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FF4163] hover:bg-[#AA001F]
-        cursor-pointer rounded-2xl flex justify-center items-center text-white"
-        onClick={() => navigate("/listingpage2")}
-      >
-        <IoArrowBackOutline className="w-6 h-6" />
-      </div>
-
-      {/* ================= MAIN CONTENT ================= */}
-      <div className="pt-28 px-6 md:px-10 max-w-7xl mx-auto">
+    <div className="w-full min-h-screen bg-[#0f0f0f] relative">
+      <div className="pt-28 px-6 md:px-10 max-w-6xl mx-auto">
         {/* TITLE */}
         <h1 className="text-white text-3xl font-semibold mb-8">
-          In <span className="text-[#FF4163]">{title?.toUpperCase()}</span>,{" "}
-          <span className="text-[#FF4163]">{city?.toUpperCase()}</span>
+          Review Your Listing
         </h1>
 
-        {/* ================= IMAGE GALLERY ================= */}
+        {/* IMAGE GRID */}
+        {/* IMAGE GRID */}
         {images?.length > 0 && (
           <div
-            className="
-              grid grid-cols-1
-              md:grid-cols-4
-              md:grid-rows-2
-              gap-3
-              rounded-2xl
-              overflow-hidden
-              h-[420px]
-              cursor-pointer
-            "
-            onClick={() => setShowGallery(true)}
+            className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-3
+    rounded-2xl overflow-hidden h-[420px] shadow-xl"
           >
-            {/* BIG IMAGE */}
-            <div className="md:col-span-2 md:row-span-2 overflow-hidden">
+            {/* MAIN IMAGE */}
+            <div className="md:col-span-2 md:row-span-2">
               <img
                 src={URL.createObjectURL(images[0])}
                 alt="main"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover cursor-pointer hover:scale-105 transition duration-500"
+                onClick={openGallery}
               />
             </div>
 
-            {/* SMALL IMAGES (2–5) */}
-            {images.slice(1, 5).map((image, index) => (
-              <div key={index} className="relative overflow-hidden">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="preview"
-                  className="w-full h-full object-cover"
-                />
+            {/* OTHER IMAGES */}
+            {images.slice(1, 5).map((image, index) => {
+              const isLastVisible = index === 3 && images.length > 5;
 
-                {/* SHOW ALL PHOTOS BUTTON */}
-                {index === 3 && images.length > 5 && (
-                  <div className="absolute inset-0 bg-black/40 flex items-end justify-end p-4">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowGallery(true);
-                      }}
-                      className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium"
-                    >
-                      Show all photos
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+              return (
+                <div
+                  key={index}
+                  className="relative w-full h-full cursor-pointer"
+                  onClick={openGallery}
+                >
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="preview"
+                    className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                  />
+
+                  {/* SHOW ALL BUTTON OVERLAY */}
+                  {isLastVisible && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
+                      <button
+                        className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold
+                hover:scale-105 transition cursor-pointer"
+                      >
+                        Show All Photos ({images.length})
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
 
-        {/* ================= LISTING DETAILS ================= */}
-        <div className="mt-10 rounded-2xl bg-[#111] border border-white/10 p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* LEFT COLUMN: DESCRIPTION + LANDMARK */}
-            {/* LEFT COLUMN: DESCRIPTION + LANDMARK */}
-            <div className="space-y-6">
-              {/* DESCRIPTION */}
-              {description && (
-                <div>
-                  <h3 className="text-gray-400 text-sm uppercase tracking-widest mb-2">
-                    Description
-                  </h3>
-                  <p
-                    className={`text-white text-base leading-relaxed ${
-                      showFullDesc ? "" : "line-clamp-5"
-                    }`}
-                  >
-                    {description}
-                  </p>
-                  {description.split(" ").length > 20 && (
-                    <button
-                      onClick={() => setShowFullDesc(!showFullDesc)}
-                      className="text-sm text-[#FF4163] mt-1 hover:underline"
-                    >
-                      {showFullDesc ? "Show less" : "Read more"}
-                    </button>
-                  )}
-                </div>
-              )}
+        {/* DETAILS CARD */}
+        <div
+          className="mt-10 bg-white/5 backdrop-blur-md border border-white/10 
+          rounded-2xl p-8 shadow-2xl relative overflow-hidden"
+        >
+          {/* PRICE BADGE */}
+          <div
+            className="absolute top-6 right-6 bg-gradient-to-r from-[#FA6436] to-[#FF4163] 
+          text-white px-4 py-2 rounded-xl shadow-lg text-sm font-semibold"
+          >
+            ₹ {rent} / day
+          </div>
 
-              {/* LANDMARK */}
-              {landmark && (
-                <div>
-                  <h3 className="text-gray-400 text-sm uppercase tracking-widest mb-2">
-                    Landmark
-                  </h3>
-                  <p className="text-white text-lg font-medium">{landmark}</p>
-                </div>
-              )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* LEFT */}
+            <div className="space-y-6">
+              <InfoItem icon={<IoHomeOutline />} label="Title" value={title} />
+
+              <Divider />
+
+              <InfoItem
+                icon={<IoDocumentTextOutline />}
+                label="Description"
+                value={description}
+              />
+
+              <Divider />
+
+              <InfoItem
+                icon={<IoLocationOutline />}
+                label="City"
+                value={city}
+              />
+
+              <Divider />
+
+              <InfoItem
+                icon={<IoBusinessOutline />}
+                label="Landmark"
+                value={landmark}
+              />
             </div>
 
-            {/* RIGHT COLUMN: CATEGORY + RENT */}
+            {/* RIGHT */}
             <div className="space-y-6">
-              {/* CATEGORY */}
-              {category && (
-                <div>
-                  <h3 className="text-gray-400 text-sm uppercase tracking-widest mb-2">
-                    Category
-                  </h3>
-                  <p className="text-[#FF4163] text-xl font-semibold">
-                    {category}
-                  </p>
-                </div>
-              )}
+              <InfoItem
+                icon={<IoPricetagOutline />}
+                label="Category"
+                value={category}
+                highlight
+              />
 
-              {/* RENT */}
-              {rent && (
-                <div>
-                  <h3 className="text-gray-400 text-sm uppercase tracking-widest mb-2">
-                    Rent
-                  </h3>
-                  <p className="text-[#FF4163] text-xl font-semibold">
-                    ₹ {rent}{" "}
-                    <span className="text-xl font-semibold text-gray-400">
-                      / day
-                    </span>
-                  </p>
-                </div>
-              )}
+              <Divider />
+
+              <InfoItem
+                icon={<IoPeopleOutline />}
+                label="Max Guests"
+                value={maxGuests}
+              />
             </div>
           </div>
         </div>
 
-        {/* ================= ADD LISTING BUTTON (OUTSIDE) ================= */}
-        <div className="mt-6 pb-10 flex items-center justify-center">
+        {/* BUTTONS */}
+        <div className="mt-10 pb-16 flex gap-4 w-full">
+          {/* Back Button */}
           <button
-            className="group/btn relative block h-10 w-full rounded-md
-      bg-gradient-to-br from-black to-neutral-600
-      font-medium text-white
-      shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]
-      dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900
-      dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]
-      border-2 hover:cursor-pointer hover:text-black hover:bg-green-400
-      duration-200 delay-100"
+            type="button"
+            onClick={() => navigate("/listingpage2")}
+            className="flex-1 h-12 rounded-xl flex justify-center items-center text-white
+            bg-[#FA6436] hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+            hover:-translate-y-1 transition duration-500 cursor-pointer"
+          >
+            <IoArrowBackOutline className="w-6 h-6 mr-2" />
+            Back
+          </button>
+
+          {/* Add Listing Button */}
+          <button
+            type="button"
             onClick={handleAddListing}
             disabled={adding}
+            className={`flex-1 h-12 rounded-xl flex justify-center items-center text-white
+            bg-gradient-to-r from-[#FA6436] to-[#FF4163]
+            hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+            hover:-translate-y-1 transition duration-500 cursor-pointer
+            ${
+              adding
+                ? "opacity-50 cursor-not-allowed hover:shadow-none hover:-translate-y-0"
+                : ""
+            }`}
           >
-            {adding ? "Adding...." : "Add Listing"}
+            {adding ? "Adding..." : "Add Listing"}
           </button>
         </div>
       </div>
 
-      {/* ================= FULLSCREEN GALLERY ================= */}
+      {/* FULLSCREEN GALLERY */}
       {showGallery && (
         <div className="fixed inset-0 bg-black/90 z-[999] overflow-y-auto">
           <div className="flex justify-between items-center p-6">
             <h2 className="text-white text-xl font-semibold">
               All Photos ({images.length})
             </h2>
-            <button
+
+            <IoClose
+              className="text-white text-2xl cursor-pointer"
               onClick={() => setShowGallery(false)}
-              className="text-white text-2xl"
-            >
-              <IoClose className="cursor-pointer" />
-            </button>
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6">
@@ -206,7 +208,7 @@ function ListingPage3() {
                 key={index}
                 src={URL.createObjectURL(image)}
                 alt="gallery"
-                className="w-full h-64 object-cover rounded-lg"
+                className="w-full h-64 object-cover rounded-lg hover:scale-105 transition duration-500"
               />
             ))}
           </div>
@@ -214,6 +216,43 @@ function ListingPage3() {
       )}
     </div>
   );
+}
+
+/* INFO ITEM */
+function InfoItem({ icon, label, value, highlight }) {
+  if (!value) return null;
+
+  return (
+    <div className="flex items-start gap-4 group">
+      {/* ICON */}
+      <div
+        className="text-[#FA6436] text-xl mt-1 
+        group-hover:scale-110 transition duration-300"
+      >
+        {icon}
+      </div>
+
+      {/* TEXT */}
+      <div>
+        <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">
+          {label}
+        </p>
+
+        <p
+          className={`text-lg font-semibold leading-relaxed ${
+            highlight ? "text-[#FF4163]" : "text-white"
+          } ${label === "Description" ? "line-clamp-3" : ""}`}
+        >
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* DIVIDER */
+function Divider() {
+  return <div className="w-full h-px bg-white/10" />;
 }
 
 export default ListingPage3;

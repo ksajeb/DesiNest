@@ -3,11 +3,8 @@ import { ListingDataContext } from "@/Context/ListingContext";
 import Card from "@/Component/Card";
 
 const AllListings = () => {
-  const { listingData, getListing } = useContext(ListingDataContext);
+  const { listingData } = useContext(ListingDataContext);
 
-  useEffect(() => {
-    getListing();
-  }, []);
 
   return (
     <div className="w-full min-h-screen px-6 md:px-10 py-10">

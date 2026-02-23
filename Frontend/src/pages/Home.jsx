@@ -9,6 +9,10 @@ import Footer from "./Footer";
 
 function Home() {
   const { listingData } = useContext(ListingDataContext);
+  const shuffleArray = (array) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+  const shuffledListings = shuffleArray(listingData).slice(0, 8);
 
   return (
     <div>
@@ -32,7 +36,7 @@ function Home() {
     px-24
     py-12"
       >
-        {listingData.slice(0, 8).map((list) => (
+        {shuffledListings.slice(0, 8).map((list) => (
           <Card key={list.id} list={list} />
         ))}
       </div>
