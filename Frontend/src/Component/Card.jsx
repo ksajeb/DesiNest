@@ -1,22 +1,44 @@
+import { bookingDataContext } from "@/Context/BookingContext";
 import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaStar, FaMapMarkerAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { GiConfirmed } from "react-icons/gi";
 
 function Card({ list }) {
   const navigate = useNavigate();
   const { userData } = useContext(UserDataContext);
   const { getListingById } = useContext(ListingDataContext);
+  const { getUserBookings } = useContext(bookingDataContext);
+
+  const [isBooked, setIsBooked] = useState(false);
+
+  useEffect(() => {
+    const checkBooking = async () => {
+      if (!userData?.id) return;
+
+      const bookings = await getUserBookings();
+
+      const alreadyBooked = bookings?.some(
+        (booking) =>
+          booking.listingId === list.id && booking.status !== "CANCELLED",
+      );
+
+      setIsBooked(alreadyBooked);
+    };
+
+    checkBooking();
+  }, [userData, list.id]);
 
   const handleClick = (id) => {
-  getListingById(id);
-  navigate(`/listing/${id}`);
-};
+    getListingById(id);
+    navigate(`/listing/${id}`);
+  };
 
   return (
     <div
-      onClick={() => handleClick(list.id)}
+      onClick={() => (!isBooked ? handleClick(list.id) : null)}
       className="
         cursor-pointer
         bg-white               
@@ -42,25 +64,31 @@ function Card({ list }) {
             hover:scale-110      
           "
         />
+        {isBooked && (
+          <span
+            className="
+      absolute
+      top-2
+      right-3
+      bg-white
+      text-green-700
+      px-3
+      py-1
+      rounded-md 
+      text-md
+      font-bold
+      shadow-md
+      flex
+      items-center
+      gap-2
+      border
 
-        {/*Category Badge (Featured) */}
-        <span
-          className="
-            absolute
-            top-4
-            right-4
-            bg-white/90
-            backdrop-blur
-            px-4
-            py-1
-            rounded-full
-            text-sm
-            font-semibold
-            shadow
-          "
-        >
-          {list.category || "Featured"}
-        </span>
+    "
+          >
+            <GiConfirmed className="w-5 h-5" />
+            Booked
+          </span>
+        )}
       </div>
 
       {/* Content Section */}

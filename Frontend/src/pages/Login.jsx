@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthDataContext } from "../Context/AuthContext";
 import { UserDataContext } from "@/Context/UserContext";
+import { toast } from "react-toastify";
 
 function Login() {
   let [show, setShow] = useState(false);
@@ -37,6 +38,7 @@ function Login() {
       const { jwt } = result.data;
       localStorage.setItem("token", jwt);
 
+      toast.success("Login successfully");
       // fetch logged-in user & update context
       await getCurrentUser();
 
@@ -45,6 +47,9 @@ function Login() {
       // window.location.reload();
     } catch (error) {
       setLoading(false);
+      toast.error(
+        error.response?.data?.message || "Invalid email or password ❌",
+      );
       console.log(error);
     }
   };

@@ -56,8 +56,10 @@ public class Listing {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column(nullable = false)
+    private Integer maxGuests;
 
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdAt;;
+    private LocalDateTime createdAt;
 }

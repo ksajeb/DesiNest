@@ -78,5 +78,16 @@ public class ListingController {
         return ResponseEntity.ok(listings);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ListingResponseDto>> searchListings(
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Integer guests,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+
+        return ResponseEntity.ok(
+                listingService.searchListings(city, guests, startDate, endDate)
+        );
+    }
 
 }

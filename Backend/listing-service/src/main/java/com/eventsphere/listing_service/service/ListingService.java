@@ -25,4 +25,6 @@ public interface ListingService {
     List<ListingResponseDto> getListingsBetweenDates(String startDate, String endDate);
 
     List<ListingResponseDto> getListingsByDate(String date);
+
+    List<ListingResponseDto> searchListings(String city, Integer guests, String startDate, String endDate);
 }

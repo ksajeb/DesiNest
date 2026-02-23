@@ -11,6 +11,8 @@ import ViewCard from "./pages/ViewCard";
 import Booking from "./pages/Booking";
 import MyBooking from "./pages/MyBooking";
 import AllListings from "./pages/AllListings";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -28,6 +30,12 @@ function App() {
         <Route path="/my-bookings" element={<MyBooking />} />
         <Route path="/hotels" element={<AllListings />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="colored"
+        newestOnTop
+      />
     </>
   );
 }

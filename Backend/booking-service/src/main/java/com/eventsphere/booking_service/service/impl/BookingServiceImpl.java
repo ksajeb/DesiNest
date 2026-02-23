@@ -170,6 +170,15 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
     }
 
+    @Override
+    public List<Long> getBookedListingIds(String startDate, String endDate) {
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        return bookingRepository.findBookedListingIds(start, end);
+    }
+
     private void validateRequest(BookingRequestDto request) {
         log.debug("Validating booking request");
         if (request.getListingId() == null)

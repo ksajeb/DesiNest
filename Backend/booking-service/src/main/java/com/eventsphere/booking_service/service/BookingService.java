@@ -16,4 +16,6 @@ public interface BookingService {
     void confirmBooking(Long bookingId);
 
     void cancelBooking(Long bookingId);
+
+    List<Long> getBookedListingIds(String startDate, String endDate);
 }

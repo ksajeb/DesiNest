@@ -20,6 +20,7 @@ public class ListingResponseDto {
     private Double rent;
     private String city;
     private String landmark;
+    private Integer maxGuests;
     private Category category;
     private List<String> images;
 }

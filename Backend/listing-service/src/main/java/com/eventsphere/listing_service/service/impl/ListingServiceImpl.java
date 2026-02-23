@@ -1,5 +1,6 @@
 package com.eventsphere.listing_service.service.impl;
 
+import com.eventsphere.listing_service.Config.BookingClients;
 import com.eventsphere.listing_service.Config.UserClients;
 import com.eventsphere.listing_service.dto.ListingRequestDto;
 import com.eventsphere.listing_service.dto.ListingResponseDto;
@@ -41,6 +42,9 @@ public class ListingServiceImpl implements ListingService {
     @Autowired
     private UserClients userClients;
 
+    @Autowired
+    private BookingClients bookingClients;
+
     @Override
     @CacheEvict(value = {"allListings", "listingsByUser"}, allEntries = true)
     public ListingResponseDto addListing(ListingRequestDto listingDto) throws IOException {
@@ -67,6 +71,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setCity(listingDto.getCity());
         listing.setLandmark(listingDto.getLandmark());
         listing.setCategory(listingDto.getCategory());
+        listing.setMaxGuests(listingDto.getMaxGuests());
 
         List<ListingImage> imageList = new ArrayList<>();
         List<String> imageUrls = new ArrayList<>();
@@ -223,6 +228,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setCity(listingDto.getCity());
         listing.setLandmark(listingDto.getLandmark());
         listing.setCategory(listingDto.getCategory());
+        listing.setMaxGuests(listingDto.getMaxGuests());
 
         if (listingDto.getImages() != null && !listingDto.getImages().isEmpty()) {
 
@@ -354,6 +360,57 @@ public class ListingServiceImpl implements ListingService {
             dto.setImages(imageUrls);
 
             log.debug("Listing id={} mapped with {} images", listing.getId(), imageUrls.size());
+
+            return dto;
+
+        }).toList();
+    }
+
+    @Override
+    @Cacheable(value = "searchListings",key = "#city + '-' + #guests + '-' + #startDate + '-' + #endDate")
+    public List<ListingResponseDto> searchListings(String city, Integer guests, String startDate, String endDate) {
+        log.info("Searching listings city={}, guests={}, start={}, end={}",
+                city, guests, startDate, endDate);
+
+        List<Listing> listings = listingRepository.findAll();
+
+        // Filter by city
+        if (city != null && !city.isBlank()) {
+            listings = listings.stream()
+                    .filter(l -> l.getCity().equalsIgnoreCase(city))
+                    .toList();
+        }
+
+        // Filter by guests
+        if (guests != null) {
+            listings = listings.stream()
+                    .filter(l -> l.getMaxGuests() != null && l.getMaxGuests() >= guests)
+                    .toList();
+        }
+
+        // Filter by availability
+        if (startDate != null && endDate != null) {
+
+            List<Long> bookedIds =
+                    bookingClients.getBookedListingIds(startDate, endDate);
+
+            listings = listings.stream()
+                    .filter(l -> !bookedIds.contains(l.getId()))
+                    .toList();
+        }
+
+        // Convert to DTO with images
+        return listings.stream().map(listing -> {
+
+            ListingResponseDto dto =
+                    modelMapper.map(listing, ListingResponseDto.class);
+
+            List<String> imageUrls = listing.getImages()
+                    .stream()
+                    .map(ListingImage::getImageUrl)
+                    .toList();
+
+            dto.setImages(imageUrls);
 
             return dto;
 

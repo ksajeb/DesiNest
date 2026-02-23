@@ -14,6 +14,7 @@ import { IoEye, IoEyeOff, IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext, { AuthDataContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 function SignUp() {
   let [show, setShow] = useState(false);
@@ -25,9 +26,9 @@ function SignUp() {
   const { serverUrl, loading, setLoading } = useContext(AuthDataContext);
 
   const handleSignup = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      e.preventDefault();
       let result = await axios.post(
         serverUrl + "/auth/signup",
         {
@@ -36,16 +37,17 @@ function SignUp() {
           password,
           phoneNumber,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setLoading(false);
-      console.log(result);
       if (result.status === 200 || result.status === 201) {
+        toast.success("Signup successful!");
         navigate("/");
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
+      toast.error(error.response?.data?.message || "Signup failed ❌");
     }
   };
 

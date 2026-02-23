@@ -51,4 +51,13 @@ public class BookingController {
         bookingService.cancelBooking(bookingId);
         return ResponseEntity.ok("Booking cancelled successfully with the booking id:"+bookingId);
     }
+
+    @GetMapping("/booked-listings")
+    public ResponseEntity<List<Long>> getBookedListingIds(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+
+        List<Long> ids = bookingService.getBookedListingIds(startDate, endDate);
+        return ResponseEntity.ok(ids);
+    }
 }
