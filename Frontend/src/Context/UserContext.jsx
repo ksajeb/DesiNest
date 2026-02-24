@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthDataContext } from "./AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const UserDataContext = createContext();
 
@@ -25,7 +26,46 @@ function UserContext({ children }) {
 
       setUserData(result.data);
     } catch (error) {
+      console.log("User fetch failed", error);
       setUserData(null);
+    }
+  };
+
+  const signup = async (data) => {
+    try {
+      const result = await axios.post(`${serverUrl}/auth/signup`, data);
+      // save jwt
+      localStorage.setItem("token", result.data.jwt);
+      // fetch user
+      await getCurrentUser();
+      toast.success("Signup successful 🎉");
+
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed ❌");
+      return false;
+    }
+  };
+
+  const login = async (email, password) => {
+    try {
+      const result = await axios.post(`${serverUrl}/auth/login`, {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", result.data.jwt);
+
+      await getCurrentUser();
+
+      toast.success("Login successful 🎉");
+
+      return true;
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Invalid email or password ❌",
+      );
+      return false;
     }
   };
 
@@ -33,9 +73,16 @@ function UserContext({ children }) {
     getCurrentUser();
   }, []);
 
+  const value = {
+    userData,
+    setUserData,
+    getCurrentUser,
+    signup,
+    login,
+  };
 
   return (
-    <UserDataContext.Provider value={{ userData, setUserData, getCurrentUser }}>
+    <UserDataContext.Provider value={value}>
       {children}
     </UserDataContext.Provider>
   );

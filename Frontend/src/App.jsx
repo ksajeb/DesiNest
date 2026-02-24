@@ -13,6 +13,7 @@ import MyBooking from "./pages/MyBooking";
 import AllListings from "./pages/AllListings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/my-bookings" element={<MyBooking />} />
         <Route path="/hotels" element={<AllListings />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
       </Routes>
       <ToastContainer
         position="top-right"

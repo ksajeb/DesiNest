@@ -32,6 +32,12 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
               - Path=/auth/**
+        - id: oauth2-route
+          uri: lb://USER-SERVICE
+          predicates:
+              - Path=/oauth2/**,/login/**
+      default-filters:
+        - PreserveHostHeader
 
       globalcors:
         corsConfigurations:

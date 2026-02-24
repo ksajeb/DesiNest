@@ -2,9 +2,9 @@ import React, { createContext, useState } from "react";
 export const AuthDataContext = createContext(null);
 
 function AuthContext({ children }) {
-  let serverUrl = "http://localhost:8096";
+  let serverUrl = "http://localhost:8080";
   let serverUrl2 = "http://localhost:8097";
-  let serverUrl3 = "http://localhost:8098";
+  let serverUrl3 = "http://localhost:8080";
 
   let [loading, setLoading] = useState(false);
 

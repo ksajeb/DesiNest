@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext, { AuthDataContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { UserDataContext } from "@/Context/UserContext";
 
 function SignUp() {
   let [show, setShow] = useState(false);
@@ -24,30 +25,24 @@ function SignUp() {
   let [password, setPassword] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
   const { serverUrl, loading, setLoading } = useContext(AuthDataContext);
+  const { signup } = useContext(UserDataContext);
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
     setLoading(true);
-    try {
-      let result = await axios.post(
-        serverUrl + "/auth/signup",
-        {
-          name,
-          email,
-          password,
-          phoneNumber,
-        },
-        { withCredentials: true },
-      );
-      setLoading(false);
-      if (result.status === 200 || result.status === 201) {
-        toast.success("Signup successful!");
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      toast.error(error.response?.data?.message || "Signup failed ❌");
+
+    const success = await signup({
+      name,
+      email,
+      password,
+      phoneNumber,
+    });
+
+    setLoading(false);
+
+    if (success) {
+      navigate("/");
     }
   };
 
@@ -175,8 +170,11 @@ function SignUp() {
               <BottomGradient />
             </button>
             <button
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
               type="button"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/google`;
+              }}
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">

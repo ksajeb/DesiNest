@@ -20,37 +20,22 @@ function Login() {
   const navigate = useNavigate();
 
   const { serverUrl, loading, setLoading } = useContext(AuthDataContext);
-  const { getCurrentUser } = useContext(UserDataContext);
+  const { login } = useContext(UserDataContext);
 
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setLoading(true);
 
-    try {
-      const result = await axios.post(serverUrl + "/auth/login", {
-        email,
-        password,
-      });
+    const success = await login(email, password);
 
-      const { jwt } = result.data;
-      localStorage.setItem("token", jwt);
+    setLoading(false);
 
-      toast.success("Login successfully");
-      // fetch logged-in user & update context
-      await getCurrentUser();
-
-      setLoading(false);
+    if (success) {
       navigate("/");
-      // window.location.reload();
-    } catch (error) {
-      setLoading(false);
-      toast.error(
-        error.response?.data?.message || "Invalid email or password ❌",
-      );
-      console.log(error);
     }
   };
 
@@ -149,8 +134,11 @@ function Login() {
               <BottomGradient />
             </button>
             <button
+              type="button"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/google`;
+              }}
               className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-95 cursor-pointer"
-              type="submit"
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">

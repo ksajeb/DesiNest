@@ -37,27 +37,20 @@ public class User implements UserDetails {
     @Column(unique = true,nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters long")
+    @Column(nullable = true)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String phoneNumber;
 
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Role role = Role.USER;
+    private String providerId;
 
-//    private String bookingId;
-
-//    @Column(nullable = false)
-//    @NotNull
-//    private String listingId;
+    @Enumerated(EnumType.STRING)
+    private AuthProviderType providerType;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
