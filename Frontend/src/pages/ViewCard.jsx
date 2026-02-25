@@ -4,6 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackOutline, IoClose } from "react-icons/io5";
 import { UserDataContext } from "@/Context/UserContext";
 import UpdateListing from "@/Component/UpdateListing";
+import BookingSummary from "@/Component/BookingSummary";
+import { toast } from "react-toastify";
+import { bookingDataContext } from "@/Context/BookingContext";
+import Footer from "./Footer";
 
 function ViewCard() {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ function ViewCard() {
 
   let { setTitle, setDescription, setRent, setCity, setLandmark, setImages } =
     useContext(ListingDataContext);
+  let { totalAmount } = useContext(bookingDataContext);
 
   useEffect(() => {
     if (id) {
@@ -37,7 +42,13 @@ function ViewCard() {
 
   const handleBooking = () => {
     if (!userData) {
+      toast.error("Please login first 🔐");
       navigate("/login");
+      return;
+    }
+    console.log("Total Amount:", totalAmount);
+    if (!totalAmount || totalAmount <= 0) {
+      toast.warning("Please select booking dates first 📅");
       return;
     }
     navigate(`/booking`);
@@ -47,22 +58,21 @@ function ViewCard() {
     <div className="w-full min-h-screen bg-[#1a1a1a] relative">
       {/* BACK BUTTON */}
       <div
-        className="fixed top-6 left-10 z-50 w-[100px] h-[40px] bg-[#FA6436]
-      hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
-      hover:-translate-y-1
-      transition duration-700 
-        cursor-pointer rounded-2xl flex justify-center items-center text-white"
+        className="pt-10 ml-12 flex items-center gap-1
+  text-white cursor-pointer font-medium 
+  hover:text-[#FA6436] transition duration-300"
         onClick={() => navigate("/")}
       >
-        <IoArrowBackOutline className="w-6 h-6" />
+        <IoArrowBackOutline className="w-5 h-5" />
+        <span>Back to results</span>
       </div>
 
       {/* ================= MAIN CONTENT ================= */}
-      <div className="pt-28 px-6 md:px-10 max-w-7xl mx-auto">
+      <div className="pt-16 px-6 md:px-10 max-w-7xl mx-auto">
         {/* TITLE */}
-        <h1 className="text-white text-3xl font-semibold mb-8">
-          In <span className="text-[#FF4163]">{title?.toUpperCase()}</span>,{" "}
-          <span className="text-[#FF4163]">{city?.toUpperCase()}</span>
+        <h1 className="text-white text-md font-semibold mb-1">
+          <span className="text-white">{title?.toUpperCase()}</span> {" "}
+          <span className="text-white">{category?.toUpperCase()}</span>
         </h1>
 
         {/* ================= IMAGE GALLERY ================= */}
@@ -106,52 +116,78 @@ function ViewCard() {
           </div>
         )}
 
-        {/* ================= LISTING DETAILS ================= */}
-        <div
-          className="mt-10 bg-white/5 backdrop-blur-md border border-white/10 
-          rounded-2xl p-8 shadow-2xl relative overflow-hidden"
-        >
-          {/* PRICE BADGE */}
+        
+        {/* ================= LISTING DETAILS + BOOKING SIDE BY SIDE ================= */}
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* ================= LEFT → LISTING DETAILS ================= */}
           <div
-            className="absolute top-6 right-6 bg-gradient-to-r from-[#FA6436] to-[#FF4163] 
-            text-white px-4 py-2 rounded-xl shadow-lg text-sm font-semibold"
+            className="lg:col-span-2 bg-white/5 backdrop-blur-md border border-white/10 
+    rounded-2xl p-8 shadow-2xl relative overflow-hidden"
           >
-            ₹ {rent} / day
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* LEFT */}
-            <div className="space-y-6">
-              <InfoItem label="Title" value={title} />
-
-              <Divider />
-
-              <InfoItem
-                label="Description"
-                value={description}
-                isDescription
-                showFullDesc={showFullDesc}
-                setShowFullDesc={setShowFullDesc}
-              />
-
-              <Divider />
-
-              <InfoItem label="City" value={city} />
-
-              <Divider />
-
-              <InfoItem label="Landmark" value={landmark} />
+            {/* PRICE BADGE */}
+            <div
+              className="absolute top-6 right-6 bg-gradient-to-r from-[#FA6436] to-[#FF4163] 
+      text-white px-4 py-2 rounded-xl shadow-lg text-sm font-semibold"
+            >
+              ₹ {rent} / day
             </div>
 
-            {/* RIGHT */}
-            <div className="space-y-6">
-              <InfoItem label="Category" value={category} highlight />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* LEFT */}
+              <div className="space-y-6">
+                <InfoItem label="Title" value={title} />
+                <Divider />
 
-              <Divider />
+                <InfoItem
+                  label="Description"
+                  value={description}
+                  isDescription
+                  showFullDesc={showFullDesc}
+                  setShowFullDesc={setShowFullDesc}
+                />
 
-              <InfoItem label="Rent" value={`₹ ${rent} / day`} />
+                <Divider />
+                <InfoItem label="City" value={city} />
+                <Divider />
+                <InfoItem label="Landmark" value={landmark} />
+              </div>
+
+              {/* RIGHT */}
+              <div className="space-y-6">
+                <InfoItem label="Category" value={category} highlight />
+                <Divider />
+                <InfoItem label="Rent" value={`₹ ${rent} / day`} />
+              </div>
             </div>
           </div>
+
+          {/* ================= RIGHT → BOOKING SUMMARY ================= */}
+          {cardDetails.ownerUserId !== userData?.id && (
+            <div className="lg:col-span-1 lg:sticky lg:top-28 h-fit">
+              {/* BOOKING SUMMARY CARD */}
+              <div
+                className="bg-white/5 backdrop-blur-md border border-white/10 
+      rounded-2xl p-6 shadow-2xl"
+              >
+                <BookingSummary />
+
+                {/* BOOK BUTTON */}
+                <button
+                  className="mt-4 w-full h-11 rounded-lg
+          bg-gradient-to-r from-[#FA6436] via-[#ff7a50] to-[#FF4163]
+          text-white font-semibold tracking-wide
+          shadow-lg shadow-[#FA6436]/25
+          hover:shadow-[0_12px_35px_rgba(250,100,50,0.6)]
+          hover:-translate-y-1 hover:scale-[1.03]
+          active:scale-95
+          transition duration-500 ease-out cursor-pointer"
+                  onClick={handleBooking}
+                >
+                  Book Now
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ================= ACTION BUTTONS ================= */}
@@ -198,25 +234,6 @@ function ViewCard() {
               </button>
             </div>
           )}
-
-          {cardDetails.ownerUserId !== userData?.id && (
-            <div className="flex justify-center">
-              {/* BOOK BUTTON */}
-              <button
-                className="h-11 w-1/2 rounded-lg
-        bg-gradient-to-r from-[#FA6436] via-[#ff7a50] to-[#FF4163]
-        text-white font-semibold tracking-wide
-        shadow-lg shadow-[#FA6436]/25
-        hover:shadow-[0_12px_35px_rgba(250,100,50,0.6)]
-        hover:-translate-y-1 hover:scale-[1.03]
-        active:scale-95
-        transition duration-500 ease-out cursor-pointer"
-                onClick={handleBooking}
-              >
-                Book Now
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
@@ -255,6 +272,7 @@ function ViewCard() {
           onClose={() => setUpdatePopUp(false)}
         />
       )}
+      <Footer />
     </div>
   );
 }

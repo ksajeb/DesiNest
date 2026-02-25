@@ -13,11 +13,8 @@ public class BookingProducer {
 
     private static final String TOPIC = "booking-created";
     public void sendBookingCreatedEvent(Long bookingId, Double amount) {
-
         BookingCreateEvent event = new BookingCreateEvent(bookingId, amount);
-
         kafkaTemplate.send(TOPIC, event);
-
         System.out.println("Booking event sent: " + bookingId);
     }
 }

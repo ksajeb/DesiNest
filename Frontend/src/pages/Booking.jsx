@@ -10,7 +10,7 @@ function Booking() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white px-12 py-16">
+    <div className="min-h-screen bg-white px-12 py-16 flex justify-center">
       <div className="max-w-6xl mx-auto px-6">
         <div
           className="fixed top-10 left-10 z-50 w-25 h-10  hover:bg-black bg-neutral-800
@@ -30,7 +30,7 @@ function Booking() {
 
           {/* RIGHT SECTION */}
           <div className="w-full lg:w-[420px]">
-            <BookingSummary />
+            {/* <BookingSummary /> */}
           </div>
         </div>
       </div>

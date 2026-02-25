@@ -57,30 +57,13 @@ function BookingSummary() {
     : null;
 
   return (
-    <div className="border border-gray-200 rounded-xl p-6 bg-white sticky top-24">
+    <div className="border border-gray-200 rounded-xl p-6 bg-white">
       {/* Image + Title */}
       <div className="flex gap-4">
-        <img
-          src={cardDetails?.images?.[0]}
-          alt="hotel"
-          className="w-24 h-24 rounded-lg object-cover"
-        />
-
-        <div>
-          <h3 className="font-semibold text-base leading-tight">
-            {cardDetails?.title}
-          </h3>
-          <p className="text-sm text-gray-600">
-            {cardDetails?.landmark}, {cardDetails?.city}
-          </p>
-          <p className="text-sm mt-1 flex items-center gap-2 whitespace-nowrap">
-            <span>⭐ 4.78 (32)</span>
-            <span className="flex items-center gap-1">
-              <PiMedalMilitary />
-              Superhost
-            </span>
-          </p>
-        </div>
+        <h3 className="font-semibold text-base  flex items-baseline gap-2">
+          <span className="text-2xl">₹{cardDetails?.rent}</span>
+          <span className="text-sm text-gray-400 ">/night</span>
+        </h3>
       </div>
 
       {/* Cancellation */}
@@ -214,7 +197,7 @@ function BookingSummary() {
           <span>₹{totalAmount.toFixed(1)}</span>
         </div>
         <div className="flex justify-between">
-          <span>Taxes</span>
+          <span>Service fee</span>
           <span>₹{taxes.toFixed(1)}</span>
         </div>
       </div>

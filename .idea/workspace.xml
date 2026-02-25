@@ -6,21 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/Config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/Config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/Config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/Config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/config/UserClients.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/config/UserClients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/PaymentListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/PaymentListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/src/main/java/com/eventsphere/listing_service/Config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/Config/CorsConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/AuthUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/BookingSummary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/BookingSummary.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Component/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/Context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/AuthContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/UserContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/UserContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/BookingContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/ListingContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/PaymentContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/PaymentContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Booking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Booking.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/ViewCard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +119,7 @@
       <recent name="booking_service.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
+  <component name="RunManager" selected="Spring Boot.BookingServiceApplication">
     <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
       <module name="api-gateway" />
@@ -130,13 +134,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="BookingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="eureka-server" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eventsphre.eureka_server.EurekaServerApplication" />
+      <module name="booking-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eventsphere.booking_service.BookingServiceApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.eventsphre.eureka_server.*" />
+          <option name="PATTERN" value="com.eventsphere.booking_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -187,19 +191,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Spring Boot.BookingServiceApplication" />
       <item itemvalue="Spring Boot.UserServiceApplication" />
-      <item itemvalue="Spring Boot.EurekaServerApplication" />
       <item itemvalue="Spring Boot.ApiGatewayApplication" />
       <item itemvalue="Spring Boot.ListingServiceApplication" />
       <item itemvalue="Spring Boot.PaymentServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ApiGatewayApplication" />
-        <item itemvalue="Spring Boot.ListingServiceApplication" />
-        <item itemvalue="Spring Boot.UserServiceApplication" />
-        <item itemvalue="Spring Boot.EurekaServerApplication" />
+        <item itemvalue="Spring Boot.BookingServiceApplication" />
         <item itemvalue="Spring Boot.PaymentServiceApplication" />
+        <item itemvalue="Spring Boot.ApiGatewayApplication" />
+        <item itemvalue="Spring Boot.UserServiceApplication" />
+        <item itemvalue="Spring Boot.ListingServiceApplication" />
       </list>
     </recent_temporary>
   </component>

@@ -98,7 +98,7 @@ function Navbar() {
                 className="hidden md:block cursor-pointer rounded-full px-5 py-2 bg-[#FA6432] hover:bg-[#FA6436] text-white hover:duration-500 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1"
                 onClick={() => navigate("/signup")}
               >
-                SignUp
+                Sign up Free
               </span>
             </>
           )}

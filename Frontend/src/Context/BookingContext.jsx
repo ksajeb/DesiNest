@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export const bookingDataContext = createContext();
 
 function BookingContext({ children }) {
-  const { serverUrl3 } = useContext(AuthDataContext);
+  const { serverUrl } = useContext(AuthDataContext);
   const { userData } = useContext(UserDataContext);
 
   const [checkIn, setCheckIn] = useState("");
@@ -51,7 +51,7 @@ function BookingContext({ children }) {
 
     try {
       const res = await axios.post(
-        `${serverUrl3}/bookings`,
+        `${serverUrl}/bookings`,
         {
           listingId,
           userId: userData.id,
@@ -67,7 +67,7 @@ function BookingContext({ children }) {
       );
 
       setBookingId(res.data.id);
-      toast.success("Booking created successfully 🎉");
+      // toast.success("Booking created successfully 🎉");
       return res.data;
     } catch (error) {
       console.error("Booking failed", error);
@@ -83,7 +83,7 @@ function BookingContext({ children }) {
 
     try {
       const res = await axios.get(
-        `${serverUrl3}/bookings/user/${userData.id}`,
+        `${serverUrl}/bookings/user/${userData.id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -103,7 +103,7 @@ function BookingContext({ children }) {
 
     try {
       await axios.put(
-        `${serverUrl3}/bookings/cancel/${bookingId}`,
+        `${serverUrl}/bookings/cancel/${bookingId}`,
         {},
         {
           headers: {

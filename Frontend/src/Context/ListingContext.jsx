@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export const ListingDataContext = createContext();
 
 function ListingContext({ children }) {
-  const { serverUrl2 } = useContext(AuthDataContext);
+  const { serverUrl } = useContext(AuthDataContext);
   const { userData } = useContext(UserDataContext);
 
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ function ListingContext({ children }) {
   const [cardDetails, setCardDetails] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [maxGuests, setMaxGuests] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
 
   // Add new listing
   const handleAddListing = async () => {
@@ -52,7 +53,7 @@ function ListingContext({ children }) {
 
       images.forEach((file) => formData.append("images", file));
 
-      await axios.post(`${serverUrl2}/listings`, formData, {
+      await axios.post(`${serverUrl}/listings`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -81,7 +82,7 @@ function ListingContext({ children }) {
   // Fetch all listings
   const getListing = async () => {
     try {
-      const result = await axios.get(`${serverUrl2}/listings`, {
+      const result = await axios.get(`${serverUrl}/listings`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -119,7 +120,7 @@ function ListingContext({ children }) {
 
     try {
       const result = await axios.get(
-        `${serverUrl2}/listings/user/${userData.id}`,
+        `${serverUrl}/listings/user/${userData.id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -138,7 +139,7 @@ function ListingContext({ children }) {
     if (!id) return;
 
     try {
-      const result = await axios.get(`${serverUrl2}/listings/${id}`, {
+      const result = await axios.get(`${serverUrl}/listings/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -176,7 +177,7 @@ function ListingContext({ children }) {
         }
       });
 
-      await axios.put(`${serverUrl2}/listings/${listingId}`, formData, {
+      await axios.put(`${serverUrl}/listings/${listingId}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -199,7 +200,7 @@ function ListingContext({ children }) {
   const deleteListing = async () => {
     setDeleting(true);
     try {
-      await axios.delete(`${serverUrl2}/listings/${cardDetails.id}`, {
+      await axios.delete(`${serverUrl}/listings/${cardDetails.id}`, {
         withCredentials: true,
       });
       toast.success("Listing deleted successfully 🗑️");
@@ -222,7 +223,7 @@ function ListingContext({ children }) {
   const searchListingsByDates = async (startDate, endDate) => {
     try {
       const result = await axios.get(
-        `${serverUrl2}/listings/between-dates?startDate=${startDate}&endDate=${endDate}`,
+        `${serverUrl}/listings/between-dates?startDate=${startDate}&endDate=${endDate}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -248,7 +249,7 @@ function ListingContext({ children }) {
       if (guests) params.append("guests", guests);
 
       const result = await axios.get(
-        `${serverUrl2}/listings/search?${params.toString()}`,
+        `${serverUrl}/listings/search?${params.toString()}`,
       );
 
       setListingData(result.data);
@@ -294,6 +295,8 @@ function ListingContext({ children }) {
     getListing,
     maxGuests,
     setMaxGuests,
+    totalAmount,
+    setTotalAmount,
   };
 
   return (

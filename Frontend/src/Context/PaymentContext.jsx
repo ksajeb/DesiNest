@@ -3,12 +3,13 @@ import axios from "axios";
 import { bookingDataContext } from "./BookingContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthDataContext } from "./AuthContext";
 
 export const paymentDataContext = createContext(null);
 
 function PaymentContext({ children }) {
   const navigate = useNavigate();
-  const PAYMENT_SERVICE_URL = "http://localhost:8099";
+  const { serverUrl } = useContext(AuthDataContext);
 
   const { totalAmount, resetBooking } = useContext(bookingDataContext);
 
@@ -41,7 +42,7 @@ function PaymentContext({ children }) {
 
     try {
       const orderResponse = await axios.post(
-        `${PAYMENT_SERVICE_URL}/payments/create-order`,
+        `${serverUrl}/payments/create-order`,
         {
           bookingId: bookingId,
           amount: totalAmount,
@@ -81,7 +82,7 @@ function PaymentContext({ children }) {
 
   const verifyPayment = async (response) => {
     try {
-      await axios.post(`${PAYMENT_SERVICE_URL}/payments/verify`, {
+      await axios.post(`${serverUrl}/payments/verify`, {
         razorpayOrderId: response.razorpay_order_id,
         razorpayPaymentId: response.razorpay_payment_id,
         razorpaySignature: response.razorpay_signature,

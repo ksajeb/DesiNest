@@ -22,9 +22,6 @@ public class WebSecurityConfig {
     @Autowired
     private OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    @Autowired
-    private CorsConfigurationSource corsConfigurationSource;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 

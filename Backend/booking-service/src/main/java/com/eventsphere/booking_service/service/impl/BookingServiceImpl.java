@@ -11,9 +11,11 @@ import com.eventsphere.booking_service.exception.ValidationException;
 import com.eventsphere.booking_service.kafka.BookingProducer;
 import com.eventsphere.booking_service.repository.BookingRepository;
 import com.eventsphere.booking_service.service.BookingService;
+import com.eventsphere.booking_service.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingProducer bookingProducer;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto request) {
@@ -153,21 +158,48 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @CacheEvict(value = {"allBookings", "bookings", "userBookings"}, allEntries = true)
     public void confirmBooking(Long bookingId) {
+        log.info("Confirm Booking is called");
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
+        if (booking.getStatus() == BookingStatus.CONFIRMED) {
+            log.info("Booking already confirmed");
+            return;
+        }
         booking.setStatus(BookingStatus.CONFIRMED);
         bookingRepository.save(booking);
+
+        log.info("Booking status updated to CONFIRMED");
+
+        var user = userClients.getUserById(booking.getUserId());
+        log.info("User fetched: {}", user.getEmail());
+        try {
+            emailService.sendBookingConfirmation(
+                    user.getEmail(),
+                    booking.getId(),
+                    booking.getCheckInDate().toString(),
+                    booking.getCheckOutDate().toString(),
+                    booking.getTotalAmount()
+            );
+        } catch (Exception e) {
+            log.error("Email sending failed", e);
+        }
+
+        log.info("Email process finished");
     }
 
     @Override
+    @CacheEvict(value = {"allBookings", "bookings", "userBookings"}, allEntries = true)
     public void cancelBooking(Long bookingId) {
+        log.info("cancel Booking called for bookingId={}", bookingId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
+        log.info("Booking cancelled successfully");
     }
 
     @Override

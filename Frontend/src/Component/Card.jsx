@@ -38,7 +38,7 @@ function Card({ list }) {
 
   return (
     <div
-      onClick={() => (!isBooked ? handleClick(list.id) : null)}
+      onClick={() => handleClick(list.id)}
       className="
         cursor-pointer
         bg-white               
