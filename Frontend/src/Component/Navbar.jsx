@@ -1,17 +1,12 @@
 import React, { useContext, useState } from "react";
-import { IoSearchOutline, IoBedOutline } from "react-icons/io5";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
-import { MdWhatshot, MdOutlinePool, MdBedroomParent } from "react-icons/md";
-import { GiFamilyHouse, GiWoodCabin } from "react-icons/gi";
-import { SiHomeassistantcommunitystore } from "react-icons/si";
-import { FaTreeCity } from "react-icons/fa6";
-import { BiBuildingHouse } from "react-icons/bi";
+import { FaList } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AuthDataContext } from "@/Context/AuthContext";
 import { ListingDataContext } from "@/Context/ListingContext";
 import { UserDataContext } from "@/Context/UserContext";
 import { AiOutlineLogout } from "react-icons/ai";
+import { IoIosContact } from "react-icons/io";
 
 import logo from "../assets/logo.png";
 import { toast } from "react-toastify";
@@ -45,13 +40,15 @@ function Navbar() {
       {/* TOP NAVBAR */}
       <div className="w-full px-[40px] py-4 flex items-center justify-between  border-b border-red-500/50 md:px-10">
         {/* LOGO */}
-        <div className="w-14 h-14 rounded-full overflow-hidden">
-          <img
-            src={logo}
-            alt="logo"
-            className="w-full h-full object-cover cursor-pointer"
-            onClick={() => navigate("/")}
-          />
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <div className="w-14 h-14 rounded-full overflow-hidden">
+            <img src={logo} alt="logo" className="w-full h-full object-cover" />
+          </div>
+
+          <span className="text-2xl">DesiNest</span>
         </div>
         {/* navItems */}
         <div className="flex items-center justify-center gap-4">
@@ -148,8 +145,9 @@ function Navbar() {
               <ul className="flex flex-col">
                 <li
                   onClick={handleBecomeHost}
-                  className="px-4 py-3 cursor-pointer flex items-center gap-2 font-bold hover:bg-gray-400 hover:text-black duration-500"
+                  className="px-4 py-3 cursor-pointer flex items-center gap-1 font-bold hover:bg-gray-400 hover:text-black duration-500"
                 >
+                  <IoIosContact className="text-xl"/>
                   Become a host
                 </li>
 
@@ -180,8 +178,9 @@ function Navbar() {
                         navigate("/mylisting");
                         setShowPopup(false);
                       }}
-                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200"
+                      className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200 font-bold flex items-center gap-1"
                     >
+                      <FaList />
                       My Listings
                     </li>
 
@@ -191,7 +190,8 @@ function Navbar() {
                       onClick={handleLogout}
                       className="px-4 py-3 cursor-pointer hover:bg-gray-100 hover:text-black duration-200 flex items-center gap-1 font-bold "
                     >
-                      <AiOutlineLogout />Logout
+                      <AiOutlineLogout />
+                      Logout
                     </li>
                   </>
                 )}

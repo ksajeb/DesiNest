@@ -31,10 +31,13 @@ const ChooseUs = () => {
   return (
     <div className="bg-gray-100 py-20">
       {/* Heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-6xl font-bold text-gray-900">Why Choose Us</h2>
+      <div className="text-center mb-12 flex flex-col items-center gap-3">
+        <span className="px-4 py-2 rounded-full bg-[#FFEDD5] font-semibold text-[#FA6436]">
+          Why DesiNest
+        </span>
+        <h2 className="text-6xl font-bold text-gray-900">Travel Reimagined</h2>
         <p className="text-[#6C7A96] mt-6 text-xl">
-          Everything you need for a perfect stay
+          We handle every detail so you can focus on the experience
         </p>
       </div>
 

@@ -6,6 +6,8 @@ import HomePage from "./HomePage";
 import HomePageListing from "./HomePageListing";
 import ChooseUs from "./ChooseUs";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
+import Newsletter from "./Newsletter";
 
 function Home() {
   const { listingData } = useContext(ListingDataContext);
@@ -13,7 +15,8 @@ function Home() {
     return [...array].sort(() => Math.random() - 0.5);
   };
   const shuffledListings = shuffleArray(listingData).slice(0, 8);
-
+  const totalListings = listingData?.length || 0;
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
@@ -39,9 +42,19 @@ function Home() {
         {shuffledListings.slice(0, 8).map((list) => (
           <Card key={list.id} list={list} />
         ))}
+        {/* <button>Explore all Listings</button> */}
+      </div>
+      <div className="flex justify-center mb-16">
+        <button
+          onClick={() => navigate("/hotels")}
+          className="hidden md:block cursor-pointer rounded-lg px-20 py-5 bg-[#FA6432] hover:bg-[#FA6436] text-white hover:duration-500 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)] font-semibold hover:-translate-y-1.5"
+        >
+          Explore all {totalListings} Hotel{totalListings !== 1 ? "s" : ""}
+        </button>
       </div>
       <HomePageListing />
       <ChooseUs />
+      <Newsletter />
       <Footer />
     </div>
   );

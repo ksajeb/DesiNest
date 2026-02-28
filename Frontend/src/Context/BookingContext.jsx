@@ -3,6 +3,7 @@ import { AuthDataContext } from "./AuthContext";
 import { UserDataContext } from "./UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { differenceInCalendarDays } from "date-fns";
 export const bookingDataContext = createContext();
 
 function BookingContext({ children }) {
@@ -17,26 +18,35 @@ function BookingContext({ children }) {
   const [bookingId, setBookingId] = useState(null);
 
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [baseAmount, setBaseAmount] = useState(0);
+  const [serviceFee, setServiceFee] = useState(0);
 
-  const calculateBooking = (pricePerNight, startDate, endDate) => {
-    if (!startDate || !endDate) return;
+  const SERVICE_PERCENT = 0.05;
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+  const calculateBooking = (rent, checkInDate, checkOutDate) => {
+    const nightsCount = differenceInCalendarDays(checkOutDate, checkInDate);
 
-    const diffTime = end - start;
-    const diffDays = Math.max(1, diffTime / (1000 * 60 * 60 * 24));
+    if (nightsCount <= 0) return;
 
-    setCheckIn(startDate);
-    setCheckOut(endDate);
-    setNights(diffDays);
-    setTotalAmount(diffDays * pricePerNight);
+    const base = rent * nightsCount;
+    const service = base * SERVICE_PERCENT;
+    const finalAmount = base + service;
+
+    setCheckIn(checkInDate);
+    setCheckOut(checkOutDate);
+    setNights(nightsCount);
+
+    setBaseAmount(base);
+    setServiceFee(service);
+    setTotalAmount(finalAmount);
   };
 
   const resetBooking = () => {
-    setCheckIn("");
-    setCheckOut("");
+    setCheckIn(null);
+    setCheckOut(null);
     setNights(0);
+    setBaseAmount(0);
+    setServiceFee(0);
     setTotalAmount(0);
     setListingId(null);
   };
@@ -67,7 +77,6 @@ function BookingContext({ children }) {
       );
 
       setBookingId(res.data.id);
-      // toast.success("Booking created successfully 🎉");
       return res.data;
     } catch (error) {
       console.error("Booking failed", error);
@@ -82,14 +91,11 @@ function BookingContext({ children }) {
     if (!userData?.id) return;
 
     try {
-      const res = await axios.get(
-        `${serverUrl}/bookings/user/${userData.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const res = await axios.get(`${serverUrl}/bookings/user/${userData.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+      });
 
       return res.data;
     } catch (error) {
@@ -126,7 +132,6 @@ function BookingContext({ children }) {
     checkOut,
     setCheckOut,
     nights,
-    totalAmount,
     listingId,
     setListingId,
     calculateBooking,
@@ -137,6 +142,9 @@ function BookingContext({ children }) {
     bookingId,
     setBookingId,
     cancelBooking,
+    baseAmount,
+    serviceFee,
+    totalAmount,
   };
 
   return (

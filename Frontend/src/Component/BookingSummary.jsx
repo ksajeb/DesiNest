@@ -18,6 +18,8 @@ function BookingSummary() {
     checkOut,
     nights,
     totalAmount,
+    baseAmount,
+    serviceFee,
     calculateBooking,
     setListingId,
   } = useContext(bookingDataContext);
@@ -25,8 +27,10 @@ function BookingSummary() {
   const [date, setDate] = useState();
 
   const pricePerNight = cardDetails?.rent || 0;
-  const taxes = totalAmount * 0.05;
-  const total = totalAmount + taxes;
+
+  const base = baseAmount;
+  const service = serviceFee;
+  const total = totalAmount;
 
   const [guests, setGuests] = useState({
     adults: 1,
@@ -193,12 +197,11 @@ function BookingSummary() {
               ? `${nights} night${nights > 1 ? "s" : ""} × ₹${pricePerNight}`
               : "Select dates to see price"}
           </span>
-
-          <span>₹{totalAmount.toFixed(1)}</span>
+          <span>₹{base.toFixed(1)}</span>
         </div>
         <div className="flex justify-between">
-          <span>Service fee</span>
-          <span>₹{taxes.toFixed(1)}</span>
+          <span>Service fee (5%)</span>
+          <span>₹{service.toFixed(1)}</span>
         </div>
       </div>
 

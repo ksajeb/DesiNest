@@ -178,10 +178,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             emailService.sendBookingConfirmation(
                     user.getEmail(),
-                    booking.getId(),
-                    booking.getCheckInDate().toString(),
-                    booking.getCheckOutDate().toString(),
-                    booking.getTotalAmount()
+                    booking.getId()
             );
         } catch (Exception e) {
             log.error("Email sending failed", e);
@@ -200,6 +197,18 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
         log.info("Booking cancelled successfully");
+        var user = userClients.getUserById(booking.getUserId());
+
+        try {
+            emailService.sendBookingCancellation(
+                    user.getEmail(),
+                    booking.getId()
+            );
+        } catch (Exception e) {
+            log.error("Cancellation email sending failed", e);
+        }
+
+        log.info("Cancellation email process finished");
     }
 
     @Override

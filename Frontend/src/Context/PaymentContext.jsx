@@ -90,7 +90,7 @@ function PaymentContext({ children }) {
       toast.success("Payment successful 🎉 Booking confirmed!");
 
       resetBooking();
-      navigate("/my-bookings");
+      navigate("/");
     } catch (error) {
       console.error("Payment verification failed", error);
       toast.error(

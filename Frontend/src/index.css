@@ -135,3 +135,7 @@
   file:bg-[#FA6436] file:border-none file:text-white file:px-4 file:h-12
   file:rounded-lg file:cursor-pointer file:font-medium;
 }
+body {
+  font-family:'Montserrat', sans-serif;
+  font-weight: 200;
+}
