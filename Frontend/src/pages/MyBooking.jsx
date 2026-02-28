@@ -3,10 +3,12 @@ import { UserDataContext } from "@/Context/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { paymentDataContext } from "@/Context/PaymentContext";
 
 const MyBooking = () => {
   const { getUserBookings, cancelBooking } = useContext(bookingDataContext);
   const { userData } = useContext(UserDataContext);
+  const { startPayment } = useContext(paymentDataContext);
   const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
 
@@ -69,14 +71,34 @@ const MyBooking = () => {
               </p>
 
               {/* Booking cancel button */}
-              {booking.status !== "CANCELLED" && (
-                <button
-                  onClick={() => handleCancel(booking.id)}
-                  className="mt-3 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer"
-                >
-                  Cancel Booking
-                </button>
-              )}
+              <div className="flex gap-3 mt-3">
+                {/* Cancel Button */}
+                {booking.status !== "CANCELLED" && (
+                  <button
+                    onClick={() => handleCancel(booking.id)}
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer"
+                  >
+                    Cancel Booking
+                  </button>
+                )}
+
+                {/* Complete Payment Button */}
+                {booking.status === "PAYMENT_PENDING" && (
+                  <button
+                    onClick={() =>
+                      navigate("/booking", {
+                        state: {
+                          bookingId: booking.id,
+                          amount: booking.totalAmount,
+                        },
+                      })
+                    }
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+                  >
+                    Complete Payment
+                  </button>
+                )}
+              </div>
 
               {booking.status === "CANCELLED" && (
                 <p className="text-red-500 mt-2 font-semibold">

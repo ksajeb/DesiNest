@@ -139,3 +139,11 @@ body {
   font-family:'Montserrat', sans-serif;
   font-weight: 200;
 }
+
+body {
+  overflow-x: hidden;
+}
+
+/* * {
+  outline: 1px solid red;
+} */

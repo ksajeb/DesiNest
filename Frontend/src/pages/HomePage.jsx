@@ -64,22 +64,29 @@ function HomePage() {
   return (
     <div className="bg-[#161D3A] w-full py-16">
       <div className="flex flex-col items-center justify-center text-center pt-3">
-        <div className="text-white text-8xl font-bold">
+        <div className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold">
           Find your perfect stay
           <br />
           <span className="text-red-500">anywhere in India</span>
         </div>
 
-        <p className="text-gray-200 mt-5 text-3xl">
+        <p className="text-gray-200 mt-5 text-lg sm:text-xl md:text-2xl lg:text-3xl">
           Discover hotels, resorts, and unique stays at the best prices
         </p>
       </div>
 
       {/* search bar */}
-      <div className="w-[85%] hidden md:block pt-10 mx-auto">
-        <div className="flex items-center h-32 rounded-4xl shadow-lg border border-gray-300 overflow-hidden bg-white">
-          <div className="flex flex-col flex-1 px-6 py-3 rounded-full  transition duration-200">
-            <span className="text-[#73809B] text-[15px] font-semibold">
+      <div className="w-full max-w-6xl px-4 pt-10 mx-auto">
+        <div
+          className="flex flex-col md:flex-row
+          rounded-3xl
+          shadow-lg
+          border border-gray-300
+          overflow-hidden
+          bg-white"
+        >
+          <div className="flex flex-col flex-1 px-6 py-4">
+            <span className="text-[#73809B] text-sm font-semibold">
               Location
             </span>
             <input
@@ -87,18 +94,18 @@ function HomePage() {
               placeholder="Where are you going?"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="bg-transparent text-gray-700 text-sm outline-none"
+              className="bg-transparent text-gray-700 text-sm outline-none mt-1"
             />
           </div>
-          <div className="h-8 w-px bg-gray-300"></div>
+          <div className="hidden md:block w-px bg-gray-300"></div>
 
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex flex-col flex-1 px-6 py-3 rounded-full transition duration-200 cursor-pointer">
-                <span className="text-[#73809B] text-[15px] font-semibold">
+              <div className="flex flex-col flex-1 px-6 py-4 cursor-pointer">
+                <span className="text-[#73809B] text-sm font-semibold">
                   Check-In
                 </span>
-                <span className="bg-transparent text-gray-700 text-sm">
+                <span className="text-gray-700 text-sm mt-1">
                   {date?.from ? (
                     date.to ? (
                       <>
@@ -125,15 +132,25 @@ function HomePage() {
               />
             </PopoverContent>
           </Popover>
-          <div className="h-8 w-px bg-gray-300"></div>
+          <div className="hidden md:block w-px bg-gray-300"></div>
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex items-center justify-between flex-1 px-6 py-3 rounded-full transition duration-200 cursor-pointer">
+              <div
+                className="flex flex-col md:flex-row
+                md:items-center
+                justify-between
+                flex-1
+                px-6 py-4
+                gap-4 md:gap-0
+                cursor-pointer"
+              >
                 <div className="flex flex-col">
-                  <span className="text-[#73809B] text-[15px] font-semibold">
+                  <span className="text-[#73809B] text-sm font-semibold">
                     Guests
                   </span>
-                  <span className="text-gray-700 text-sm">{guestText}</span>
+                  <span className="text-gray-700 text-sm mt-1">
+                    {guestText}
+                  </span>
                 </div>
 
                 <button
@@ -141,15 +158,25 @@ function HomePage() {
                     e.stopPropagation();
                     handleSearch();
                   }}
-                  className="ml-4 bg-[#FA6432] hover:bg-[#FA6436] w-28 h-12 rounded flex items-center justify-center text-white font-semibold transition-all duration-300 cursor-pointer 
-  hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]"
+                  className="
+                    bg-[#FA6432]
+                    hover:bg-[#FA6436]
+                    w-full md:w-28
+                    h-12
+                    rounded-lg
+                    flex items-center justify-center
+                    text-white font-semibold
+                    transition-all duration-300
+                    hover:-translate-y-1
+                    hover:shadow-[0_8px_25px_rgba(250,100,50,0.6)]
+                  "
                 >
                   Search
                 </button>
               </div>
             </PopoverTrigger>
             <PopoverContent
-              className="w-[320px] p-5 rounded-2xl shadow-xl"
+              className="w-[90vw] md:w-[320px] p-5 rounded-2xl shadow-xl"
               align="end"
             >
               <GuestRow

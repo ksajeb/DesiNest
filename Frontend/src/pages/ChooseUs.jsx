@@ -29,30 +29,34 @@ const ChooseUs = () => {
     },
   ];
   return (
-    <div className="bg-gray-100 py-20">
+    <div className="bg-gray-100 py-20 px-4">
       {/* Heading */}
       <div className="text-center mb-12 flex flex-col items-center gap-3">
-        <span className="px-4 py-2 rounded-full bg-[#FFEDD5] font-semibold text-[#FA6436]">
+        <span className="px-3 sm:px-4 py-2 rounded-full bg-[#FFEDD5] font-semibold text-[#FA6436] text-sm sm:text-base">
           Why DesiNest
         </span>
-        <h2 className="text-6xl font-bold text-gray-900">Travel Reimagined</h2>
-        <p className="text-[#6C7A96] mt-6 text-xl">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+          Travel Reimagined
+        </h2>
+        <p className="text-[#6C7A96] mt-4 sm:mt-6 text-base sm:text-lg md:text-xl max-w-2xl">
           We handle every detail so you can focus on the experience
         </p>
       </div>
 
       {/* Cards */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
         {features.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition h-80"
+            className="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center hover:shadow-lg duration-300"
           >
-            <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-400 to-green-400 text-white text-2xl my-4">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-400 to-green-400 text-white text-xl sm:text-2xl my-4">
               {item.icon}
             </div>
-            <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-            <p className="text-gray-500 text-xl px-3">{item.description}</p>
+            <h3 className="text-base sm:text-lg font-bold mb-2">{item.title}</h3>
+           <p className="text-gray-500 text-sm sm:text-base md:text-lg px-2 sm:px-3">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>

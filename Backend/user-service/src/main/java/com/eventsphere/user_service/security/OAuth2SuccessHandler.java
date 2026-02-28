@@ -23,8 +23,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -36,7 +34,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         ResponseEntity<LoginResponseDto> loginResponse= authService.handleOAuth2loginRequest(oAuth2User,registrationId);
         response.setStatus(loginResponse.getStatusCode().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.getWriter().write(objectMapper.writeValueAsString(loginResponse.getBody()));
         String jwt = loginResponse.getBody().getJwt();
 
         String redirectUrl = "http://localhost:5173/oauth-success?token=" + jwt;

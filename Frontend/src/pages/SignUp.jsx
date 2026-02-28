@@ -1,20 +1,12 @@
-// import React from 'react'
-import SignupFormDemo from "../components/signup-form-demo";
-// ("use client");
 import React, { useContext, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { IconBrandGoogle } from "@tabler/icons-react";
 import { IoEye, IoEyeOff, IoArrowBackOutline } from "react-icons/io5";
+import { MdOutlineMail, MdOutlineFacebook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import AuthContext, { AuthDataContext } from "../Context/AuthContext";
-import { toast } from "react-toastify";
+import { AuthDataContext } from "../Context/AuthContext";
 import { UserDataContext } from "@/Context/UserContext";
 
 function SignUp() {
@@ -80,7 +72,7 @@ function SignUp() {
             <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
-              placeholder="projectmayhem@fc.com"
+              placeholder="desinest@gmail.com"
               type="email"
               required
               onChange={(e) => setEmail(e.target.value)}
@@ -147,7 +139,7 @@ function SignUp() {
             {loading ? "Loading..." : "Signup →"}
           </button>
           <p className="mt-5">
-            Create an account
+            Already have an account?
             <span
               className="text-blue-600 cursor-pointer p-2 hover:underline"
               onClick={() => navigate("/login")}
@@ -159,22 +151,25 @@ function SignUp() {
           <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
           <div className="flex flex-col gap-4">
-            <button
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
+            {/* <button
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 duration-500 cursor-pointer"
               type="button"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/facebook`;
+              }}
             >
-              <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-              <span className="text-sm text-neutral-700 dark:text-neutral-300">
+              <MdOutlineFacebook className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+              <span className="text-sm text-neutral-700 dark:text-neutral-300 ">
                 Continue with Facebook
               </span>
               <BottomGradient />
-            </button>
+            </button> */}
             <button
               type="button"
               onClick={() => {
                 window.location.href = `${serverUrl}/oauth2/authorization/google`;
               }}
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 duration-500 cursor-pointer"
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -183,10 +178,13 @@ function SignUp() {
               <BottomGradient />
             </button>
             <button
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
-              type="submit"
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 duration-500 cursor-pointer"
+              type="button"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/google`;
+              }}
             >
-              <IconBrandOnlyfans className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+              <MdOutlineMail className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
                 Continue with email
               </span>

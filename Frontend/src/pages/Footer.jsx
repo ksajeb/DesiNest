@@ -1,8 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const quickLinks = ["Home", "Hotels", "About", "Contact"];
-  const hostLinks = ["List Property", "Resources", "Pricing"];
+  const quickLinks = [
+    { name: "Home", path: "/" },
+    { name: "Hotels", path: "/hotels" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+  const hostLinks = [
+    { name: "List Property", path: "/listingpage1" },
+    { name: "Resources", path: "/" },
+    { name: "Pricing", path: "/hotels" },
+  ];
   const legalLinks = ["Privacy Policy", "Terms"];
   return (
     <footer className="bg-[#0A0E27] text-white pt-16 pb-8">
@@ -21,12 +31,13 @@ const Footer = () => {
           <h3 className="font-bold mb-4">Quick Links</h3>
 
           {quickLinks.map((link, index) => (
-            <p
+            <Link
               key={index}
-              className="text-gray-400 mb-2 hover:text-white cursor-pointer transition font-semibold"
+              to={link.path}
+              className="block text-gray-400 mb-2 hover:text-white cursor-pointer transition font-semibold"
             >
-              {link}
-            </p>
+              {link.name}
+            </Link>
           ))}
         </div>
 
@@ -35,12 +46,13 @@ const Footer = () => {
           <h3 className="font-bold mb-4">For Hosts</h3>
 
           {hostLinks.map((link, index) => (
-            <p
+            <Link
               key={index}
-              className="text-gray-400 mb-2 hover:text-white cursor-pointer transition font-semibold"
+              to={link.path}
+              className="block text-gray-400 mb-2 hover:text-white transition font-semibold"
             >
-              {link}
-            </p>
+              {link.name}
+            </Link>
           ))}
         </div>
 

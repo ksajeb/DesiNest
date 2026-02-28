@@ -21,7 +21,7 @@ function Home() {
     <div>
       <Navbar />
       <HomePage />
-      <div className="px-24 mt-16  flex flex-col justify-center items-center">
+      <div className="px-6 md:px-12 lg:px-24 mt-16 flex flex-col justify-center items-center">
         <h2 className="text-5xl font-bold">Featured Stays</h2>
         <p className="my-4 text-2xl text-[#6C7A96]">
           Handpicked properties for unforgettable experiences
@@ -36,7 +36,7 @@ function Home() {
     lg:grid-cols-3
     xl:grid-cols-4
     gap-8
-    px-24
+    px-6 md:px-12 lg:px-24
     py-12"
       >
         {shuffledListings.slice(0, 8).map((list) => (

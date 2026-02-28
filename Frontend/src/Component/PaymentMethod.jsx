@@ -4,16 +4,28 @@ import CreditCard from "../assets/credit-card-svgrepo-com.svg";
 import Bank from "../assets/bank.svg";
 import { bookingDataContext } from "@/Context/BookingContext";
 import { paymentDataContext } from "@/Context/PaymentContext";
+import { useLocation } from "react-router-dom";
 
 function PaymentMethod() {
   const { totalAmount, createBooking } = useContext(bookingDataContext);
   const { startPayment, paymentLoading } = useContext(paymentDataContext);
+  const location = useLocation();
+  const retryBookingId = location.state?.bookingId;
+  const retryAmount = location.state?.amount;
+  const payableAmount = retryAmount || totalAmount;
 
   const handlePay = async () => {
     try {
-      const booking = await createBooking();
-      if (booking?.id) {
-        await startPayment(booking.id);
+      // If coming from MyBooking (retry case)
+      if (retryBookingId) {
+        await startPayment(retryBookingId, retryAmount);
+      }
+      // Normal new booking case
+      else {
+        const booking = await createBooking();
+        if (booking?.id) {
+          await startPayment(booking.id);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -40,15 +52,15 @@ function PaymentMethod() {
 
       <button
         onClick={handlePay}
-        disabled={!totalAmount || totalAmount <= 0 || paymentLoading}
+        disabled={!payableAmount || payableAmount <= 0 || paymentLoading}
         className={`mt-8 ml-auto block px-8 py-3 rounded-lg font-semibold
-          ${
-            !totalAmount || totalAmount <= 0 || paymentLoading
-              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-              : "bg-neutral-900 text-white hover:bg-black cursor-pointer"
-          }`}
+    ${
+      !payableAmount || payableAmount <= 0 || paymentLoading
+        ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+        : "bg-neutral-900 text-white hover:bg-black cursor-pointer"
+    }`}
       >
-        {paymentLoading ? "Processing..." : `Pay ₹${totalAmount}`}
+        {paymentLoading ? "Processing..." : `Pay ₹${payableAmount}`}
       </button>
     </div>
   );

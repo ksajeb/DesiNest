@@ -67,6 +67,8 @@ public class AuthUtil {
         String providerId = switch (registrationId.toLowerCase()) {
             case "google" -> oAuth2User.getAttribute("sub");
             case "github" -> oAuth2User.getAttribute("id").toString();
+            case "facebook" -> oAuth2User.getAttribute("id");
+
 
             default -> {
                 log.error("Unsupported OAuth2 provider: {}", registrationId);

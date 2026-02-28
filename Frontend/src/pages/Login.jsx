@@ -3,17 +3,12 @@ import React, { useContext, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  // IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { IconBrandGoogle } from "@tabler/icons-react";
 import { IoEye, IoEyeOff, IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { AuthDataContext } from "../Context/AuthContext";
 import { UserDataContext } from "@/Context/UserContext";
-import { toast } from "react-toastify";
+import { MdOutlineMail, MdOutlineFacebook } from "react-icons/md";
 
 function Login() {
   let [show, setShow] = useState(false);
@@ -60,7 +55,7 @@ function Login() {
             <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
-              placeholder="projectmayhem@fc.com"
+              placeholder="desinest@gmail.com"
               type="email"
               required
               onChange={(e) => setEmail(e.target.value)}
@@ -124,21 +119,11 @@ function Login() {
 
           <div className="flex flex-col space-y-4">
             <button
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-95 cursor-pointer"
-              type="submit"
-            >
-              <IconBrandGithub className="h-4 w-4 text-white dark:text-neutral-300" />
-              <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                GitHub
-              </span>
-              <BottomGradient />
-            </button>
-            <button
               type="button"
               onClick={() => {
                 window.location.href = `${serverUrl}/oauth2/authorization/google`;
               }}
-              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-95 cursor-pointer"
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 cursor-pointer duration-500"
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -146,6 +131,32 @@ function Login() {
               </span>
               <BottomGradient />
             </button>
+            <button
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 cursor-pointer duration-500"
+              type="button"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/google`;
+              }}
+            >
+              <MdOutlineMail className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+              <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                Email
+              </span>
+              <BottomGradient />
+            </button>
+            {/* <button
+              className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626] hover:scale-x-105 cursor-pointer duration-500"
+              type="submit"
+              onClick={() => {
+                window.location.href = `${serverUrl}/oauth2/authorization/facebook`;
+              }}
+            >
+              <MdOutlineFacebook className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+              <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                Facebook
+              </span>
+              <BottomGradient />
+            </button> */}
           </div>
         </form>
       </div>

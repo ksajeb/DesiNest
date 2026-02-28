@@ -24,7 +24,7 @@ function PaymentContext({ children }) {
     });
   };
 
-  const startPayment = async (bookingId) => {
+  const startPayment = async (bookingId, retryAmount = null) => {
     if (!bookingId) {
       toast.error("Booking not created properly ❌");
       return;
@@ -45,7 +45,7 @@ function PaymentContext({ children }) {
         `${serverUrl}/payments/create-order`,
         {
           bookingId: bookingId,
-          amount: totalAmount,
+          amount: retryAmount || totalAmount,
         },
       );
 
@@ -53,7 +53,7 @@ function PaymentContext({ children }) {
 
       const options = {
         key: "rzp_test_SBB1ElloLuHfk8",
-        amount: totalAmount,
+        amount: retryAmount || totalAmount,
         currency: "INR",
         order_id: razorpayOrderId,
         name: "EventSphere",

@@ -164,7 +164,7 @@ public class AuthService {
             user.setEmail(email);
             user.setProviderType(providerType);
             user.setProviderId(providerId);
-            user.setPassword(null); // important
+            user.setPassword(null);
 
             userRepository.save(user);
         }
