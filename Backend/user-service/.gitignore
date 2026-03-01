@@ -35,3 +35,5 @@ build/
 # Spring Boot secrets
 application.yml
 application-*.yml
+
+.env

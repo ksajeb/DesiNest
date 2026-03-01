@@ -1,26 +1,47 @@
-server:
-  port: 8099
-
 spring:
+  application:
+    name: payment-service
+
   datasource:
-    url: jdbc:postgresql://<DB_HOST>:<DB_PORT>/<DB_NAME>
-    username: <DB_USERNAME>
-    password: <DB_PASSWORD>
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
 
-razorpay:
-  key-id: <RAZORPAY_KEY_ID>
-  key-secret: <RAZORPAY_KEY_SECRET>
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 
-cors:
-  allowed-origins: <FRONTEND_URL>
-  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-  allowed-headers: *
+    consumer:
+      group-id: payment-group-v2
+      auto-offset-reset: latest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.eventsphere.payment_service.event.BookingCreateEvent
+
+server:
+  port: ${SERVER_PORT:8099}
 
 logging:
   level:
     root: INFO
-    com.eventsphere: DEBUG
+    com.eventsphere.payment_service: DEBUG
+
+razorpay:
+  key: ${RAZORPAY_KEY}
+  secret: ${RAZORPAY_SECRET}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL}
