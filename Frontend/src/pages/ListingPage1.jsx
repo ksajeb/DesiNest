@@ -37,6 +37,17 @@ function ListingPage1() {
   return (
     // <div className="w-full min-h-screen bg-[#1a1a1a] relative flex flex-col items-center overflow-y-auto">
     <div className="w-full min-h-screen bg-[#1a1a1a] relative flex flex-col items-center overflow-y-auto">
+      <div className="w-full px-8 pt-6">
+        <div
+          className="inline-flex items-center gap-1
+               cursor-pointer font-medium text-white
+               hover:text-[#FA6436] transition duration-500"
+          onClick={() => navigate("/")}
+        >
+          <IoArrowBackOutline className="w-5 h-5" />
+          <span>Back to home</span>
+        </div>
+      </div>
       {/* HEADER */}
       <div className="w-full text-center pt-20 px-4">
         <h1 className="text-3xl md:text-4xl font-bold text-white">
