@@ -5,12 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Backend/api-gateway/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/eureka-server/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DesiNest.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml.example" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/listing-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/payment-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/eureka-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/BookingCreateEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/BookingCreateEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/ListingResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/ListingResponseDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/PaymentSuccessEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/PaymentSuccessEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/UserDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/classes/com/eventsphere/common/event/UserDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/event-common-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/event-common-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/listing-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/listing-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/About.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/About.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +82,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.ListingServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserServiceTest.createUser_shouldCreateUser_whenEmailNotExists.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserServiceTest.createUser_shouldThrowException_whenUserAlreadyExists.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -92,11 +119,11 @@
       <recent name="D:\J-SPRING BOOT PROJECT\DesiNest\Backend\event-common\src\main\java\com\eventsphere\common\event" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\J-SPRING BOOT PROJECT\DesiNest" />
+      <recent name="D:\J-SPRING BOOT PROJECT\DesiNest\Backend" />
       <recent name="D:\J-SPRING BOOT PROJECT\DesiNest\Backend\booking-service\src\main\java\com\eventsphere\booking_service" />
       <recent name="D:\J-SPRING BOOT PROJECT\DesiNest\Backend\booking-service\src\main\java\com\eventsphere" />
       <recent name="D:\J-SPRING BOOT PROJECT\DesiNest\Backend\booking-service\src\main\java\com\eventsphere\booking_service\service" />
-      <recent name="D:\J-SPRING BOOT PROJECT\Event-Sphere\Backend\listing-service\src\main\java\com\eventsphere\listing_service" />
-      <recent name="D:\J-SPRING BOOT PROJECT\Event-Sphere\Backend\listing-service\src\main\java\com\eventsphere" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.eventsphere.common.event" />
@@ -105,7 +132,7 @@
       <recent name="booking_service.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.BookingServiceApplication">
+  <component name="RunManager" selected="Docker.docker-compose.yml.postgres: Compose Deployment">
     <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
       <module name="api-gateway" />
@@ -205,48 +232,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="user-service" />
-      <selectedOptions>
-        <option name="environmentVariables" />
-      </selectedOptions>
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eventsphere.user_service.UserServiceApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.eventsphere.user_service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="true" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="Backend/user-service/.env" />
-        </ENTRIES>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
       <item itemvalue="Spring Boot.BookingServiceApplication" />
       <item itemvalue="Spring Boot.ListingServiceApplication" />
-      <item itemvalue="Spring Boot.UserServiceApplication" />
       <item itemvalue="Spring Boot.ApiGatewayApplication" />
       <item itemvalue="Spring Boot.PaymentServiceApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
         <item itemvalue="Spring Boot.BookingServiceApplication" />
         <item itemvalue="Spring Boot.ListingServiceApplication" />
         <item itemvalue="Spring Boot.PaymentServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
-        <item itemvalue="Spring Boot.UserServiceApplication" />
       </list>
     </recent_temporary>
   </component>

@@ -106,7 +106,7 @@ const About = () => {
       <section className="bg-[#0A0E27] text-white py-20 px-6">
         <h2 className="text-3xl font-bold text-center mb-16">Meet Our Team</h2>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center cursor-pointer">
           <div className="bg-[#1B1F3B] p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-500">
             <div className="w-24 h-24 mx-auto bg-[#FA6436] rounded-full mb-4"></div>
             <h3 className="font-semibold text-lg">Founder</h3>

@@ -1,2 +1,5 @@
-com\eventsphere\booking_service\event\BookingCreateEvent.class
-com\eventsphere\booking_service\event\PaymentSuccessEvent.class
+com\eventsphere\common\event\BookingCreateEvent.class
+com\eventsphere\common\event\ListingResponseDto.class
+com\eventsphere\common\event\Category.class
+com\eventsphere\common\event\PaymentSuccessEvent.class
+com\eventsphere\common\event\UserDto.class

@@ -3,19 +3,18 @@ FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /build
 
-COPY pom.xml .
+COPY Backend ./Backend
+COPY pom.xml ./pom.xml
 
-COPY src ./src
-
-RUN mvn clean package -DskipTests
+RUN mvn -pl Backend/listing-service -am clean package -DskipTests
 
 # Stage 2: Run the app
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY --from=builder /build/target/*.jar app.jar
+COPY --from=builder /build/Backend/listing-service/target/*.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8097
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

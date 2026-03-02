@@ -8,10 +8,10 @@
 
 	<!-- Spring Boot Parent -->
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
-		<relativePath/>
+		<groupId>com.eventsphere</groupId>
+		<artifactId>desinest</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.eventsphere</groupId>
@@ -19,11 +19,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>listing-service</name>
 	<description>Listing service</description>
-
-	<properties>
-		<java.version>21</java.version>
-		<spring-cloud.version>2023.0.1</spring-cloud.version>
-	</properties>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -77,7 +72,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Testing -->
@@ -99,19 +94,7 @@
 	</dependencies>
 
 	<!-- Spring Cloud BOM -->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
-	<!-- Build -->
 	<build>
 		<plugins>
 			<plugin>

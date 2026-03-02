@@ -18,6 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="DesiNest" target="1.5" />
       <module name="Event-Sphere" target="21" />
       <module name="payment_service" target="21" />
     </bytecodeTargetLevel>
@@ -28,6 +29,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="booking-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="event-common" options="-parameters" />
       <module name="listing-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="payment_service" options="-parameters" />

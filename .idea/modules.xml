@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DesiNest.iml" filepath="$PROJECT_DIR$/.idea/DesiNest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Backend/booking-service/booking-service.iml" filepath="$PROJECT_DIR$/Backend/booking-service/booking-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/Backend/listing-service/listing-service.iml" filepath="$PROJECT_DIR$/Backend/listing-service/listing-service.iml" />
     </modules>

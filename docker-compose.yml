@@ -1,9 +1,10 @@
 #version: "3.8"
 
 services:
+
   postgres:
     image: postgres:15
-    container_name: postres-db
+    container_name: postgres-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: event-sphere
@@ -16,24 +17,20 @@ services:
     networks:
       - desinest-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
-    container_name: zookeeper
-    restart: unless-stopped
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-    ports:
-      - "2181:2181"
     networks:
       - desinest-network
+
   kafka:
     image: confluentinc/cp-kafka:7.5.0
-    container_name: kafka
-    restart: unless-stopped
     depends_on:
       - zookeeper
     ports:
@@ -42,80 +39,119 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - desinest-network
 
+  eureka-server:
+    build:
+      context: .
+      dockerfile: Backend/eureka-server/Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - desinest-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Backend/api-gateway/Dockerfile
+    depends_on:
+      - eureka-server
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    networks:
+      - desinest-network
+
   user-service:
-    build: ./Backend/user-service
-    container_name: user-service
-    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Backend/user-service/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
+      eureka-server:
+        condition: service_started
     ports:
       - "8096:8096"
+    env_file:
+      - Backend/user-service/.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-      SERVER_PORT: 8096
+      EUREKA_URL: http://eureka-server:8761/eureka/
     networks:
       - desinest-network
 
   listing-service:
-    build: ./Backend/listing-service
-    container_name: listing-service
-    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Backend/listing-service/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
+      eureka-server:
+        condition: service_started
     ports:
       - "8097:8097"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-      SERVER_PORT: 8097
+    env_file:
+      - Backend/listing-service/.env
     networks:
       - desinest-network
 
   booking-service:
-    build: ./Backend/booking-service
-    container_name: booking-service
-    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Backend/booking-service/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_started
     ports:
       - "8098:8098"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SERVER_PORT: 8098
+    env_file:
+      - Backend/booking-service/.env
     networks:
       - desinest-network
 
   payment-service:
-    build: ./Backend/payment-service
-    container_name: payment-service
-    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Backend/payment-service/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_started
     ports:
       - "8099:8099"
+    env_file:
+      - Backend/payment-service/.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event-sphere
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SERVER_PORT: 8099
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     networks:
       - desinest-network
+
+  frontend:
+    build:
+      context: Frontend
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-gateway
+    environment:
+      - VITE_APP_API_URL=http://api-gateway:8080
+    networks:
+      - desinest-network
+    restart: unless-stopped
 
 networks:
   desinest-network:

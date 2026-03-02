@@ -5,20 +5,22 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.eventsphere</groupId>
+    <parent>
+        <groupId>com.eventsphere</groupId>
+        <artifactId>desinest</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
     <artifactId>event-common</artifactId>
-    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
 
 </project>
