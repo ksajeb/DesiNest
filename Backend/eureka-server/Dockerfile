@@ -3,12 +3,10 @@ FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /build
 
-#COPY Backend ./Backend
-COPY . .
+COPY Backend ./Backend
 COPY pom.xml ./pom.xml
 
- #mvn -pl Backend/eureka-server -am clean package -DskipTests
-RUN mvn clean package -DskipTests
+RUN mvn -pl Backend/eureka-server -am clean package -DskipTests
 
 # Stage 2: Run the app
 FROM eclipse-temurin:21-jre
