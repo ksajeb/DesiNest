@@ -1,0 +1,76 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+
+        - id: booking-service
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/bookings/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payments/**
+
+        - id: listing-service
+          uri: lb://LISTING-SERVICE
+          predicates:
+            - Path=/listings/**
+
+        - id: auth-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: oauth2-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/oauth2/**,/login/**
+
+      default-filters:
+        - PreserveHostHeader
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - ${FRONTEND_URL}
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    root: WARN
+    org.springframework.cloud.gateway: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL}
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    prefer-ip-address: true

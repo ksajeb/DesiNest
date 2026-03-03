@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: eureka-server
+
+server:
+  port: ${PORT:8761}
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost}
+    prefer-ip-address: false
+
+  server:
+    enable-self-preservation: true
+
+logging:
+  level:
+    root: WARN
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO

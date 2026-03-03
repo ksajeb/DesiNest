@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/UserServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/UserServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
