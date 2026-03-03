@@ -3,7 +3,8 @@ FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /build
 
-COPY Backend ./Backend
+#COPY Backend ./Backend
+COPY . .
 COPY pom.xml ./pom.xml
 
 RUN mvn -pl Backend/eureka-server -am clean package -DskipTests
