@@ -7,7 +7,8 @@ WORKDIR /build
 COPY . .
 COPY pom.xml ./pom.xml
 
-RUN mvn -pl Backend/eureka-server -am clean package -DskipTests
+ #mvn -pl Backend/eureka-server -am clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the app
 FROM eclipse-temurin:21-jre
