@@ -4,7 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="" />
+    <list default="true" id="bb2a10d5-9925-4e41-8356-4571774c9217" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/BookingProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/BookingProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/PaymentListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/kafka/PaymentListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/java/com/eventsphere/booking_service/service/impl/BookingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml.example" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/booking-service/src/main/resources/application.yml.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/event-common/target/event-common-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/event-common/target/event-common-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/config/KafkaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/config/KafkaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/config/KafkaConsumerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/kafka/PaymentProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/kafka/PaymentProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/service/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/java/com/eventsphere/payment_service/service/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/payment-service/src/main/resources/application.yml.example" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/payment-service/src/main/resources/application.yml.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/OAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/user-service/src/main/java/com/eventsphere/user_service/security/OAuth2SuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/Context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/Context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

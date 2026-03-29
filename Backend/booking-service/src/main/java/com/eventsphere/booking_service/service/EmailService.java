@@ -21,6 +21,7 @@ public class EmailService {
     @Autowired
     private BookingRepository bookingRepository;
 
+
     public void sendBookingConfirmation(String toEmail, Long bookingId) {
 
         log.info("📧 Preparing to send email to {}", toEmail);

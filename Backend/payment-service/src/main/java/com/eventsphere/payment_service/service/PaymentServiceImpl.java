@@ -4,7 +4,7 @@ import com.eventsphere.payment_service.dto.PaymentRequestDto;
 import com.eventsphere.payment_service.dto.PaymentResponseDto;
 import com.eventsphere.payment_service.dto.PaymentVerifyRequestDto;
 import com.eventsphere.payment_service.entity.Payment;
-import com.eventsphere.payment_service.kafka.PaymentProducer;
+//import com.eventsphere.payment_service.kafka.PaymentProducer;
 import com.eventsphere.payment_service.repository.PaymentRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
@@ -30,8 +30,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Value("${razorpay.secret}")
     private String secret;
 
-    @Autowired
-    private PaymentProducer paymentProducer;
+//    @Autowired
+//    private PaymentProducer paymentProducer;
 
 
     @Override
@@ -84,11 +84,11 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setStatus("SUCCESS");
             paymentRepository.save(payment);
 
-            paymentProducer.sendPaymentSuccess(
-                    payment.getBookingId(),
-                    dto.getRazorpayPaymentId(),
-                    payment.getRazorpayOrderId()
-            );
+//            paymentProducer.sendPaymentSuccess(
+//                    payment.getBookingId(),
+//                    dto.getRazorpayPaymentId(),
+//                    payment.getRazorpayOrderId()
+//            );
             return "Payment Successful";
         } else {
             payment.setStatus("FAILED");

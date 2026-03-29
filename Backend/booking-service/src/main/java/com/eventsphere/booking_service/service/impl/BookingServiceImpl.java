@@ -8,7 +8,7 @@ import com.eventsphere.booking_service.dto.BookingResponseDto;
 import com.eventsphere.booking_service.entity.Booking;
 import com.eventsphere.booking_service.entity.BookingStatus;
 import com.eventsphere.booking_service.exception.ValidationException;
-import com.eventsphere.booking_service.kafka.BookingProducer;
+//import com.eventsphere.booking_service.kafka.BookingProducer;
 import com.eventsphere.booking_service.repository.BookingRepository;
 import com.eventsphere.booking_service.service.BookingService;
 import com.eventsphere.booking_service.service.EmailService;
@@ -39,8 +39,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserClients userClients;
 
-    @Autowired
-    private BookingProducer bookingProducer;
+//    @Autowired
+//    private BookingProducer bookingProducer;
 
     @Autowired
     private EmailService emailService;
@@ -76,14 +76,14 @@ public class BookingServiceImpl implements BookingService {
         log.info("Booking saved successfully with ID: {}", savedBooking.getId());
 
         //Send Kafka Event
-        try {
-            bookingProducer.sendBookingCreatedEvent(
-                    savedBooking.getId(),
-                    savedBooking.getTotalAmount()
-            );
-        } catch (Exception e) {
-            log.error("Failed to send Kafka event", e);
-        }
+//        try {
+//            bookingProducer.sendBookingCreatedEvent(
+//                    savedBooking.getId(),
+//                    savedBooking.getTotalAmount()
+//            );
+//        } catch (Exception e) {
+//            log.error("Failed to send Kafka event", e);
+//        }
 
         BookingResponseDto response = modelMapper.map(savedBooking, BookingResponseDto.class);
         log.debug("Mapped Response DTO: {}", response);

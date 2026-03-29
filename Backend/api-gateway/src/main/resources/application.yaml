@@ -40,10 +40,12 @@ spring:
         - PreserveHostHeader
 
       globalcors:
+        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
             allowedOrigins:
               - "http://localhost:5173"
+              - "https://desinest-lvjv.onrender.com"
             allowedMethods:
               - GET
               - POST
@@ -61,4 +63,4 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: ${EUREKA_SERVER_URL}
