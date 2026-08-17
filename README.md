@@ -401,14 +401,3 @@ DesiNest/
 
 ---
 
-## Roadmap / Notes
-
-- Kafka/Zookeeper containers are stubbed out (commented) in `docker-compose.yml` and Kafka listener auto-start is disabled by default in `booking-service` — enable both to activate the async payment → booking confirmation flow.
-- The project's internal package namespace (`com.eventsphere`) and DB name (`event-sphere`) reflect an earlier project name and can be renamed for a fully "DesiNest"-branded codebase without affecting behavior.
-- No automated test suite beyond the default Spring Boot `spring-boot-starter-test` scaffolding was found — contributions adding integration tests for the booking↔payment Kafka flow and Feign-client interactions would be valuable.
-
----
-
-## License
-
-No license file is currently included in this repository. Add one (e.g. MIT, Apache 2.0) if you intend for others to reuse this code.
